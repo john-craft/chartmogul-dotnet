@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +14,6 @@ namespace OConnors.ChartMogul
     {
         private readonly string _baseUrl = "https://api.chartmogul.com/v1/";
         private readonly string _credentials;
-        private DataSource _ds;
 
         public Client(Config config)
         {
@@ -27,7 +27,9 @@ namespace OConnors.ChartMogul
             ApiResponse resp = CallApi(urlPath, "GET");
             if (resp.Success)
             {
-                IEnumerable<DataSource> dataSources = JsonConvert.DeserializeObject<IEnumerable<DataSource>>(resp.Json);
+                JToken root = JObject.Parse(resp.Json);
+                JToken sources = root["data_sources"];
+                IEnumerable<DataSource> dataSources = JsonConvert.DeserializeObject<IEnumerable<DataSource>>(sources.ToString());
                 return dataSources.ToList();
             }
             else
@@ -57,13 +59,13 @@ namespace OConnors.ChartMogul
                 return null;
         }
 
-        public bool AddCustomer(Customer cust)
+        public bool AddCustomer(Customer cust, DataSource ds)
         {
             if (cust == null)
                 return false;
 
             string urlPath = "import/customers";
-            cust.DataSource = _ds.Uuid;
+            cust.DataSource = ds.Uuid;
             string json = JsonConvert.SerializeObject(cust);
 
             ApiResponse resp = CallApi(urlPath, "POST", json);
@@ -91,10 +93,10 @@ namespace OConnors.ChartMogul
                 return null;
         }
 
-        public bool AddPlan(Plan plan)
+        public bool AddPlan(Plan plan, DataSource ds)
         {
             string urlPath = "import/plans";
-            plan.DataSource = _ds.Uuid;
+            plan.DataSource = ds.Uuid;
             string json = JsonConvert.SerializeObject(plan);
 
             ApiResponse resp = CallApi(urlPath, "POST", json);
