@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OConnors.ChartMogul.API.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OConnors.ChartMogul
+namespace OConnors.ChartMogul.API
 {
     public class Client
     {
@@ -21,7 +22,7 @@ namespace OConnors.ChartMogul
             _credentials = Convert.ToBase64String(plainTextBytes);
         }
 
-        public List<DataSource> GetDataSources()
+        public List<DataSourceModel> GetDataSources()
         {
             string urlPath = "import/data_sources";
             ApiResponse resp = CallApi(urlPath, "GET");
@@ -29,14 +30,14 @@ namespace OConnors.ChartMogul
             {
                 JToken root = JObject.Parse(resp.Json);
                 JToken sources = root["data_sources"];
-                IEnumerable<DataSource> dataSources = JsonConvert.DeserializeObject<IEnumerable<DataSource>>(sources.ToString());
+                IEnumerable<DataSourceModel> dataSources = JsonConvert.DeserializeObject<IEnumerable<DataSourceModel>>(sources.ToString());
                 return dataSources.ToList();
             }
             else
                 return null;
         }
 
-        public string AddDataSource(DataSource dataSource)
+        public string AddDataSource(DataSourceModel dataSource)
         {
             throw new NotImplementedException();
         }
@@ -46,20 +47,20 @@ namespace OConnors.ChartMogul
             throw new NotImplementedException();
         }
 
-        public List<Customer> GetCustomers()
+        public List<CustomerModel> GetCustomers()
         {
             string urlPath = "import/customers";
             ApiResponse resp = CallApi(urlPath, "GET");
             if (resp.Success)
             {
-                IEnumerable<Customer> customers = JsonConvert.DeserializeObject<IEnumerable<Customer>>(resp.Json);
+                IEnumerable<CustomerModel> customers = JsonConvert.DeserializeObject<IEnumerable<CustomerModel>>(resp.Json);
                 return customers.ToList();
             }
             else
                 return null;
         }
 
-        public bool AddCustomer(Customer cust, DataSource ds)
+        public bool AddCustomer(CustomerModel cust, DataSourceModel ds)
         {
             if (cust == null)
                 return false;
@@ -75,25 +76,25 @@ namespace OConnors.ChartMogul
                 return false;
         }
 
-        public void DeleteCustomer(Customer cust)
+        public void DeleteCustomer(CustomerModel cust)
         {
             throw new NotImplementedException();
         }
 
-        public List<Plan> GetPlans()
+        public List<PlanModel> GetPlans()
         {
             string urlPath = "import/plans";
             ApiResponse resp = CallApi(urlPath, "GET");
             if (resp.Success)
             {
-                IEnumerable<Plan> plans = JsonConvert.DeserializeObject<IEnumerable<Plan>>(resp.Json);
+                IEnumerable<PlanModel> plans = JsonConvert.DeserializeObject<IEnumerable<PlanModel>>(resp.Json);
                 return plans.ToList();
             }
             else
                 return null;
         }
 
-        public bool AddPlan(Plan plan, DataSource ds)
+        public bool AddPlan(PlanModel plan, DataSourceModel ds)
         {
             string urlPath = "import/plans";
             plan.DataSource = ds.Uuid;
@@ -106,12 +107,12 @@ namespace OConnors.ChartMogul
                 return false;
         }
 
-        public List<Invoice> GetInvoices()
+        public List<InvoiceModel> GetInvoices()
         {
             throw new NotImplementedException();
         }
 
-        public bool AddInvoice(List<Invoice> invoices, Customer customer)
+        public bool AddInvoice(List<InvoiceModel> invoices, CustomerModel customer)
         {
             string urlPath = "import/customers/" + customer.Uuid + "/invoices";
             string json = JsonConvert.SerializeObject(invoices);
@@ -123,20 +124,20 @@ namespace OConnors.ChartMogul
                 return false;
         }
 
-        public List<Subscription> GetSubscriptions(Customer cust)
+        public List<SubscriptionModel> GetSubscriptions(CustomerModel cust)
         {
             string urlPath = "import/customers/" + cust.Uuid + "/subscriptions";
             ApiResponse resp = CallApi(urlPath, "GET");
             if (resp.Success)
             {
-                IEnumerable<Subscription> subscriptions = JsonConvert.DeserializeObject<IEnumerable<Subscription>>(resp.Json);
+                IEnumerable<SubscriptionModel> subscriptions = JsonConvert.DeserializeObject<IEnumerable<SubscriptionModel>>(resp.Json);
                 return subscriptions.ToList();
             }
             else
                 return null;
         }
 
-        public bool CancelSubscription(Subscription sub, DateTime cancelledAt)
+        public bool CancelSubscription(SubscriptionModel sub, DateTime cancelledAt)
         {
             string urlPath = "import/subscriptions/" + sub.Uuid;
             sub.CancellationDates = cancelledAt;

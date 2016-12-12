@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChartMogul", "ChartMogul\ChartMogul.csproj", "{EEF931BB-B3BF-4CB9-A151-E4A959B6684E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChartMogul.API", "ChartMogul\ChartMogul.API.csproj", "{EEF931BB-B3BF-4CB9-A151-E4A959B6684E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestChartMogul", "TestChartMogul\TestChartMogul.csproj", "{740972AA-6CDA-43DF-9295-4CC83BE37AAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{EEF931BB-B3BF-4CB9-A151-E4A959B6684E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEF931BB-B3BF-4CB9-A151-E4A959B6684E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEF931BB-B3BF-4CB9-A151-E4A959B6684E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{740972AA-6CDA-43DF-9295-4CC83BE37AAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{740972AA-6CDA-43DF-9295-4CC83BE37AAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{740972AA-6CDA-43DF-9295-4CC83BE37AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{740972AA-6CDA-43DF-9295-4CC83BE37AAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

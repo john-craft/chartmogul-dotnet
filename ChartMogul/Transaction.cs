@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OConnors.ChartMogul
+namespace OConnors.ChartMogul.API
 {
     public class Transaction
     {
