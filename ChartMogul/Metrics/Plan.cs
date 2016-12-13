@@ -9,45 +9,34 @@ using System.Threading.Tasks;
 
 namespace ChartMogul.API.Import
 {
-
-    public interface IDataSource
+    public interface IPlan
     {
-        List<DataSourceModel> GetDataSources();
-        DataSourceModel AddDataSource(DataSourceModel dataSource);
-        void DeleteDataSource();
+        PlanModel CreatePlan(PlanModel plan);
+        List<PlanModel> GetPlans();
         APIRequest ApiRequest { get; set; }
+
     }
 
-  public class DataSource:  IDataSource
+    public class Plan : IPlan
     {
         public APIRequest ApiRequest { get; set; }
         private IChartMogulCore _icharmogulCore;
 
-        DataSource(IChartMogulCore ichartMogulcore)
+        Plan (IChartMogulCore ichartMogulcore)
         {
             _icharmogulCore = ichartMogulcore;
         }
 
 
-        public List<DataSourceModel> GetDataSources()
+        public PlanModel CreatePlan(PlanModel plan)
         {
             throw new NotImplementedException();
         }
 
-
-        public DataSourceModel AddDataSource(DataSourceModel dataSource)
+       
+        public List<PlanModel> GetPlans()
         {
             throw new NotImplementedException();
         }
-
-
-        public void DeleteDataSource()
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
     }
 }
