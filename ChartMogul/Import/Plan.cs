@@ -13,21 +13,11 @@ namespace ChartMogul.API.Import
     {
         PlanModel CreatePlan(PlanModel plan);
         List<PlanModel> GetPlans();
-        APIRequest ApiRequest { get; set; }
-
     }
 
-    public class Plan : IPlan
+    public class Plan : ChartMogulCore, IPlan
     {
-        public APIRequest ApiRequest { get; set; }
-        private IChartMogulCore _icharmogulCore;
-
-        Plan (IChartMogulCore ichartMogulcore)
-        {
-            _icharmogulCore = ichartMogulcore;
-        }
-
-
+  
         public PlanModel CreatePlan(PlanModel plan)
         {
             throw new NotImplementedException();

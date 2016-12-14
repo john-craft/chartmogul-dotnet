@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StructureMap;
 using ChartMogul.API.Models.Core;
+using ChartMogul.API.Common;
 
 namespace ChartMogul.API
 {
@@ -28,27 +29,35 @@ namespace ChartMogul.API
         private ICustomer _iCustomer;
         private IDataSource _iDataSource;
         private IPlan _iPlan;
-        private APIRequest _apiRequest;
+      //  private APIRequest _apiRequest;
+        private IChartMogulCore _iChartMogulCore;
         private string _credentials;
 
-       public  ChartMogulClient(ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan )
+       public  ChartMogulClient(ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan, IChartMogulCore iChartMogulCore )
         {
+            _iChartMogulCore = iChartMogulCore;
             _iCustomer = iCustomer;
             _iDataSource = iDataSource;
             _iPlan = iPlan;
+           
+
+
         }
 
        public  ChartMogulClient(Config config)
         {
             configureDependencies();
+            
             var plainTextBytes = Encoding.UTF8.GetBytes(config.AccountToken + ":" + config.SecretKey);
             _credentials = Convert.ToBase64String(plainTextBytes);
             SetupDataForAPI();
+
         }
 
         private void SetupDataForAPI()
         {
-            _apiRequest.Header.Add("Authorization", "Basic " + _credentials);
+            _iChartMogulCore.ApiRequest.HttpMethod = "get";
+            _iChartMogulCore.ApiRequest.Header.Add("Authorization", "Basic " + _credentials);
 
         }
 
@@ -58,7 +67,7 @@ namespace ChartMogul.API
         {
             foreach (KeyValuePair<string, string> entry in dictHeaders)
             {
-                _apiRequest.Header.Add(entry.Key,entry.Value);
+                _iChartMogulCore.ApiRequest.Header.Add(entry.Key,entry.Value);
             }
 
            
@@ -69,11 +78,12 @@ namespace ChartMogul.API
         {
             //StructureMap Still require some work
             var container = Container.For<MyRegistry>();
-            _iCustomer = container.GetInstance<Customer>();
+            _iChartMogulCore = container.GetInstance<IChartMogulCore>();
+            _iCustomer = container.GetInstance<ICustomer>();
 
             _iDataSource = container.GetInstance<IDataSource>();
             _iPlan = container.GetInstance<IPlan>();
-
+           
         }
         
         public CustomerModel AddCustomer(CustomerModel customerModel)
@@ -88,7 +98,7 @@ namespace ChartMogul.API
 
         public void DeleteCustomer()
         {
-            _iCustomer.ApiRequest.URLPath = string.Empty;
+           // _iCustomer.ApiRequest.URLPath = string.Empty;
 
             _iCustomer.DeleteCustomer();
             
@@ -101,7 +111,7 @@ namespace ChartMogul.API
 
         public List<CustomerModel> GetCustomers()
         {
-            throw new NotImplementedException();
+           return _iCustomer.GetCustomers(_iChartMogulCore.ApiRequest);
         }
 
         public List<DataSourceModel> GetDataSources()

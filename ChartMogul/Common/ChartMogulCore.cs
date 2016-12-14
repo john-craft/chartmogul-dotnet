@@ -14,47 +14,53 @@ namespace ChartMogul.API.Common
     public interface IChartMogulCore
     {
         void SetConfiguration(Models.Core.Config config);
-        ApiResponse CallApi(APIRequest apiRequest);
-
+        ApiResponse CallApi(APIRequest ApiRequest);
+        APIRequest ApiRequest { get; set; }
     }
 
    public class ChartMogulCore: IChartMogulCore
     {
         private readonly string _baseUrl = "https://api.chartmogul.com/v1/";
         private string _credentials;
-
+        public APIRequest ApiRequest { get; set; }
+        public ChartMogulCore ()
+        {
+            ApiRequest = new APIRequest();
+        }
         public void SetConfiguration(Models.Core.Config config)
         {
             var plainTextBytes = Encoding.UTF8.GetBytes(config.AccountToken + ":" + config.SecretKey);
             _credentials = Convert.ToBase64String(plainTextBytes);
         }
 
-        public ApiResponse CallApi(APIRequest apiRequest)
+
+
+        public ApiResponse CallApi(APIRequest ApiRequest)
         {
             try
             {
-                HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(_baseUrl + apiRequest.URLPath);
+                HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(_baseUrl + ApiRequest.URLPath);
                 //httpRequest.Headers.Add("Authorization", "Basic " + _credentials);
-                foreach (KeyValuePair<string, string> entry in apiRequest.Header)
+                foreach (KeyValuePair<string, string> entry in ApiRequest.Header)
                 {
                    httpRequest.Headers.Add(entry.Key, entry.Value);
                 }
 
 
                 httpRequest.Accept = "*/*";
-                httpRequest.Method = apiRequest.HttpMethod.ToUpper();
+                httpRequest.Method = ApiRequest.HttpMethod.ToUpper();
 
-                if (apiRequest.HttpMethod == "POST")
+                if (this.ApiRequest.HttpMethod == "POST")
                 {
                     httpRequest.ContentType = "application/json";
                 }
 
                 // Only write the json file when it is a add call or a update call
-                if (!string.IsNullOrEmpty(apiRequest.JsonData))
+                if (!string.IsNullOrEmpty(ApiRequest.JsonData))
                 {
                     using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
                     {
-                        streamWriter.Write(apiRequest.JsonData);
+                        streamWriter.Write(ApiRequest.JsonData);
                         streamWriter.Flush();
                         streamWriter.Close();
                     }
