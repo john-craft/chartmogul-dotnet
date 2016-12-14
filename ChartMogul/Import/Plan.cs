@@ -12,21 +12,23 @@ namespace ChartMogul.API.Import
     public interface IPlan
     {
         PlanModel CreatePlan(PlanModel plan);
-        List<PlanModel> GetPlans();
+        List<PlanModel> GetPlans(APIRequest apiRequest);
     }
 
     public class Plan : ChartMogulCore, IPlan
     {
-  
         public PlanModel CreatePlan(PlanModel plan)
         {
             throw new NotImplementedException();
         }
 
-       
-        public List<PlanModel> GetPlans()
+        public List<PlanModel> GetPlans(APIRequest apiRequest)
         {
-            throw new NotImplementedException();
+            apiRequest.URLPath = "import/plans";
+            apiRequest.HttpMethod = "get";
+            var temp = CallApi(apiRequest);
+            return null;
         }
+
     }
 }

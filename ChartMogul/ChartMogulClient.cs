@@ -24,53 +24,40 @@ namespace ChartMogul.API
         List<PlanModel> GetPlans();
     }
 
-   public class ChartMogulClient : IChartMogulClient
+    public class ChartMogulClient : IChartMogulClient
     {
         private ICustomer _iCustomer;
         private IDataSource _iDataSource;
         private IPlan _iPlan;
-      //  private APIRequest _apiRequest;
-        private IChartMogulCore _iChartMogulCore;
         private string _credentials;
+        private APIRequest _apiRequest = new APIRequest();
 
-       public  ChartMogulClient(ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan, IChartMogulCore iChartMogulCore )
+        public ChartMogulClient(ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan)
         {
-            _iChartMogulCore = iChartMogulCore;
             _iCustomer = iCustomer;
             _iDataSource = iDataSource;
             _iPlan = iPlan;
-           
-
-
         }
 
-       public  ChartMogulClient(Config config)
+        public ChartMogulClient(Config config)
         {
             configureDependencies();
-            
             var plainTextBytes = Encoding.UTF8.GetBytes(config.AccountToken + ":" + config.SecretKey);
             _credentials = Convert.ToBase64String(plainTextBytes);
             SetupDataForAPI();
-
         }
 
         private void SetupDataForAPI()
         {
-            _iChartMogulCore.ApiRequest.HttpMethod = "get";
-            _iChartMogulCore.ApiRequest.Header.Add("Authorization", "Basic " + _credentials);
-
+            _apiRequest.Header.Add("Authorization", "Basic " + _credentials);
         }
-
-
 
         public void AddHeaders(Dictionary<string, string> dictHeaders)
         {
             foreach (KeyValuePair<string, string> entry in dictHeaders)
             {
-                _iChartMogulCore.ApiRequest.Header.Add(entry.Key,entry.Value);
+                _apiRequest.Header.Add(entry.Key, entry.Value);
             }
-
-           
         }
 
 
@@ -78,14 +65,11 @@ namespace ChartMogul.API
         {
             //StructureMap Still require some work
             var container = Container.For<MyRegistry>();
-            _iChartMogulCore = container.GetInstance<IChartMogulCore>();
             _iCustomer = container.GetInstance<ICustomer>();
-
             _iDataSource = container.GetInstance<IDataSource>();
             _iPlan = container.GetInstance<IPlan>();
-           
         }
-        
+
         public CustomerModel AddCustomer(CustomerModel customerModel)
         {
             throw new NotImplementedException();
@@ -98,10 +82,10 @@ namespace ChartMogul.API
 
         public void DeleteCustomer()
         {
-           // _iCustomer.ApiRequest.URLPath = string.Empty;
+            // _iCustomer.ApiRequest.URLPath = string.Empty;
 
             _iCustomer.DeleteCustomer();
-            
+
         }
 
         public void DeleteDataSource()
@@ -111,7 +95,7 @@ namespace ChartMogul.API
 
         public List<CustomerModel> GetCustomers()
         {
-           return _iCustomer.GetCustomers(_iChartMogulCore.ApiRequest);
+            return _iCustomer.GetCustomers(_apiRequest);
         }
 
         public List<DataSourceModel> GetDataSources()
@@ -126,7 +110,7 @@ namespace ChartMogul.API
 
         public List<PlanModel> GetPlans()
         {
-            throw new NotImplementedException();
+            return _iPlan.GetPlans(_apiRequest);
         }
     }
 }

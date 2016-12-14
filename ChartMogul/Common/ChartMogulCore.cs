@@ -18,12 +18,12 @@ namespace ChartMogul.API.Common
         APIRequest ApiRequest { get; set; }
     }
 
-   public class ChartMogulCore: IChartMogulCore
+    public class ChartMogulCore : IChartMogulCore
     {
         private readonly string _baseUrl = "https://api.chartmogul.com/v1/";
         private string _credentials;
         public APIRequest ApiRequest { get; set; }
-        public ChartMogulCore ()
+        public ChartMogulCore()
         {
             ApiRequest = new APIRequest();
         }
@@ -34,16 +34,16 @@ namespace ChartMogul.API.Common
         }
 
 
-
         public ApiResponse CallApi(APIRequest ApiRequest)
         {
+
             try
             {
                 HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(_baseUrl + ApiRequest.URLPath);
                 //httpRequest.Headers.Add("Authorization", "Basic " + _credentials);
                 foreach (KeyValuePair<string, string> entry in ApiRequest.Header)
                 {
-                   httpRequest.Headers.Add(entry.Key, entry.Value);
+                    httpRequest.Headers.Add(entry.Key, entry.Value);
                 }
 
 

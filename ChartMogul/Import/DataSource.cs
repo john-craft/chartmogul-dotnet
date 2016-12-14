@@ -15,33 +15,24 @@ namespace ChartMogul.API.Import
         List<DataSourceModel> GetDataSources();
         DataSourceModel AddDataSource(DataSourceModel dataSource);
         void DeleteDataSource();
-      
     }
 
-  public class DataSource: ChartMogulCore,IDataSource
+    public class DataSource : ChartMogulCore, IDataSource
     {
-       
-        private IChartMogulCore _icharmogulCore;
 
-         public List<DataSourceModel> GetDataSources()
+        public List<DataSourceModel> GetDataSources()
         {
             throw new NotImplementedException();
         }
-
 
         public DataSourceModel AddDataSource(DataSourceModel dataSource)
         {
             throw new NotImplementedException();
         }
 
-
         public void DeleteDataSource()
         {
             throw new NotImplementedException();
         }
-
-
-
-
     }
 }

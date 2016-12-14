@@ -15,7 +15,7 @@ namespace TestAPIChartMogul
             string accountToken = ConfigurationManager.AppSettings["AccountToken"].ToString();
             string secretKey = ConfigurationManager.AppSettings["SecretKey"].ToString();
             ChartMogulClient Objclient = new ChartMogulClient(new ChartMogul.API.Models.Core.Config {AccountToken= accountToken, SecretKey = secretKey });
-           var temp= Objclient.GetCustomers();
+           var temp= Objclient.GetPlans();
         }
     }
 }
