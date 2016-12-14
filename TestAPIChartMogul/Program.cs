@@ -16,6 +16,16 @@ namespace TestAPIChartMogul
             string secretKey = ConfigurationManager.AppSettings["SecretKey"].ToString();
             ChartMogulClient Objclient = new ChartMogulClient(new ChartMogul.API.Models.Core.Config {AccountToken= accountToken, SecretKey = secretKey });
            var temp= Objclient.GetPlans();
+
+            Objclient.AddCustomer(new OConnors.ChartMogul.API.Models.CustomerModel
+            {
+                DataSource = "ds_fef05d54-47b4-431b-aed2-eb6b9e545430",
+                ExternalId = "cus_0001",
+                Name = "Adam Smith",
+                Email = "adam@smith.com",
+                Country = "US",
+                City = "New York"
+            });
         }
     }
 }

@@ -42,13 +42,13 @@ namespace ChartMogul.API
         public ChartMogulClient(Config config)
         {
             configureDependencies();
-            var plainTextBytes = Encoding.UTF8.GetBytes(config.AccountToken + ":" + config.SecretKey);
-            _credentials = Convert.ToBase64String(plainTextBytes);
-            SetupDataForAPI();
+            SetupDataForAPI(config);
         }
 
-        private void SetupDataForAPI()
+        private void SetupDataForAPI(Config config)
         {
+             var plainTextBytes = Encoding.UTF8.GetBytes(config.AccountToken + ":" + config.SecretKey);
+            _credentials = Convert.ToBase64String(plainTextBytes);
             _apiRequest.Header.Add("Authorization", "Basic " + _credentials);
         }
 
@@ -72,7 +72,8 @@ namespace ChartMogul.API
 
         public CustomerModel AddCustomer(CustomerModel customerModel)
         {
-            throw new NotImplementedException();
+            // _iCustomer.AddCustomer(_apiRequest);
+            return null;
         }
 
         public DataSourceModel AddDataSource(DataSourceModel dataSource)

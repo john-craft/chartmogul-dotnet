@@ -15,7 +15,7 @@ namespace ChartMogul.API.Import
         CustomerModel AddCustomer(CustomerModel customerModel);
         List<CustomerModel> GetCustomers(APIRequest apirequest);
         void DeleteCustomer();
-        APIRequest ApiRequest { get; set; }
+      
     }
 
     public class Customer : ChartMogulCore, ICustomer

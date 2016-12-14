@@ -1,4 +1,5 @@
-﻿using ChartMogul.API.Models.Core;
+﻿using ChartMogul.API.Exceptions;
+using ChartMogul.API.Models.Core;
 using OConnors.ChartMogul.API;
 using System;
 using System.Collections.Generic;
@@ -15,18 +16,15 @@ namespace ChartMogul.API.Common
     {
         void SetConfiguration(Models.Core.Config config);
         ApiResponse CallApi(APIRequest ApiRequest);
-        APIRequest ApiRequest { get; set; }
+       // APIRequest ApiRequest { get; set; }
     }
 
     public class ChartMogulCore : IChartMogulCore
     {
         private readonly string _baseUrl = "https://api.chartmogul.com/v1/";
         private string _credentials;
-        public APIRequest ApiRequest { get; set; }
-        public ChartMogulCore()
-        {
-            ApiRequest = new APIRequest();
-        }
+       // public APIRequest ApiRequest { get; set; }
+      
         public void SetConfiguration(Models.Core.Config config)
         {
             var plainTextBytes = Encoding.UTF8.GetBytes(config.AccountToken + ":" + config.SecretKey);
@@ -36,21 +34,19 @@ namespace ChartMogul.API.Common
 
         public ApiResponse CallApi(APIRequest ApiRequest)
         {
-
             try
             {
-                HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(_baseUrl + ApiRequest.URLPath);
+                HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(Path.Combine(_baseUrl, ApiRequest.URLPath));
                 //httpRequest.Headers.Add("Authorization", "Basic " + _credentials);
                 foreach (KeyValuePair<string, string> entry in ApiRequest.Header)
                 {
                     httpRequest.Headers.Add(entry.Key, entry.Value);
                 }
 
-
                 httpRequest.Accept = "*/*";
                 httpRequest.Method = ApiRequest.HttpMethod.ToUpper();
 
-                if (this.ApiRequest.HttpMethod == "POST")
+                if (ApiRequest.HttpMethod == "POST")
                 {
                     httpRequest.ContentType = "application/json";
                 }
@@ -75,9 +71,22 @@ namespace ChartMogul.API.Common
                     return new ApiResponse { Success = true, Json = responseText };
                 }
             }
-            catch (Exception ex)
+            catch (WebException ex)
             {
+                var webResponse = (System.Net.HttpWebResponse)ex.Response;
+                GenerateErrorResponse(webResponse.StatusCode);
                 return new ApiResponse { Success = false, Message = "Could not add customer: " + ex.Message };
+            }
+        }
+        public void GenerateErrorResponse(HttpStatusCode statusCode)
+        {
+            switch (statusCode)
+            {
+                case HttpStatusCode.BadRequest: new SchemaInvalidException(); break;
+                case HttpStatusCode.Forbidden: new ForbiddenException(); break;
+                case HttpStatusCode.NotFound: new NotFoundException(); break;
+                default:
+                    new ChartMogulException(); break;
             }
         }
 
