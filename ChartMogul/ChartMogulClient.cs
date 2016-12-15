@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using StructureMap;
 using ChartMogul.API.Models.Core;
 using ChartMogul.API.Common;
+using Newtonsoft.Json;
 
 namespace ChartMogul.API
 {
@@ -30,7 +31,7 @@ namespace ChartMogul.API
         private IDataSource _iDataSource;
         private IPlan _iPlan;
         private string _credentials;
-        private APIRequest _apiRequest = new APIRequest();
+        private APIRequest _apiRequest= new APIRequest();
 
         public ChartMogulClient(ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan)
         {
@@ -43,6 +44,7 @@ namespace ChartMogul.API
         {
             configureDependencies();
             SetupDataForAPI(config);
+            
         }
 
         private void SetupDataForAPI(Config config)
@@ -71,8 +73,12 @@ namespace ChartMogul.API
         }
 
         public CustomerModel AddCustomer(CustomerModel customerModel)
-        {
-            // _iCustomer.AddCustomer(_apiRequest);
+        {          
+           var serializeData = JsonConvert.SerializeObject(customerModel);         
+            _apiRequest.JsonData = serializeData;
+            _apiRequest.URLPath = "import/customers";
+            _apiRequest.HttpMethod = "POST";
+            _iCustomer.AddCustomer(_apiRequest);
             return null;
         }
 
@@ -96,6 +102,7 @@ namespace ChartMogul.API
 
         public List<CustomerModel> GetCustomers()
         {
+        //    _apiRequest = new APIRequest<Customer>();
             return _iCustomer.GetCustomers(_apiRequest);
         }
 
@@ -105,12 +112,13 @@ namespace ChartMogul.API
         }
 
         public PlanModel CreatePlan(PlanModel plan)
-        {
+        {          
             throw new NotImplementedException();
         }
 
         public List<PlanModel> GetPlans()
         {
+        //    _apiRequest = new APIRequest<PlanModel>();
             return _iPlan.GetPlans(_apiRequest);
         }
     }

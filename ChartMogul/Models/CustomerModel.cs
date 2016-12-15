@@ -10,28 +10,28 @@ namespace OConnors.ChartMogul.API.Models
     public class CustomerModel
     {
         [JsonProperty(PropertyName = "data_source_uuid")]
-        public string DataSource { get; set; }
+        public string data_source_uuid { get; set; }
 
         [JsonProperty(PropertyName = "external_id")]
-        public string ExternalId { get; set; }
+        public string external_id { get; set; }
 
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string name { get; set; }
 
         [JsonProperty(PropertyName = "email")]
-        public string Email { get; set; }
+        public string email { get; set; }
 
         [JsonProperty(PropertyName = "company")]
         public string Company { get; set; }
 
         [JsonProperty(PropertyName = "country")]
-        public string Country { get; set; }
+        public string country { get; set; }
 
         [JsonProperty(PropertyName = "state")]
         public string State { get; set; }
 
         [JsonProperty(PropertyName = "city")]
-        public string City { get; set; }
+        public string city { get; set; }
 
         [JsonProperty(PropertyName = "zip")]
         public string Zip { get; set; }

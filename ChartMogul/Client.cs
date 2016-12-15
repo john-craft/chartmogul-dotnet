@@ -66,7 +66,7 @@ namespace OConnors.ChartMogul.API
                 return false;
 
             string urlPath = "import/customers";
-            cust.DataSource = ds.Uuid;
+            cust.data_source_uuid = ds.Uuid;
             string json = JsonConvert.SerializeObject(cust);
 
             ApiResponse resp = CallApi(urlPath, "POST", json);

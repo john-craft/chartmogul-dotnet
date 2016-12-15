@@ -12,17 +12,23 @@ namespace ChartMogul.API.Import
 
     public interface ICustomer
     {
-        CustomerModel AddCustomer(CustomerModel customerModel);
+        CustomerModel AddCustomer(APIRequest customerModel);
         List<CustomerModel> GetCustomers(APIRequest apirequest);
         void DeleteCustomer();
       
     }
 
-    public class Customer : ChartMogulCore, ICustomer
+    public class Customer: ICustomer
     {
-        public CustomerModel AddCustomer(CustomerModel customerModel)
+        private IChartMogulCore _chartMogulCore;
+        public Customer(IChartMogulCore chartMogulCore)
         {
-            throw new NotImplementedException();
+            _chartMogulCore = chartMogulCore;
+        }
+        public CustomerModel AddCustomer(APIRequest customerModel)
+        {     
+            var temp = _chartMogulCore.CallApi(customerModel);
+            return new CustomerModel();
         }
 
         public void DeleteCustomer()
@@ -34,7 +40,7 @@ namespace ChartMogul.API.Import
         {
             apiRequest.URLPath = "import/customers";
             apiRequest.HttpMethod = "get";
-            var temp = CallApi(apiRequest);
+            var temp = _chartMogulCore.CallApi(apiRequest);
             return null;
         }
     }

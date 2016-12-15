@@ -52,6 +52,7 @@
     <Compile Include="ApiResponse.cs" />
     <Compile Include="ChartMogulClient.cs" />
     <Compile Include="Common\ChartMogulCore.cs" />
+    <Compile Include="Exceptions\RequestFailedException.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Exceptions\ChartMogulException.cs" />
     <Compile Include="Exceptions\ForbiddenException.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Exceptions\ResourceInvalidException.cs" />
     <Compile Include="Exceptions\ResponseException.cs" />
     <Compile Include="Exceptions\SchemaInvalidException.cs" />
+    <Compile Include="Exceptions\UnAuthorizedUserException.cs" />
     <Compile Include="Import\Customer.cs" />
     <Compile Include="Import\Plan.cs" />
     <Compile Include="Models\Core\APIRequest.cs" />

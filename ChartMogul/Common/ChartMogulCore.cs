@@ -60,8 +60,7 @@ namespace ChartMogul.API.Common
                         streamWriter.Flush();
                         streamWriter.Close();
                     }
-                }
-
+                }          
                 WebResponse response = (HttpWebResponse)httpRequest.GetResponse();
                 using (var reader = new StreamReader(response.GetResponseStream(), Encoding.ASCII))
                 {
@@ -72,21 +71,35 @@ namespace ChartMogul.API.Common
                 }
             }
             catch (WebException ex)
-            {
-                var webResponse = (System.Net.HttpWebResponse)ex.Response;
-                GenerateErrorResponse(webResponse.StatusCode);
-                return new ApiResponse { Success = false, Message = "Could not add customer: " + ex.Message };
+            {                          
+                if (ex.Response != null)
+                {
+                    using (var errorResponse = (HttpWebResponse)ex.Response)
+                    {
+                        string error = string.Empty;
+                        using (var reader = new StreamReader(errorResponse.GetResponseStream()))
+                        {
+                             error = reader.ReadToEnd();
+                        }
+                        GenerateErrorResponse(errorResponse.StatusCode, error);
+                    }
+                }         
+              return new ApiResponse { Success = false, Message = "Could not add customer: " + ex.Message };
             }
         }
-        public void GenerateErrorResponse(HttpStatusCode statusCode)
+
+
+        public void GenerateErrorResponse(HttpStatusCode statusCode,string errorDetails)
         {
             switch (statusCode)
             {
-                case HttpStatusCode.BadRequest: new SchemaInvalidException(); break;
-                case HttpStatusCode.Forbidden: new ForbiddenException(); break;
-                case HttpStatusCode.NotFound: new NotFoundException(); break;
+                case HttpStatusCode.BadRequest: new SchemaInvalidException(errorDetails); break;
+                case HttpStatusCode.Forbidden: new ForbiddenException(errorDetails); break;
+                case HttpStatusCode.NotFound: new NotFoundException(errorDetails); break;
+                case HttpStatusCode.Unauthorized: new UnAuthorizedUserException(errorDetails); break;
+                case HttpStatusCode.PaymentRequired: new RequestFailedException(errorDetails);break;
                 default:
-                    new ChartMogulException(); break;
+                    new ChartMogulException(errorDetails); break;
             }
         }
 

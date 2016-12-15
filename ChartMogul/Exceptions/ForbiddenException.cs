@@ -9,9 +9,9 @@ namespace ChartMogul.API.Exceptions
 {
    public class ForbiddenException
     {
-        public ForbiddenException()
+        public ForbiddenException(string errorDetails)
         {
-            throw new WebException("request error has occurred.", (WebExceptionStatus)403);
+            throw new WebException(string.Concat("request error has occurred.",(!string.IsNullOrEmpty(errorDetails) ? string.Concat("ErrorDetails are:", errorDetails) : "")), (WebExceptionStatus)403);
         }
     }
 }

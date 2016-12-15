@@ -15,8 +15,13 @@ namespace ChartMogul.API.Import
         List<PlanModel> GetPlans(APIRequest apiRequest);
     }
 
-    public class Plan : ChartMogulCore, IPlan
+    public class Plan : IPlan
     {
+        private IChartMogulCore _chartMogulCore;
+        public Plan(IChartMogulCore chartMogulCore)
+        {
+            _chartMogulCore = chartMogulCore;
+        }
         public PlanModel CreatePlan(PlanModel plan)
         {
             throw new NotImplementedException();
@@ -26,7 +31,7 @@ namespace ChartMogul.API.Import
         {
             apiRequest.URLPath = "import/plans";
             apiRequest.HttpMethod = "get";
-            var temp = CallApi(apiRequest);
+            var temp = _chartMogulCore.CallApi(apiRequest);
             return null;
         }
 

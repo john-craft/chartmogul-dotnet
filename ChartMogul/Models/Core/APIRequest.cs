@@ -8,7 +8,7 @@ namespace ChartMogul.API.Models.Core
         public string URLPath { get; set; }
         public string HttpMethod { get; set; }
         public string JsonData { get; set; }
-        public Dictionary<string, string> Header = new Dictionary<string, string>();
+       public Dictionary<string, string> Header = new Dictionary<string, string>();
         public string Credentials { get; set; }
 
         public void Set(string key, string value)
