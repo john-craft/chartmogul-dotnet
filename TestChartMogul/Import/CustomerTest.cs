@@ -17,22 +17,16 @@ using System.Threading.Tasks;
 namespace TestChartMogul.Import
 {
     [TestClass]
-  public  class CustomerTest
+  public  class CustomerTest:ParentTest
     {
-        private ChartMogulCore _chartMogulCore;
-        private Customer _customer;
-        private Mock<IDataSource> _dataSource;
-        private Mock<IPlan> _plan;
-        private Mock<IWebCall> _webCall;
+         private Customer _customer;
+        
+    
+
         [TestInitialize]
-        public void TestInitialize()
+        public  void TestInitialize()
         {
-            _webCall = new Mock<IWebCall>();
-            _chartMogulCore = new ChartMogulCore(_webCall.Object);         
-            _plan = new Mock<IPlan>();
-            _dataSource = new Mock<IDataSource>();
-            _customer = new Customer(_chartMogulCore);
-          //  _chartMogulClient = new ChartMogulClient(_customer.Object,_dataSource.Object,_plan.Object);           
+           _customer = new Customer(_chartMogulCore);
         }
 
         public CustomerModel TestCustomerModel()

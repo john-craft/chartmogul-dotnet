@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Import\CustomerTest.cs" />
     <Compile Include="Import\DataSourceTest.cs" />
+    <Compile Include="Import\ParentTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
