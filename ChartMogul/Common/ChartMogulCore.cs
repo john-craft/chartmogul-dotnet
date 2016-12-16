@@ -21,6 +21,11 @@ namespace ChartMogul.API.Common
 
     public class ChartMogulCore : IChartMogulCore
     {
+        private IWebCall _webCall;
+        public ChartMogulCore(IWebCall webCall)
+        {
+            _webCall = webCall;
+        }
         private readonly string _baseUrl = "https://api.chartmogul.com/v1/";
         private string _credentials;
        // public APIRequest ApiRequest { get; set; }
@@ -60,8 +65,8 @@ namespace ChartMogul.API.Common
                         streamWriter.Flush();
                         streamWriter.Close();
                     }
-                }          
-                WebResponse response = (HttpWebResponse)httpRequest.GetResponse();
+                }
+                HttpWebResponse response = (HttpWebResponse)_webCall.DownloadResponse(httpRequest);            
                 using (var reader = new StreamReader(response.GetResponseStream(), Encoding.ASCII))
                 {
                     var responseText = reader.ReadToEnd();
@@ -98,6 +103,7 @@ namespace ChartMogul.API.Common
                 case HttpStatusCode.NotFound: new NotFoundException(errorDetails); break;
                 case HttpStatusCode.Unauthorized: new UnAuthorizedUserException(errorDetails); break;
                 case HttpStatusCode.PaymentRequired: new RequestFailedException(errorDetails);break;
+                case (HttpStatusCode)422: new SchemaInvalidException(errorDetails); break;
                 default:
                     new ChartMogulException(errorDetails); break;
             }

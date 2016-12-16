@@ -52,6 +52,7 @@
     <Compile Include="ApiResponse.cs" />
     <Compile Include="ChartMogulClient.cs" />
     <Compile Include="Common\ChartMogulCore.cs" />
+    <Compile Include="Common\WebCall.cs" />
     <Compile Include="Exceptions\RequestFailedException.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Exceptions\ChartMogulException.cs" />
