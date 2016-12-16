@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using ChartMogul.API.Models;
 using System.Web.Script.Serialization;
 using System.Net.Http;
+using System.Web;
 
 namespace ChartMogul.API
 {
