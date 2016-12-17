@@ -74,6 +74,7 @@ namespace ChartMogul.API.Common
                     response.Close();
                     return new ApiResponse { Success = true, Json = responseText };
                 }
+
             }
             catch (WebException ex)
             {                          
