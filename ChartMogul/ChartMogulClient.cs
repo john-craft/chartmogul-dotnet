@@ -34,14 +34,14 @@ namespace ChartMogul.API
         private APIRequest _apiRequest= new APIRequest();
 
         public ChartMogulClient(ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan)
-        {
+        {    
             _iCustomer = iCustomer;
             _iDataSource = iDataSource;
-            _iPlan = iPlan;
+            _iPlan = iPlan;         
         }
 
         public ChartMogulClient(Config config)
-        {
+        {  
             configureDependencies();
             SetupDataForAPI(config);
             
@@ -49,7 +49,7 @@ namespace ChartMogul.API
 
         private void SetupDataForAPI(Config config)
         {
-             var plainTextBytes = Encoding.UTF8.GetBytes(config.AccountToken + ":" + config.SecretKey);
+            var plainTextBytes = Encoding.UTF8.GetBytes(config.AccountToken + ":" + config.SecretKey);
             _credentials = Convert.ToBase64String(plainTextBytes);
             _apiRequest.Header.Add("Authorization", "Basic " + _credentials);
         }
@@ -78,7 +78,7 @@ namespace ChartMogul.API
             _apiRequest.JsonData = serializeData;
             _apiRequest.URLPath = "import/customers";
             _apiRequest.HttpMethod = "POST";
-            _iCustomer.AddCustomer(_apiRequest);
+            _iCustomer.AddCustomer(customerModel);
             return null;
         }
 
@@ -112,8 +112,8 @@ namespace ChartMogul.API
         }
 
         public PlanModel CreatePlan(PlanModel plan)
-        {          
-            throw new NotImplementedException();
+        {
+            return _iPlan.CreatePlan(plan);
         }
 
         public List<PlanModel> GetPlans()

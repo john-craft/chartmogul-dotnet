@@ -8,14 +8,10 @@ using System.Threading.Tasks;
 
 namespace ChartMogul.API.Models
 {
-    public class ResponseDataModel<T>
-    {
-        [JsonProperty(PropertyName = "customers")]
-        public T customers { get; set; }
-        public T Response { get; set; }
+    public class CustomerResponseDataModel
+    {             
+        public List<CustomerModel> customers { get; set; }
         public int current_page { get; set; }
-        public int total_pages { get; set; }
-    
-
+        public int total_pages { get; set; }        
     }
 }

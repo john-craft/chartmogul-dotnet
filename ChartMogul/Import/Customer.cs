@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using OConnors.ChartMogul.API.Models;
 using ChartMogul.API.Common;
 using ChartMogul.API.Models.Core;
+using ChartMogul.API.Models;
 
 namespace ChartMogul.API.Import
 {
 
     public interface ICustomer
     {
-        CustomerModel AddCustomer(APIRequest customerModel);
+        CustomerModel AddCustomer(CustomerModel customerModel);
         List<CustomerModel> GetCustomers(APIRequest apirequest);
         void DeleteCustomer();
       
@@ -21,14 +22,17 @@ namespace ChartMogul.API.Import
     public class Customer: AbstractService,ICustomer
     {
         private IChartMogulCore _chartMogulCore;
+        private readonly string _baseUrl;
         public Customer(IChartMogulCore chartMogulCore, Http http):base(http)
         {
             _chartMogulCore = chartMogulCore;
+            _baseUrl = Configuration.BaseUrl;
         }
-        public CustomerModel AddCustomer(APIRequest customerModel)
-        {     
-            var temp = _chartMogulCore.CallApi(customerModel);
-            return new CustomerModel();
+        public CustomerModel AddCustomer(CustomerModel customerModel)
+        {            
+            var response =  Http.Post<CustomerModel,CustomerModel>(String.Format("{0}/import/customers", _baseUrl), customerModel);
+          //  var temp = _chartMogulCore.CallApi(customerModel);
+            return response;
         }
 
         public void DeleteCustomer()
@@ -41,9 +45,8 @@ namespace ChartMogul.API.Import
         //    apiRequest.URLPath = "import/customers";
         //apiRequest.HttpMethod = "get";
            // var temp = _chartMogulCore.CallApi(apiRequest);
-            return Http.Get<List<CustomerModel>>(String.Format("{0}/import/customers", "https://api.chartmogul.com/v1"));
-
-            return null;
+            var response = Http.Get<CustomerResponseDataModel>(String.Format("{0}/import/customers", _baseUrl));
+            return response.customers;
         }
     }
 }

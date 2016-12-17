@@ -217,13 +217,11 @@ namespace ChartMogul.API
         }
 
         private T HandleResponse<T>(Stream responseStream)
-        {
+        {   
             using (var reader = new StreamReader(responseStream))
-            {
-                var responseText = reader.ReadToEnd();
-                var objectDe = JsonConvert.DeserializeObject(responseText);                      
-                var test= JsonConvert.DeserializeObject<ResponseDataModel<T>>(responseText);             
-                return test.Response;
+            {               
+                var responseText = reader.ReadToEnd();             
+                return JsonConvert.DeserializeObject<T>(responseText);         
             }
         }
 
@@ -232,11 +230,9 @@ namespace ChartMogul.API
             using (var reader = new StreamReader(exc.Response.GetResponseStream()))
             {
                 string content = string.Empty;
-              //  ApiError error = null;
                 try
                 {
                      content = reader.ReadToEnd();
-                   // error =  JsonConvert.DeserializeObject<ApiError>(content);
                 }
                 catch (Exception)
                 {

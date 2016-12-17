@@ -79,7 +79,8 @@
     <Compile Include="Import\DataSource.cs" />
     <Compile Include="Models\InvoiceModel.cs" />
     <Compile Include="Models\LineItemModel.cs" />
-    <Compile Include="Models\ResponseDataModel.cs" />
+    <Compile Include="Models\CustomerResponseDataModel.cs" />
+    <Compile Include="Models\PlanResponseDataModel.cs" />
     <Compile Include="Payment.cs" />
     <Compile Include="Models\PlanModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
