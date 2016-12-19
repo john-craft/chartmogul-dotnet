@@ -15,13 +15,12 @@ namespace TestChartMogul.Import
   public  class CustomerTest:ParentTest
     {
          private Customer _customer;
-         private Mock<IHttp> _http;           
+                  
 
         [TestInitialize]
         public  void TestInitialize()
         {
-            _http = new Mock<IHttp>();
-           _customer = new Customer( _http.Object);
+             _customer = new Customer( _http.Object);
         }
   
             [TestMethod]
