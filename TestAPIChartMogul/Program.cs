@@ -24,7 +24,7 @@ namespace TestAPIChartMogul
             //     City = "New York"
             // });
             //Uncomment this code for get customer
-               var getCustomers= Objclient.GetCustomers();
+          var getCustomers= Objclient.GetCustomers();
 
 
             //Uncomment this code for get plans
@@ -39,9 +39,6 @@ namespace TestAPIChartMogul
             //    InvervalUnit = "month",
             //    Name = "Bronze Plan",
             //});
-
-
-
 
         }
     }

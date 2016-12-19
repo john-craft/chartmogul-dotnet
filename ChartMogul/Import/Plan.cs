@@ -11,24 +11,26 @@ namespace ChartMogul.API.Import
         List<PlanModel> GetPlans(APIRequest apiRequest);
     }
 
-    public class Plan : AbstractService,IPlan
-    { 
-        public Plan( Http http) : base(http)
+    public class Plan : IPlan
+    {
+        private IHttp _ihttp;
+        public Plan(IHttp ihttp)
         {
+            _ihttp = ihttp;
         }
         public PlanModel CreatePlan(PlanModel plan,APIRequest apiRequest)
         {
             apiRequest.RouteName ="import/plans";
-            Http.ApiRequest = apiRequest;
-            var response = Http.Post<PlanModel, PlanModel>(plan);
+            _ihttp.ApiRequest = apiRequest;
+            var response = _ihttp.Post<PlanModel, PlanModel>(plan);
             return response;
         }
 
         public List<PlanModel> GetPlans(APIRequest apiRequest)
         {
             apiRequest.RouteName = "import/plans";
-            Http.ApiRequest = apiRequest;
-            var response = Http.Get<PlanResponseDataModel>();
+            _ihttp.ApiRequest = apiRequest;
+            var response = _ihttp.Get<PlanResponseDataModel>();
             return response.Plans;
         }
 

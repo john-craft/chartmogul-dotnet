@@ -11,7 +11,17 @@ using ChartMogul.API.Models.Core;
 
 namespace ChartMogul.API
 {
-    public class Http
+    public interface IHttp
+    {
+        TO Get<TO>();
+        void Post(object item);
+        void Put(object item);
+        TO Post<TI, TO>(TI item);
+        TO Put<TI, TO>(TI item);
+        APIRequest ApiRequest { get; set; }
+
+    }
+    public class Http: IHttp
     {
         /// <summary>
         /// Connection timeout in milliseconds
@@ -40,7 +50,7 @@ namespace ChartMogul.API
         /// <summary>
         /// Perform a GET request
         /// </summary>
-        internal TO Get<TO>()
+        public TO Get<TO>()
         {
             HttpWebRequest request = CreateRequest(RequestMethod.Get, null, _authenticated);
             return SendRequest<TO>(request);
@@ -49,7 +59,7 @@ namespace ChartMogul.API
         /// <summary>
         /// Perform a POST request
         /// </summary>
-        internal void Post(object item)
+        public void Post(object item)
         {
             HttpWebRequest request = CreateRequest(RequestMethod.Post, item, _authenticated);
             SendRequest(request);
@@ -58,7 +68,7 @@ namespace ChartMogul.API
         /// <summary>
         /// Perform a PUT request
         /// </summary>
-        internal void Put(object item)
+        public void Put(object item)
         {
             HttpWebRequest request = CreateRequest(RequestMethod.Put, item, _authenticated);
             SendRequest(request);
@@ -67,7 +77,7 @@ namespace ChartMogul.API
         /// <summary>
         /// Perform a POST request
         /// </summary>
-        internal TO Post<TI, TO>(TI item)
+        public TO Post<TI, TO>(TI item)
         {
             HttpWebRequest request = CreateRequest( RequestMethod.Post, item, _authenticated);
             return SendRequest<TO>(request);
@@ -76,7 +86,7 @@ namespace ChartMogul.API
         /// <summary>
         /// Perform a POST request
         /// </summary>
-        internal TO Put<TI, TO>(TI item)
+        public TO Put<TI, TO>(TI item)
         {
             HttpWebRequest request = CreateRequest( RequestMethod.Put, item, _authenticated);
             return SendRequest<TO>(request);
