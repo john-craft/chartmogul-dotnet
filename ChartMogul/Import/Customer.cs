@@ -26,7 +26,7 @@ namespace ChartMogul.API.Import
         }
         public CustomerModel AddCustomer(CustomerModel customerModel,APIRequest apiRequest)
         {
-            apiRequest.Url = "{0}/import/customers";
+            apiRequest.RouteName = "import/customers";
             var response =  Http.Post<CustomerModel,CustomerModel>(customerModel, apiRequest);
             return response;
         }
@@ -38,7 +38,7 @@ namespace ChartMogul.API.Import
 
         public List<CustomerModel> GetCustomers(APIRequest apiRequest)
         {
-            apiRequest.Url = "{0}/import/customers";
+            apiRequest.RouteName = "import/customers";
             var response = Http.Get<CustomerResponseDataModel>(apiRequest);
             return response.customers;
         }

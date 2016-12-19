@@ -23,7 +23,7 @@ namespace ChartMogul.API
         /// Connection timeout in milliseconds
         /// </summary>
         private const int connectionTimeout = 10000;
-        private const string baseUrl = "https://api.chartmogul.com/v1";
+        private const string baseUrl = "https://api.chartmogul.com/v1/";
         /// <summary>
         /// JSON header value
         /// </summary>
@@ -117,7 +117,7 @@ namespace ChartMogul.API
 
         private HttpWebRequest CreateRequest(RequestMethod method, object data, bool authorize,APIRequest apiRequest)
         {
-            var request = (HttpWebRequest)HttpWebRequest.Create(string.Format(apiRequest.Url,baseUrl));
+            var request = (HttpWebRequest)HttpWebRequest.Create(string.Concat(baseUrl,apiRequest.RouteName));
             //request.Accept = ApplicationJson;
             request.Accept= "*/*";
             request.Timeout = connectionTimeout;
@@ -193,8 +193,7 @@ namespace ChartMogul.API
             try
             {
                 using (var response = request.GetResponse())
-                {
-                    var test = response.GetResponseStream();
+                {                 
                     return HandleResponse<T>(response.GetResponseStream());
                 }
             }

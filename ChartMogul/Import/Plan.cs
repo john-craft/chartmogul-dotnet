@@ -22,14 +22,14 @@ namespace ChartMogul.API.Import
         }
         public PlanModel CreatePlan(PlanModel plan,APIRequest apiRequest)
         {
-            apiRequest.Url ="{0}/import/plans";
+            apiRequest.RouteName ="import/plans";
             var response = Http.Post<PlanModel, PlanModel>(plan, apiRequest);
             return response;
         }
 
         public List<PlanModel> GetPlans(APIRequest apiRequest)
         {
-            apiRequest.Url = "{0}/import/plans";
+            apiRequest.RouteName = "import/plans";
             var response = Http.Get<PlanResponseDataModel>(apiRequest);
             return response.plans;
         }
