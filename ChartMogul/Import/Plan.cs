@@ -30,9 +30,7 @@ namespace ChartMogul.API.Import
 
         public List<PlanModel> GetPlans(APIRequest apiRequest)
         {
-            //apiRequest.URLPath = "import/plans";
-            //apiRequest.HttpMethod = "get";
-            var response = Http.Get<PlanResponseDataModel>(String.Format("{0}/import/plans", _baseUrl), apiRequest);
+           var response = Http.Get<PlanResponseDataModel>(String.Format("{0}/import/plans", _baseUrl), apiRequest);
             return response.plans;
         }
 
