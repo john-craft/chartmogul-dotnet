@@ -24,6 +24,10 @@ namespace ChartMogul.API
         List<PlanModel> GetPlans();
     }
 
+
+    /// <summary>
+    /// Master client for interacting with ChartMogulClient services
+    /// </summary>
     public class ChartMogulClient : IChartMogulClient
     {
         private ICustomer _iCustomer;
@@ -42,8 +46,11 @@ namespace ChartMogul.API
         {  
             configureDependencies();       
             
-        }   
+        }
 
+        /// <summary>
+        /// The Headers provided by the client to add to the service
+        /// </summary>
         public void AddHeaders(Dictionary<string, string> dictHeaders)
         {
             foreach (KeyValuePair<string, string> entry in dictHeaders)
@@ -76,7 +83,6 @@ namespace ChartMogul.API
         public void DeleteCustomer()
         {
             // _iCustomer.ApiRequest.URLPath = string.Empty;
-
             _iCustomer.DeleteCustomer();
 
         }
@@ -88,7 +94,6 @@ namespace ChartMogul.API
 
         public List<CustomerModel> GetCustomers()
         {
-        //    _apiRequest = new APIRequest<Customer>();
             return _iCustomer.GetCustomers(_apiRequest);
         }
 
