@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using StructureMap;
 using ChartMogul.API.Models.Core;
+using System.Text;
+using System.IO;
 
 namespace ChartMogul.API
 {
@@ -38,11 +40,22 @@ namespace ChartMogul.API
             _iPlan = iPlan;         
         }
 
+
         public ChartMogulClient()
-        {  
-            configureDependencies();       
-            
+        {
+           if (string.IsNullOrEmpty(Configuration.AccountToken))
+            {
+                throw new InvalidDataException("AccountToken cannot be null");
+            }
+
+           if (string.IsNullOrEmpty(Configuration.SecretKey))
+            {
+                throw new InvalidDataException("SecretKey cannot be null");
+            }
+            configureDependencies();
         }
+
+
 
         /// <summary>
         /// The Headers provided by the client to add to the service
