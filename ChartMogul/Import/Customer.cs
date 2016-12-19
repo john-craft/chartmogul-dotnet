@@ -19,16 +19,15 @@ namespace ChartMogul.API.Import
     }
 
     public class Customer: AbstractService,ICustomer
-    {
-        private readonly string _baseUrl;
+    {   
         public Dictionary<string, string> headers;
         public Customer(Http http):base(http)
-        {
-            _baseUrl = Configuration.BaseUrl;              
+        {           
         }
         public CustomerModel AddCustomer(CustomerModel customerModel,APIRequest apiRequest)
-        {            
-            var response =  Http.Post<CustomerModel,CustomerModel>(String.Format("{0}/import/customers", _baseUrl), customerModel, apiRequest);
+        {
+            apiRequest.Url = "{0}/import/customers";
+            var response =  Http.Post<CustomerModel,CustomerModel>(customerModel, apiRequest);
             return response;
         }
 
@@ -39,7 +38,8 @@ namespace ChartMogul.API.Import
 
         public List<CustomerModel> GetCustomers(APIRequest apiRequest)
         {
-            var response = Http.Get<CustomerResponseDataModel>(String.Format("{0}/import/customers", _baseUrl), apiRequest);
+            apiRequest.Url = "{0}/import/customers";
+            var response = Http.Get<CustomerResponseDataModel>(apiRequest);
             return response.customers;
         }
     }

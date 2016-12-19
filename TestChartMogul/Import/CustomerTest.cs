@@ -3,15 +3,10 @@ using ChartMogul.API.Import;
 using ChartMogul.API.Models.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using OConnors.ChartMogul.API;
 using OConnors.ChartMogul.API.Models;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace TestChartMogul.Import
 {
@@ -44,8 +39,7 @@ namespace TestChartMogul.Import
             responseStream.Write(expectedBytes, 0, expectedBytes.Length);
             responseStream.Seek(0, SeekOrigin.Begin);
             var response = new Mock<HttpWebResponse>();
-            response.Setup(c => c.GetResponseStream()).Returns(responseStream);
-            //_webCall.Setup(x => x.DownloadResponse(It.IsAny<HttpWebRequest>())).Returns(response.Object);
+            response.Setup(c => c.GetResponseStream()).Returns(responseStream);        
             _customer.AddCustomer(new CustomerModel { city="test" },new APIRequest());
             }               
     }

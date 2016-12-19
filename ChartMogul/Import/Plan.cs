@@ -17,14 +17,13 @@ namespace ChartMogul.API.Import
 
     public class Plan : AbstractService,IPlan
     { 
-        private readonly string _baseUrl;
         public Plan( Http http) : base(http)
         {
-            _baseUrl = Configuration.BaseUrl;
         }
         public PlanModel CreatePlan(PlanModel plan,APIRequest apiRequest)
         {
-            var response = Http.Post<PlanModel, PlanModel>(String.Format("{0}/import/plans", _baseUrl), plan, apiRequest);
+            apiRequest.Url ="{0}/import/plans";
+            var response = Http.Post<PlanModel, PlanModel>(plan, apiRequest);
             return response;
         }
 
@@ -32,7 +31,8 @@ namespace ChartMogul.API.Import
         {
             //apiRequest.URLPath = "import/plans";
             //apiRequest.HttpMethod = "get";
-            var response = Http.Get<PlanResponseDataModel>(String.Format("{0}/import/plans", _baseUrl), apiRequest);
+            apiRequest.Url = "{0}/import/plans";
+            var response = Http.Get<PlanResponseDataModel>(apiRequest);
             return response.plans;
         }
 

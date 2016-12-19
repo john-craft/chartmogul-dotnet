@@ -22,18 +22,13 @@ namespace ChartMogul.API
         /// <summary>
         /// Connection timeout in milliseconds
         /// </summary>
-        private const int ConnectionTimeout = 10000;
-
+        private const int connectionTimeout = 10000;
+        private const string baseUrl = "https://api.chartmogul.com/v1";
         /// <summary>
         /// JSON header value
         /// </summary>
-        private const string ApplicationJson = "application/json";
-
-        /// <summary>
-        /// Service key
-        /// </summary>
-        private readonly string _serviceKey;
-
+        private const string applicationJson = "application/json";
+        
         /// <summary>
         /// Authenticated
         /// </summary>
@@ -46,59 +41,49 @@ namespace ChartMogul.API
         {
             _authenticated = true;
         }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="serviceKey">The authorization key for the service</param>
-        public Http(string serviceKey)
-        {
-            _serviceKey = serviceKey;
-            _authenticated = true;
-        }
-
+    
         /// <summary>
         /// Perform a GET request
         /// </summary>
-        internal TO Get<TO>(string api, APIRequest apiRequest)
+        internal TO Get<TO>(APIRequest apiRequest)
         {
-            HttpWebRequest request = CreateRequest(api, RequestMethod.Get, null, _authenticated, apiRequest);
+            HttpWebRequest request = CreateRequest(RequestMethod.Get, null, _authenticated, apiRequest);
             return SendRequest<TO>(request);
         }
 
         /// <summary>
         /// Perform a POST request
         /// </summary>
-        internal void Post(string api, object item, APIRequest apiRequest)
+        internal void Post(object item, APIRequest apiRequest)
         {
-            HttpWebRequest request = CreateRequest(api, RequestMethod.Post, item, _authenticated, apiRequest);
+            HttpWebRequest request = CreateRequest(RequestMethod.Post, item, _authenticated, apiRequest);
             SendRequest(request);
         }
 
         /// <summary>
         /// Perform a PUT request
         /// </summary>
-        internal void Put(string api, object item, APIRequest apiRequest)
+        internal void Put(object item, APIRequest apiRequest)
         {
-            HttpWebRequest request = CreateRequest(api, RequestMethod.Put, item, _authenticated, apiRequest);
+            HttpWebRequest request = CreateRequest(RequestMethod.Put, item, _authenticated, apiRequest);
             SendRequest(request);
         }
 
         /// <summary>
         /// Perform a POST request
         /// </summary>
-        internal TO Post<TI, TO>(string api, TI item,APIRequest apiRequest)
+        internal TO Post<TI, TO>(TI item,APIRequest apiRequest)
         {
-            HttpWebRequest request = CreateRequest(api, RequestMethod.Post, item, _authenticated,apiRequest);
+            HttpWebRequest request = CreateRequest( RequestMethod.Post, item, _authenticated,apiRequest);
             return SendRequest<TO>(request);
         }
 
         /// <summary>
         /// Perform a POST request
         /// </summary>
-        internal TO Put<TI, TO>(string api, TI item, APIRequest apiRequest)
+        internal TO Put<TI, TO>(TI item, APIRequest apiRequest)
         {
-            HttpWebRequest request = CreateRequest(api, RequestMethod.Put, item, _authenticated, apiRequest);
+            HttpWebRequest request = CreateRequest( RequestMethod.Put, item, _authenticated, apiRequest);
             return SendRequest<TO>(request);
         }
 
@@ -106,9 +91,9 @@ namespace ChartMogul.API
         /// <summary>
         /// Perform a DELETE request
         /// </summary>
-        public void Delete(string api, APIRequest apiRequest)
+        public void Delete(APIRequest apiRequest)
         {
-            HttpWebRequest request = CreateRequest(api, RequestMethod.Delete, null, _authenticated, apiRequest);
+            HttpWebRequest request = CreateRequest(RequestMethod.Delete, null, _authenticated, apiRequest);
             SendRequest(request);
         }
 
@@ -130,12 +115,12 @@ namespace ChartMogul.API
 
         #region helpers
 
-        private HttpWebRequest CreateRequest(string api, RequestMethod method, object data, bool authorize,APIRequest apiRequest)
+        private HttpWebRequest CreateRequest(RequestMethod method, object data, bool authorize,APIRequest apiRequest)
         {
-            var request = (HttpWebRequest)HttpWebRequest.Create(api);
+            var request = (HttpWebRequest)HttpWebRequest.Create(string.Format(apiRequest.Url,baseUrl));
             //request.Accept = ApplicationJson;
             request.Accept= "*/*";
-            request.Timeout = ConnectionTimeout;
+            request.Timeout = connectionTimeout;
 
             switch (method)
             {
@@ -170,7 +155,7 @@ namespace ChartMogul.API
             {
                 if (data != null)
                 {
-                    request.ContentType = ApplicationJson;
+                    request.ContentType = applicationJson;
                     string serializedData = JsonConvert.SerializeObject(data);
                     byte[] bytes = Encoding.ASCII.GetBytes(serializedData);
                     request.ContentLength = bytes.Length;
@@ -249,7 +234,7 @@ namespace ChartMogul.API
             } 
         }
 
-         public void GenerateErrorResponse(HttpStatusCode statusCode,string errorDetails)
+         private void GenerateErrorResponse(HttpStatusCode statusCode,string errorDetails)
         {
             switch (statusCode)
             {

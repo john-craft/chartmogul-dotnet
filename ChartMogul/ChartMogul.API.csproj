@@ -54,11 +54,11 @@
     <Compile Include="AbstractTransaction.cs" />
     <Compile Include="ApiResponse.cs" />
     <Compile Include="ChartMogulClient.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Enums\CountryCode.cs" />
     <Compile Include="Enums\RequestMethod.cs" />
     <Compile Include="Exceptions\RequestFailedException.cs" />
-    <Compile Include="Config.cs" />
     <Compile Include="Exceptions\ChartMogulException.cs" />
     <Compile Include="Exceptions\ForbiddenException.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
@@ -70,7 +70,6 @@
     <Compile Include="Import\Customer.cs" />
     <Compile Include="Import\Plan.cs" />
     <Compile Include="Models\Core\APIRequest.cs" />
-    <Compile Include="Models\Core\Config.cs" />
     <Compile Include="Models\DataSourceModel.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Models\CustomerModel.cs" />

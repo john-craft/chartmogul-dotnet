@@ -5,6 +5,7 @@ namespace ChartMogul.API.Models.Core
 {
     public class APIRequest
     {    
+        public string Url { get; set; }
        public Dictionary<string, string> Header = new Dictionary<string, string>();
 
         public void SetHeader(string key, string value)
