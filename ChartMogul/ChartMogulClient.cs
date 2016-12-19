@@ -76,8 +76,7 @@ namespace ChartMogul.API
         }
 
         public void DeleteCustomer()
-        {
-            // _iCustomer.ApiRequest.URLPath = string.Empty;
+        {   
             _iCustomer.DeleteCustomer();
 
         }
@@ -103,8 +102,7 @@ namespace ChartMogul.API
         }
 
         public List<PlanModel> GetPlans()
-        {
-            //    _apiRequest = new APIRequest<PlanModel>();        
+        {     
             return _iPlan.GetPlans(_apiRequest);
         }
     }
