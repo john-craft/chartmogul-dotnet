@@ -1,16 +1,18 @@
-﻿using OConnors.ChartMogul.API.Models;
-using System;
+﻿using Newtonsoft.Json;
+using OConnors.ChartMogul.API.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChartMogul.API.Models
 {
     public class PlanResponseDataModel
     {
-        public List<PlanModel> plans { get; set; }
-        public int current_page { get; set; }
-        public int total_pages { get; set; }
+        [JsonProperty(PropertyName = "plans")]
+        public List<PlanModel> Plans { get; set; }
+
+        [JsonProperty(PropertyName = "current_page")]
+        public int Current_Page { get; set; }
+
+        [JsonProperty(PropertyName = "total_pages")]
+        public int Total_Pages { get; set; }
     }
 }

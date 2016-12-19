@@ -1,6 +1,5 @@
 ﻿using StructureMap;
 
-
 namespace ChartMogul.API
 {
     public class MyRegistry : Registry

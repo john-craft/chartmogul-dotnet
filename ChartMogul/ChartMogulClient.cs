@@ -2,12 +2,8 @@
 using OConnors.ChartMogul.API.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StructureMap;
 using ChartMogul.API.Models.Core;
-using Newtonsoft.Json;
 
 namespace ChartMogul.API
 {
@@ -70,9 +66,8 @@ namespace ChartMogul.API
         }
 
         public CustomerModel AddCustomer(CustomerModel customerModel)
-        {          
-            _iCustomer.AddCustomer(customerModel,_apiRequest);
-            return null;
+        {
+            return _iCustomer.AddCustomer(customerModel,_apiRequest);   
         }
 
         public DataSourceModel AddDataSource(DataSourceModel dataSource)

@@ -1,17 +1,11 @@
-﻿
-using System;
+﻿using System;
 using System.Net;
 using System.Text;
 using System.IO;
 using Newtonsoft.Json;
-using ChartMogul.API.Models;
-using System.Net.Http;
 using System.Web;
 using ChartMogul.API.Enums;
 using ChartMogul.API.Exceptions;
-using System.Net.Http;
-using System.Web;
-using OConnors.ChartMogul.API.Models;
 using System.Collections.Generic;
 using ChartMogul.API.Models.Core;
 
@@ -34,6 +28,7 @@ namespace ChartMogul.API
         /// </summary>
         private readonly bool _authenticated;
 
+        public APIRequest ApiRequest { get; set; }
         /// <summary>
         /// Constructor
         /// </summary>
@@ -45,45 +40,45 @@ namespace ChartMogul.API
         /// <summary>
         /// Perform a GET request
         /// </summary>
-        internal TO Get<TO>(APIRequest apiRequest)
+        internal TO Get<TO>()
         {
-            HttpWebRequest request = CreateRequest(RequestMethod.Get, null, _authenticated, apiRequest);
+            HttpWebRequest request = CreateRequest(RequestMethod.Get, null, _authenticated);
             return SendRequest<TO>(request);
         }
 
         /// <summary>
         /// Perform a POST request
         /// </summary>
-        internal void Post(object item, APIRequest apiRequest)
+        internal void Post(object item)
         {
-            HttpWebRequest request = CreateRequest(RequestMethod.Post, item, _authenticated, apiRequest);
+            HttpWebRequest request = CreateRequest(RequestMethod.Post, item, _authenticated);
             SendRequest(request);
         }
 
         /// <summary>
         /// Perform a PUT request
         /// </summary>
-        internal void Put(object item, APIRequest apiRequest)
+        internal void Put(object item)
         {
-            HttpWebRequest request = CreateRequest(RequestMethod.Put, item, _authenticated, apiRequest);
+            HttpWebRequest request = CreateRequest(RequestMethod.Put, item, _authenticated);
             SendRequest(request);
         }
 
         /// <summary>
         /// Perform a POST request
         /// </summary>
-        internal TO Post<TI, TO>(TI item,APIRequest apiRequest)
+        internal TO Post<TI, TO>(TI item)
         {
-            HttpWebRequest request = CreateRequest( RequestMethod.Post, item, _authenticated,apiRequest);
+            HttpWebRequest request = CreateRequest( RequestMethod.Post, item, _authenticated);
             return SendRequest<TO>(request);
         }
 
         /// <summary>
         /// Perform a POST request
         /// </summary>
-        internal TO Put<TI, TO>(TI item, APIRequest apiRequest)
+        internal TO Put<TI, TO>(TI item)
         {
-            HttpWebRequest request = CreateRequest( RequestMethod.Put, item, _authenticated, apiRequest);
+            HttpWebRequest request = CreateRequest( RequestMethod.Put, item, _authenticated);
             return SendRequest<TO>(request);
         }
 
@@ -91,9 +86,9 @@ namespace ChartMogul.API
         /// <summary>
         /// Perform a DELETE request
         /// </summary>
-        public void Delete(APIRequest apiRequest)
+        public void Delete()
         {
-            HttpWebRequest request = CreateRequest(RequestMethod.Delete, null, _authenticated, apiRequest);
+            HttpWebRequest request = CreateRequest(RequestMethod.Delete, null, _authenticated);
             SendRequest(request);
         }
 
@@ -115,9 +110,9 @@ namespace ChartMogul.API
 
         #region helpers
 
-        private HttpWebRequest CreateRequest(RequestMethod method, object data, bool authorize,APIRequest apiRequest)
+        private HttpWebRequest CreateRequest(RequestMethod method, object data, bool authorize)
         {
-            var request = (HttpWebRequest)HttpWebRequest.Create(string.Concat(baseUrl,apiRequest.RouteName));
+            var request = (HttpWebRequest)HttpWebRequest.Create(string.Concat(baseUrl,ApiRequest.RouteName));
             //request.Accept = ApplicationJson;
             request.Accept= "*/*";
             request.Timeout = connectionTimeout;
@@ -146,7 +141,7 @@ namespace ChartMogul.API
                 var credentials = Convert.ToBase64String(plainTextBytes);
                 request.Headers.Add(HttpRequestHeader.Authorization, "Basic " + credentials);
             }
-            foreach (KeyValuePair<string, string> entry in apiRequest.Header)
+            foreach (KeyValuePair<string, string> entry in ApiRequest.Header)
             {
                 request.Headers.Add(entry.Key, entry.Value);
             }

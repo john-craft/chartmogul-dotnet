@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace OConnors.ChartMogul.API
 {
@@ -66,7 +65,7 @@ namespace OConnors.ChartMogul.API
                 return false;
 
             string urlPath = "import/customers";
-            cust.data_source_uuid = ds.Uuid;
+            cust.Data_Source_Uuid = ds.Uuid;
             string json = JsonConvert.SerializeObject(cust);
 
             ApiResponse resp = CallApi(urlPath, "POST", json);

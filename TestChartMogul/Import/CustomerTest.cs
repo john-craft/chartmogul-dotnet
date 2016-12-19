@@ -14,9 +14,7 @@ namespace TestChartMogul.Import
   public  class CustomerTest:ParentTest
     {
          private Customer _customer;
-        private Http _http;
-        
-    
+         private Http _http;           
 
         [TestInitialize]
         public  void TestInitialize()
@@ -40,7 +38,7 @@ namespace TestChartMogul.Import
             responseStream.Seek(0, SeekOrigin.Begin);
             var response = new Mock<HttpWebResponse>();
             response.Setup(c => c.GetResponseStream()).Returns(responseStream);        
-            _customer.AddCustomer(new CustomerModel { city="test" },new APIRequest());
+            _customer.AddCustomer(new CustomerModel { City="test" },new APIRequest());
             }               
     }
 }
