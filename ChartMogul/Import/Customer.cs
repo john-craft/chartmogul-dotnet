@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OConnors.ChartMogul.API.Models;
-using ChartMogul.API.Common;
 using ChartMogul.API.Models.Core;
 using ChartMogul.API.Models;
 
@@ -13,7 +12,7 @@ namespace ChartMogul.API.Import
 
     public interface ICustomer
     {
-        CustomerModel AddCustomer(CustomerModel customerModel);
+        CustomerModel AddCustomer(CustomerModel customerModel,APIRequest apiRequest);
         List<CustomerModel> GetCustomers(APIRequest apirequest);
         void DeleteCustomer();
       
@@ -21,17 +20,15 @@ namespace ChartMogul.API.Import
 
     public class Customer: AbstractService,ICustomer
     {
-        private IChartMogulCore _chartMogulCore;
         private readonly string _baseUrl;
-        public Customer(IChartMogulCore chartMogulCore, Http http):base(http)
+        public Dictionary<string, string> headers;
+        public Customer(Http http):base(http)
         {
-            _chartMogulCore = chartMogulCore;
-            _baseUrl = Configuration.BaseUrl;
+            _baseUrl = Configuration.BaseUrl;              
         }
-        public CustomerModel AddCustomer(CustomerModel customerModel)
+        public CustomerModel AddCustomer(CustomerModel customerModel,APIRequest apiRequest)
         {            
-            var response =  Http.Post<CustomerModel,CustomerModel>(String.Format("{0}/import/customers", _baseUrl), customerModel);
-          //  var temp = _chartMogulCore.CallApi(customerModel);
+            var response =  Http.Post<CustomerModel,CustomerModel>(String.Format("{0}/import/customers", _baseUrl), customerModel, apiRequest);
             return response;
         }
 
@@ -42,10 +39,7 @@ namespace ChartMogul.API.Import
 
         public List<CustomerModel> GetCustomers(APIRequest apiRequest)
         {
-        //    apiRequest.URLPath = "import/customers";
-        //apiRequest.HttpMethod = "get";
-           // var temp = _chartMogulCore.CallApi(apiRequest);
-            var response = Http.Get<CustomerResponseDataModel>(String.Format("{0}/import/customers", _baseUrl));
+            var response = Http.Get<CustomerResponseDataModel>(String.Format("{0}/import/customers", _baseUrl), apiRequest);
             return response.customers;
         }
     }

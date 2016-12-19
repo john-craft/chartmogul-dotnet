@@ -54,8 +54,6 @@
     <Compile Include="AbstractTransaction.cs" />
     <Compile Include="ApiResponse.cs" />
     <Compile Include="ChartMogulClient.cs" />
-    <Compile Include="Common\ChartMogulCore.cs" />
-    <Compile Include="Common\WebCall.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Enums\CountryCode.cs" />
     <Compile Include="Enums\RequestMethod.cs" />
@@ -93,6 +91,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Common\" />
     <Folder Include="Enrichment\" />
     <Folder Include="Metrics\" />
   </ItemGroup>

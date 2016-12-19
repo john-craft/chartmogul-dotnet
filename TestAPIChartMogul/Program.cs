@@ -12,9 +12,10 @@ namespace TestAPIChartMogul
     {
         static void Main(string[] args)
         {
-            string accountToken = ConfigurationManager.AppSettings["AccountToken"].ToString();
-            string secretKey = ConfigurationManager.AppSettings["SecretKey"].ToString();
-            ChartMogulClient Objclient = new ChartMogulClient(new ChartMogul.API.Models.Core.Config {AccountToken= accountToken, SecretKey = secretKey });
+            ChartMogulClient Objclient = new ChartMogulClient();
+            var test = new Dictionary<string, string>();
+            test.Add("test", "value");
+            Objclient.AddHeaders(test);
             //var temp= Objclient.GetPlans();
       //Uncomment this code for post
             //Objclient.AddCustomer(new OConnors.ChartMogul.API.Models.CustomerModel

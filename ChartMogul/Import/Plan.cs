@@ -1,5 +1,4 @@
-﻿using ChartMogul.API.Common;
-using ChartMogul.API.Models.Core;
+﻿using ChartMogul.API.Models.Core;
 using OConnors.ChartMogul.API.Models;
 using System;
 using System.Collections.Generic;
@@ -12,22 +11,20 @@ namespace ChartMogul.API.Import
 {
     public interface IPlan
     {
-        PlanModel CreatePlan(PlanModel plan);
+        PlanModel CreatePlan(PlanModel plan,APIRequest apiRequest);
         List<PlanModel> GetPlans(APIRequest apiRequest);
     }
 
     public class Plan : AbstractService,IPlan
-    {
-        private IChartMogulCore _chartMogulCore;
+    { 
         private readonly string _baseUrl;
-        public Plan(IChartMogulCore chartMogulCore, Http http) : base(http)
+        public Plan( Http http) : base(http)
         {
-            _chartMogulCore = chartMogulCore;
             _baseUrl = Configuration.BaseUrl;
         }
-        public PlanModel CreatePlan(PlanModel plan)
+        public PlanModel CreatePlan(PlanModel plan,APIRequest apiRequest)
         {
-            var response = Http.Post<PlanModel, PlanModel>(String.Format("{0}/import/plans", _baseUrl), plan);
+            var response = Http.Post<PlanModel, PlanModel>(String.Format("{0}/import/plans", _baseUrl), plan, apiRequest);
             return response;
         }
 
@@ -35,7 +32,7 @@ namespace ChartMogul.API.Import
         {
             //apiRequest.URLPath = "import/plans";
             //apiRequest.HttpMethod = "get";
-            var response = Http.Get<PlanResponseDataModel>(String.Format("{0}/import/plans", _baseUrl));
+            var response = Http.Get<PlanResponseDataModel>(String.Format("{0}/import/plans", _baseUrl), apiRequest);
             return response.plans;
         }
 

@@ -13,6 +13,7 @@ using System.Net.Http;
 using System.Web;
 using OConnors.ChartMogul.API.Models;
 using System.Collections.Generic;
+using ChartMogul.API.Models.Core;
 
 namespace ChartMogul.API
 {
@@ -59,45 +60,45 @@ namespace ChartMogul.API
         /// <summary>
         /// Perform a GET request
         /// </summary>
-        internal TO Get<TO>(string api)
+        internal TO Get<TO>(string api, APIRequest apiRequest)
         {
-            HttpWebRequest request = CreateRequest(api, RequestMethod.Get, null, _authenticated);
+            HttpWebRequest request = CreateRequest(api, RequestMethod.Get, null, _authenticated, apiRequest);
             return SendRequest<TO>(request);
         }
 
         /// <summary>
         /// Perform a POST request
         /// </summary>
-        internal void Post(string api, object item)
+        internal void Post(string api, object item, APIRequest apiRequest)
         {
-            HttpWebRequest request = CreateRequest(api, RequestMethod.Post, item, _authenticated);
+            HttpWebRequest request = CreateRequest(api, RequestMethod.Post, item, _authenticated, apiRequest);
             SendRequest(request);
         }
 
         /// <summary>
         /// Perform a PUT request
         /// </summary>
-        internal void Put(string api, object item)
+        internal void Put(string api, object item, APIRequest apiRequest)
         {
-            HttpWebRequest request = CreateRequest(api, RequestMethod.Put, item, _authenticated);
+            HttpWebRequest request = CreateRequest(api, RequestMethod.Put, item, _authenticated, apiRequest);
             SendRequest(request);
         }
 
         /// <summary>
         /// Perform a POST request
         /// </summary>
-        internal TO Post<TI, TO>(string api, TI item)
+        internal TO Post<TI, TO>(string api, TI item,APIRequest apiRequest)
         {
-            HttpWebRequest request = CreateRequest(api, RequestMethod.Post, item, _authenticated);
+            HttpWebRequest request = CreateRequest(api, RequestMethod.Post, item, _authenticated,apiRequest);
             return SendRequest<TO>(request);
         }
 
         /// <summary>
         /// Perform a POST request
         /// </summary>
-        internal TO Put<TI, TO>(string api, TI item)
+        internal TO Put<TI, TO>(string api, TI item, APIRequest apiRequest)
         {
-            HttpWebRequest request = CreateRequest(api, RequestMethod.Put, item, _authenticated);
+            HttpWebRequest request = CreateRequest(api, RequestMethod.Put, item, _authenticated, apiRequest);
             return SendRequest<TO>(request);
         }
 
@@ -105,9 +106,9 @@ namespace ChartMogul.API
         /// <summary>
         /// Perform a DELETE request
         /// </summary>
-        public void Delete(string api)
+        public void Delete(string api, APIRequest apiRequest)
         {
-            HttpWebRequest request = CreateRequest(api, RequestMethod.Delete, null, _authenticated);
+            HttpWebRequest request = CreateRequest(api, RequestMethod.Delete, null, _authenticated, apiRequest);
             SendRequest(request);
         }
 
@@ -129,7 +130,7 @@ namespace ChartMogul.API
 
         #region helpers
 
-        private HttpWebRequest CreateRequest(string api, RequestMethod method, object data, bool authorize)
+        private HttpWebRequest CreateRequest(string api, RequestMethod method, object data, bool authorize,APIRequest apiRequest)
         {
             var request = (HttpWebRequest)HttpWebRequest.Create(api);
             //request.Accept = ApplicationJson;
@@ -160,6 +161,10 @@ namespace ChartMogul.API
                 var credentials = Convert.ToBase64String(plainTextBytes);
                 request.Headers.Add(HttpRequestHeader.Authorization, "Basic " + credentials);
             }
+            foreach (KeyValuePair<string, string> entry in apiRequest.Header)
+            {
+                request.Headers.Add(entry.Key, entry.Value);
+            }
 
             try
             {
@@ -169,7 +174,6 @@ namespace ChartMogul.API
                     string serializedData = JsonConvert.SerializeObject(data);
                     byte[] bytes = Encoding.ASCII.GetBytes(serializedData);
                     request.ContentLength = bytes.Length;
-
                     using (Stream outputStream = request.GetRequestStream())
                     {
                         outputStream.Write(bytes, 0, bytes.Length);
@@ -227,18 +231,36 @@ namespace ChartMogul.API
 
         private void HandleError(WebException exc)
         {
-            using (var reader = new StreamReader(exc.Response.GetResponseStream()))
+            using (var errorResponse = (HttpWebResponse)exc.Response)
             {
-                string content = string.Empty;
-                try
+                string error = string.Empty;
+                using (var reader = new StreamReader(errorResponse.GetResponseStream()))
                 {
-                     content = reader.ReadToEnd();
+                    try
+                    {
+                        error = reader.ReadToEnd();
+                    }
+                    catch (Exception)
+                    {
+                        throw exc;
+                    }
                 }
-                catch (Exception)
-                {
-                    throw exc;
-                }
-                new ChartMogulException(content);
+                GenerateErrorResponse(errorResponse.StatusCode, error);
+            } 
+        }
+
+         public void GenerateErrorResponse(HttpStatusCode statusCode,string errorDetails)
+        {
+            switch (statusCode)
+            {
+                case HttpStatusCode.BadRequest: new SchemaInvalidException(errorDetails); break;
+                case HttpStatusCode.Forbidden: new ForbiddenException(errorDetails); break;
+                case HttpStatusCode.NotFound: new NotFoundException(errorDetails); break;
+                case HttpStatusCode.Unauthorized: new UnAuthorizedUserException(errorDetails); break;
+                case HttpStatusCode.PaymentRequired: new RequestFailedException(errorDetails);break;
+                case (HttpStatusCode)422: new SchemaInvalidException(errorDetails); break;
+                default:
+                    new ChartMogulException(errorDetails); break;
             }
         }
 

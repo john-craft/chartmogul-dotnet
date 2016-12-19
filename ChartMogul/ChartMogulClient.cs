@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using StructureMap;
 using ChartMogul.API.Models.Core;
-using ChartMogul.API.Common;
 using Newtonsoft.Json;
 
 namespace ChartMogul.API
@@ -29,8 +28,7 @@ namespace ChartMogul.API
     {
         private ICustomer _iCustomer;
         private IDataSource _iDataSource;
-        private IPlan _iPlan;
-        private string _credentials;
+        private IPlan _iPlan;        
         private APIRequest _apiRequest= new APIRequest();
 
         public ChartMogulClient(ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan)
@@ -40,25 +38,17 @@ namespace ChartMogul.API
             _iPlan = iPlan;         
         }
 
-        public ChartMogulClient(Config config)
+        public ChartMogulClient()
         {  
-            configureDependencies();
-            SetupDataForAPI(config);
+            configureDependencies();       
             
-        }
-
-        private void SetupDataForAPI(Config config)
-        {
-            var plainTextBytes = Encoding.UTF8.GetBytes(config.AccountToken + ":" + config.SecretKey);
-            _credentials = Convert.ToBase64String(plainTextBytes);
-            _apiRequest.Header.Add("Authorization", "Basic " + _credentials);
-        }
+        }   
 
         public void AddHeaders(Dictionary<string, string> dictHeaders)
         {
             foreach (KeyValuePair<string, string> entry in dictHeaders)
             {
-                _apiRequest.Header.Add(entry.Key, entry.Value);
+                _apiRequest.SetHeader(entry.Key, entry.Value);
             }
         }
 
@@ -67,18 +57,14 @@ namespace ChartMogul.API
         {
             //StructureMap Still require some work
             var container = Container.For<MyRegistry>();
-            _iCustomer = container.GetInstance<ICustomer>();
+            _iCustomer = container.GetInstance<ICustomer>();           
             _iDataSource = container.GetInstance<IDataSource>();
             _iPlan = container.GetInstance<IPlan>();
         }
 
         public CustomerModel AddCustomer(CustomerModel customerModel)
         {          
-           var serializeData = JsonConvert.SerializeObject(customerModel);         
-            _apiRequest.JsonData = serializeData;
-            _apiRequest.URLPath = "import/customers";
-            _apiRequest.HttpMethod = "POST";
-            _iCustomer.AddCustomer(customerModel);
+            _iCustomer.AddCustomer(customerModel,_apiRequest);
             return null;
         }
 
@@ -113,12 +99,12 @@ namespace ChartMogul.API
 
         public PlanModel CreatePlan(PlanModel plan)
         {
-            return _iPlan.CreatePlan(plan);
+            return _iPlan.CreatePlan(plan, _apiRequest);
         }
 
         public List<PlanModel> GetPlans()
         {
-        //    _apiRequest = new APIRequest<PlanModel>();
+            //    _apiRequest = new APIRequest<PlanModel>();        
             return _iPlan.GetPlans(_apiRequest);
         }
     }

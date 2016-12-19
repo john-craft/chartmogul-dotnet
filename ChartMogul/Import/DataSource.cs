@@ -1,5 +1,4 @@
-﻿using ChartMogul.API.Common;
-using ChartMogul.API.Models.Core;
+﻿using ChartMogul.API.Models.Core;
 using OConnors.ChartMogul.API.Models;
 using System;
 using System.Collections.Generic;
@@ -19,10 +18,8 @@ namespace ChartMogul.API.Import
 
     public class DataSource : IDataSource
     {
-        private IChartMogulCore _chartMogulCore;
-        public DataSource(IChartMogulCore chartMogulCore)
-        {
-            _chartMogulCore = chartMogulCore;
+        public DataSource()
+        { 
         }
         public List<DataSourceModel> GetDataSources()
         {

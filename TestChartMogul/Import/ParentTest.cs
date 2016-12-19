@@ -1,5 +1,4 @@
-﻿using ChartMogul.API.Common;
-using ChartMogul.API.Import;
+﻿using ChartMogul.API.Import;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -14,14 +13,10 @@ namespace TestChartMogul.Import
     public class ParentTest
     {
 
-        public ChartMogulCore _chartMogulCore;
-        public Mock<IDataSource> _dataSource;
-        public Mock<IWebCall> _webCall;
+        public Mock<IDataSource> _dataSource;  
 
       public  ParentTest()
-        {
-            _webCall = new Mock<IWebCall>();
-            _chartMogulCore = new ChartMogulCore(_webCall.Object);
+        {     
             _dataSource = new Mock<IDataSource>();
         }
  
