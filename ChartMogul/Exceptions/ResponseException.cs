@@ -1,7 +1,7 @@
 ﻿
 namespace ChartMogul.API.Exceptions
 {
-    public  class ResponseException
+    public class ResponseException
     {
     }
 }

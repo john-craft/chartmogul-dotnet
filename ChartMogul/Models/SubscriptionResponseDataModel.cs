@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ChartMogul.API.Models
 {
-   public class SubscriptionResponseDataModel
+    public class SubscriptionResponseDataModel
     {
         [JsonProperty(PropertyName = "subscriptions")]
         public List<SubscriptionModel> Subscriptions { get; set; }
