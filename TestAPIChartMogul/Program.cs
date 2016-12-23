@@ -32,7 +32,7 @@ namespace TestAPIChartMogul
 
 
                 //Uncomment this code for get customer
-                //  var getCustomers= Objclient.GetCustomers();
+                  var getCustomers= Objclient.GetCustomers();
 
 
                 //To Create a data Source
@@ -120,12 +120,16 @@ namespace TestAPIChartMogul
 
 
                 //GetSubscription
-                var SubscriptionList = Objclient.GetSubscriptions(new CustomerModel { Uuid = "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408" });
+                //var SubscriptionList = Objclient.GetSubscriptions(new CustomerModel { Uuid = "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408"});
 
 
+                //Cancel Subscription
+                //DateTime[] canceldate = new DateTime[1];
+                //canceldate[0] = DateTime.Now;
+                //var cancelSubscription = Objclient.CancelSubscription(new SubscriptionModel { Uuid = "sub_f4f97eb2-e5f4-4b41-ad22-e5ebc4d3a665", CancellationDates = canceldate });
 
 
-            }
+                }
             catch (Exception ex)
             {
 

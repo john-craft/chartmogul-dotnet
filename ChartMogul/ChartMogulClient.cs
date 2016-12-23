@@ -24,6 +24,7 @@ namespace ChartMogul.API
         InvoiceModel AddInvoice(CustomerModel customerModel, InvoiceModel invoiceModel);
         TransactionModel AddTransaction(InvoiceModel invoicemodel, TransactionModel transactionmodel);
         List<SubscriptionModel> GetSubscriptions(CustomerModel customermodelequest);
+        SubscriptionModel CancelSubscription(SubscriptionModel subscriptionModel);
 
     }
 
@@ -153,5 +154,11 @@ namespace ChartMogul.API
         {
             return _iSubscription.GetSubscriptions(customermodel, _apiRequest);
         }
+
+        public SubscriptionModel CancelSubscription(SubscriptionModel subscriptionModel)
+        {
+            return _iSubscription.CancelSubscription(subscriptionModel,_apiRequest);
+        }
+
     }
 }

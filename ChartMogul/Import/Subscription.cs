@@ -12,6 +12,7 @@ namespace ChartMogul.API.Import
     public interface ISubscription
     {
         List<SubscriptionModel> GetSubscriptions(CustomerModel customermodel, APIRequest apiRequest);
+        SubscriptionModel CancelSubscription(SubscriptionModel subscriptionmodel,APIRequest apirequest);
     }
 
     public class Subscription : ISubscription
@@ -20,6 +21,14 @@ namespace ChartMogul.API.Import
         public Subscription(IHttp ihttp)
         {
             _ihttp = ihttp;
+        }
+
+        public SubscriptionModel CancelSubscription(SubscriptionModel subscriptionmodel, APIRequest apiRequest)
+        {
+            apiRequest.RouteName = string.Format("import/subscriptions/{0}", subscriptionmodel.Uuid);
+            _ihttp.ApiRequest = apiRequest;
+            var response = _ihttp.Put<SubscriptionModel, SubscriptionModel>(subscriptionmodel);
+            return response;
         }
 
         public List<SubscriptionModel> GetSubscriptions(CustomerModel customermodel, APIRequest apiRequest)
