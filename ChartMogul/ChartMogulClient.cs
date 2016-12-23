@@ -17,13 +17,13 @@ namespace ChartMogul.API
         void DeleteCustomer(CustomerModel customerModel);
         List<DataSourceModel> GetDataSources();
         DataSourceModel AddDataSource(DataSourceModel datasourcemodal);
-        // void DeleteDataSource(DataSourceModel dataSourcemodel);
         void DeleteDataSource(DataSourceModel dataSourcemodel);
         PlanModel CreatePlan(PlanModel plan);
         List<PlanModel> GetPlans();
         List<InvoiceModel> GetInvoices(CustomerModel customerModel);
         InvoiceModel AddInvoice(CustomerModel customerModel, InvoiceModel invoiceModel);
         TransactionModel AddTransaction(InvoiceModel invoicemodel, TransactionModel transactionmodel);
+        List<SubscriptionModel> GetSubscriptions(CustomerModel customermodelequest);
 
     }
 
@@ -38,15 +38,17 @@ namespace ChartMogul.API
         private IPlan _iPlan;
         private IInvoice _iInvoice;
         private ITransaction _iTransaction;
+        private ISubscription _iSubscription;
         private APIRequest _apiRequest= new APIRequest();
 
-        public ChartMogulClient(ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan,IInvoice iInvoice,ITransaction iTransaction)
+        public ChartMogulClient(ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan,IInvoice iInvoice,ITransaction iTransaction,ISubscription iSubscription)
         {    
             _iCustomer = iCustomer;
             _iDataSource = iDataSource;
             _iPlan = iPlan;
             _iInvoice = iInvoice;
             _iTransaction = iTransaction;
+            _iSubscription = iSubscription;
         }
 
 
@@ -87,6 +89,7 @@ namespace ChartMogul.API
             _iPlan = container.GetInstance<IPlan>();
             _iInvoice = container.GetInstance<IInvoice>();
             _iTransaction = container.GetInstance<ITransaction>();
+            _iSubscription= container.GetInstance<ISubscription>();
         }
 
         public CustomerModel AddCustomer(CustomerModel customerModel)
@@ -146,5 +149,9 @@ namespace ChartMogul.API
             return _iTransaction.AddTransaction(invoicemodel, transactionmodel, _apiRequest);
         }
 
+        public List<SubscriptionModel> GetSubscriptions(CustomerModel customermodel)
+        {
+            return _iSubscription.GetSubscriptions(customermodel, _apiRequest);
+        }
     }
 }

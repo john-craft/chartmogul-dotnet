@@ -119,6 +119,9 @@ namespace TestAPIChartMogul
 
 
 
+                //GetSubscription
+                var SubscriptionList = Objclient.GetSubscriptions(new CustomerModel { Uuid = "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408" });
+
 
 
 
