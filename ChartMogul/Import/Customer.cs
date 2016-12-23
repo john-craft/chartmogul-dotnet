@@ -11,8 +11,9 @@ namespace ChartMogul.API.Import
     {
         CustomerModel AddCustomer(CustomerModel customerModel,APIRequest apiRequest);
         List<CustomerModel> GetCustomers(APIRequest apirequest);
-        void DeleteCustomer();
-      
+        void DeleteCustomer(CustomerModel customerModel, APIRequest apiRequest);
+
+
     }
 
     public class Customer: ICustomer
@@ -31,9 +32,11 @@ namespace ChartMogul.API.Import
             return response;
         }
 
-        public void DeleteCustomer()
+        public void DeleteCustomer(CustomerModel customerModel, APIRequest apiRequest)
         {
-            throw new NotImplementedException();
+            apiRequest.RouteName = "import/customers/" + customerModel.Uuid;
+            _iHttp.ApiRequest = apiRequest;
+            _iHttp.Delete();
         }
 
         public List<CustomerModel> GetCustomers(APIRequest apiRequest)

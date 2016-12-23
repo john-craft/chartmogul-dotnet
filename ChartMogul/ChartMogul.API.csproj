@@ -68,13 +68,16 @@
     <Compile Include="Exceptions\UnAuthorizedUserException.cs" />
     <Compile Include="Http.cs" />
     <Compile Include="Import\Customer.cs" />
+    <Compile Include="Import\Invoice.cs" />
     <Compile Include="Import\Plan.cs" />
     <Compile Include="Models\Core\APIRequest.cs" />
     <Compile Include="Models\DataSourceModel.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Import\DataSource.cs" />
+    <Compile Include="Models\DataSourceResponseDataModel.cs" />
     <Compile Include="Models\InvoiceModel.cs" />
+    <Compile Include="Models\InvoiceResponseDataModel.cs" />
     <Compile Include="Models\LineItemModel.cs" />
     <Compile Include="Models\CustomerResponseDataModel.cs" />
     <Compile Include="Models\PlanResponseDataModel.cs" />

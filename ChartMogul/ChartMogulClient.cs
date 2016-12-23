@@ -14,12 +14,16 @@ namespace ChartMogul.API
     {
         CustomerModel AddCustomer(CustomerModel customerModel);
         List<CustomerModel> GetCustomers();
-        void DeleteCustomer();
+        void DeleteCustomer(CustomerModel customerModel);
         List<DataSourceModel> GetDataSources();
-        DataSourceModel AddDataSource(DataSourceModel dataSource);
-        void DeleteDataSource();
+        DataSourceModel AddDataSource(DataSourceModel datasourcemodal);
+        // void DeleteDataSource(DataSourceModel dataSourcemodel);
+        void DeleteDataSource(DataSourceModel dataSourcemodel);
         PlanModel CreatePlan(PlanModel plan);
         List<PlanModel> GetPlans();
+        List<InvoiceModel> GetInvoices(CustomerModel customerModel);
+        InvoiceModel AddInvoice(CustomerModel customerModel, InvoiceModel invoiceModel);
+
     }
 
 
@@ -30,14 +34,16 @@ namespace ChartMogul.API
     {
         private ICustomer _iCustomer;
         private IDataSource _iDataSource;
-        private IPlan _iPlan;        
+        private IPlan _iPlan;
+        private IInvoice _iInvoice;
         private APIRequest _apiRequest= new APIRequest();
 
-        public ChartMogulClient(ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan)
+        public ChartMogulClient(ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan,IInvoice iInvoice)
         {    
             _iCustomer = iCustomer;
             _iDataSource = iDataSource;
-            _iPlan = iPlan;         
+            _iPlan = iPlan;
+            _iInvoice = iInvoice;
         }
 
 
@@ -76,6 +82,7 @@ namespace ChartMogul.API
             _iCustomer = container.GetInstance<ICustomer>();           
             _iDataSource = container.GetInstance<IDataSource>();
             _iPlan = container.GetInstance<IPlan>();
+            _iInvoice = container.GetInstance<IInvoice>();
         }
 
         public CustomerModel AddCustomer(CustomerModel customerModel)
@@ -83,20 +90,21 @@ namespace ChartMogul.API
             return _iCustomer.AddCustomer(customerModel,_apiRequest);   
         }
 
-        public DataSourceModel AddDataSource(DataSourceModel dataSource)
+        public DataSourceModel AddDataSource(DataSourceModel datasourcemodal)
         {
-            throw new NotImplementedException();
+            //dataSourceName
+            return _iDataSource.AddDataSource(datasourcemodal, _apiRequest);
         }
 
-        public void DeleteCustomer()
+        public void DeleteCustomer(CustomerModel customerModel)
         {   
-            _iCustomer.DeleteCustomer();
+            _iCustomer.DeleteCustomer(customerModel,_apiRequest);
 
         }
 
-        public void DeleteDataSource()
+        public void DeleteDataSource(DataSourceModel dataSourcemodel)
         {
-            throw new NotImplementedException();
+            _iDataSource.DeleteDataSource(dataSourcemodel,_apiRequest);
         }
 
         public List<CustomerModel> GetCustomers()
@@ -106,7 +114,7 @@ namespace ChartMogul.API
 
         public List<DataSourceModel> GetDataSources()
         {
-            throw new NotImplementedException();
+           return  _iDataSource.GetDataSources(_apiRequest);
         }
 
         public PlanModel CreatePlan(PlanModel plan)
@@ -117,6 +125,16 @@ namespace ChartMogul.API
         public List<PlanModel> GetPlans()
         {     
             return _iPlan.GetPlans(_apiRequest);
+        }
+
+        public List<InvoiceModel> GetInvoices(CustomerModel customerModel)
+        {
+            return _iInvoice.GetInvoices(customerModel,_apiRequest);
+        }
+
+        public InvoiceModel AddInvoice(CustomerModel customerModel, InvoiceModel invoiceModel)
+        {
+           return _iInvoice.AddInvoice(customerModel, _apiRequest, invoiceModel);
         }
     }
 }

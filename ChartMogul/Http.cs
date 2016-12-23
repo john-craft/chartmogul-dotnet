@@ -19,6 +19,7 @@ namespace ChartMogul.API
         TO Post<TI, TO>(TI item);
         TO Put<TI, TO>(TI item);
         APIRequest ApiRequest { get; set; }
+        void Delete();
 
     }
     public class Http: IHttp
