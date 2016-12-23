@@ -49,6 +49,6 @@ namespace OConnors.ChartMogul.API.Models
         /// A list of Transaction objects.
         /// </summary>
         [JsonProperty(PropertyName = "transactions")]
-        public List<Transaction> Transactions { get; set; }
+        public List<TransactionModel> Transactions { get; set; }
     }
 }

@@ -16,14 +16,6 @@ namespace TestAPIChartMogul
             Objclient.AddHeaders(test);
             //var temp= Objclient.GetPlans();
 
-           
-
-
-
-
-
-
-
             try
             {
 
@@ -73,7 +65,7 @@ namespace TestAPIChartMogul
                 //});
 
                 //Get Invoices
-                // var invoices=  Objclient.GetInvoices(new OConnors.ChartMogul.API.Models.CustomerModel { Uuid= "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408" });
+                var invoices = Objclient.GetInvoices(new OConnors.ChartMogul.API.Models.CustomerModel { Uuid = "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408" });
 
 
                 //Import Invoices
@@ -113,23 +105,40 @@ namespace TestAPIChartMogul
 
 
 
+                //Add Transaction
+                //InvoiceModel inv = new InvoiceModel { Uuid = "inv_09fa95d0-80ef-41d1-b556-07d927b9a8da" };
+                //Objclient.AddTransaction(inv,
+                //    new TransactionModel
+                //    {
+                //        Type= "refund",
+                //        Date=DateTime.Now,
+                //        Result= "successful"
+
+                //    }
+                //);
+
+
+
+
+
+
             }
             catch (Exception ex)
             {
 
             }
 
-           
 
 
 
-            
-
-           
 
 
 
-            
+
+
+
+
+
 
 
 

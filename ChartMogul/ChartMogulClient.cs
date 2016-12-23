@@ -23,6 +23,7 @@ namespace ChartMogul.API
         List<PlanModel> GetPlans();
         List<InvoiceModel> GetInvoices(CustomerModel customerModel);
         InvoiceModel AddInvoice(CustomerModel customerModel, InvoiceModel invoiceModel);
+        TransactionModel AddTransaction(InvoiceModel invoicemodel, TransactionModel transactionmodel);
 
     }
 
@@ -36,14 +37,16 @@ namespace ChartMogul.API
         private IDataSource _iDataSource;
         private IPlan _iPlan;
         private IInvoice _iInvoice;
+        private ITransaction _iTransaction;
         private APIRequest _apiRequest= new APIRequest();
 
-        public ChartMogulClient(ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan,IInvoice iInvoice)
+        public ChartMogulClient(ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan,IInvoice iInvoice,ITransaction iTransaction)
         {    
             _iCustomer = iCustomer;
             _iDataSource = iDataSource;
             _iPlan = iPlan;
             _iInvoice = iInvoice;
+            _iTransaction = iTransaction;
         }
 
 
@@ -83,6 +86,7 @@ namespace ChartMogul.API
             _iDataSource = container.GetInstance<IDataSource>();
             _iPlan = container.GetInstance<IPlan>();
             _iInvoice = container.GetInstance<IInvoice>();
+            _iTransaction = container.GetInstance<ITransaction>();
         }
 
         public CustomerModel AddCustomer(CustomerModel customerModel)
@@ -136,5 +140,11 @@ namespace ChartMogul.API
         {
            return _iInvoice.AddInvoice(customerModel, _apiRequest, invoiceModel);
         }
+
+       public TransactionModel AddTransaction(InvoiceModel invoicemodel, TransactionModel transactionmodel)
+        {
+            return _iTransaction.AddTransaction(invoicemodel, transactionmodel, _apiRequest);
+        }
+
     }
 }

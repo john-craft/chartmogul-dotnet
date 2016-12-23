@@ -70,6 +70,7 @@
     <Compile Include="Import\Customer.cs" />
     <Compile Include="Import\Invoice.cs" />
     <Compile Include="Import\Plan.cs" />
+    <Compile Include="Import\Transaction.cs" />
     <Compile Include="Models\Core\APIRequest.cs" />
     <Compile Include="Models\DataSourceModel.cs" />
     <Compile Include="Client.cs" />
@@ -87,7 +88,7 @@
     <Compile Include="Refund.cs" />
     <Compile Include="Models\SubscriptionModel.cs" />
     <Compile Include="MyRegistry.cs" />
-    <Compile Include="Transaction.cs" />
+    <Compile Include="Models\TransactionModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace OConnors.ChartMogul.API
+namespace OConnors.ChartMogul.API.Models
 {
-    public class Transaction
+    public class TransactionModel
     {
         [JsonProperty(PropertyName = "date")]
         public DateTime Date { get; set; }
