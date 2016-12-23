@@ -14,17 +14,17 @@ namespace TestAPIChartMogul
             Objclient.AddHeaders(test);
             //var temp= Objclient.GetPlans();
             //Uncomment this code for post
-            //var result = Objclient.AddCustomer(new OConnors.ChartMogul.API.Models.CustomerModel
-            // {
-            //     Data_Source_Uuid = "ds_fa1e14c8-c1fb-11e6-a9ee-47d77bcf3ed5",
-            //     External_Id = Guid.NewGuid().ToString(),
-            //     Name = "Adam Smith",
-            //     Email = "adam@smith.com",
-            //     Country = "US",
-            //     City = "New York"
-            // });
+            var result = Objclient.AddCustomer(new OConnors.ChartMogul.API.Models.CustomerModel
+            {
+                Data_Source_Uuid = "ds_fa1e14c8-c1fb-11e6-a9ee-47d77bcf3ed5",
+                External_Id = "1ce83ceb-9209-4aba-a6bd-9c99a85e3f3d",
+                Name = "Adam Smith",
+                Email = "adam@smith.com",
+                Country = "US",
+                City = "New York"
+            });
             //Uncomment this code for get customer
-          var getCustomers= Objclient.GetCustomers();
+            //var getCustomers= Objclient.GetCustomers();
 
 
             //Uncomment this code for get plans

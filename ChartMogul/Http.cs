@@ -242,14 +242,14 @@ namespace ChartMogul.API
         {
             switch (statusCode)
             {
-                case HttpStatusCode.BadRequest: new SchemaInvalidException(errorDetails); break;
-                case HttpStatusCode.Forbidden: new ForbiddenException(errorDetails); break;
-                case HttpStatusCode.NotFound: new NotFoundException(errorDetails); break;
-                case HttpStatusCode.Unauthorized: new UnAuthorizedUserException(errorDetails); break;
-                case HttpStatusCode.PaymentRequired: new RequestFailedException(errorDetails);break;
-                case (HttpStatusCode)422: new SchemaInvalidException(errorDetails); break;
+                case HttpStatusCode.BadRequest: throw new SchemaInvalidException(errorDetails);
+                case HttpStatusCode.Forbidden: throw new ForbiddenException(errorDetails); 
+                case HttpStatusCode.NotFound: throw new NotFoundException(errorDetails); 
+                case HttpStatusCode.Unauthorized: throw new UnAuthorizedUserException(errorDetails); 
+                case HttpStatusCode.PaymentRequired: throw new RequestFailedException(errorDetails);
+                case (HttpStatusCode)422: throw new SchemaInvalidException(errorDetails); 
                 default:
-                    new ChartMogulException(errorDetails); break;
+                    throw new ChartMogulException(errorDetails); 
             }
         }
 

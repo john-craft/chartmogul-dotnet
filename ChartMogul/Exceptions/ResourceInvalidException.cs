@@ -1,7 +1,7 @@
 ﻿
 namespace ChartMogul.API.Exceptions
 {
-    public class ResourceInvalidException
+    public class ResourceInvalidException : System.Exception
     {
     }
 }

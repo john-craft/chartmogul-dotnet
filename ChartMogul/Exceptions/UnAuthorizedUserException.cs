@@ -2,11 +2,10 @@
 
 namespace ChartMogul.API.Exceptions
 {
-   public class UnAuthorizedUserException
+   public class UnAuthorizedUserException : WebException
     {
-        public UnAuthorizedUserException(string errorDetails)
+        public UnAuthorizedUserException(string errorDetails):base(string.Concat("Unauthorized.", (!string.IsNullOrEmpty(errorDetails) ? string.Concat("ErrorDetails are:", errorDetails) : "")), (WebExceptionStatus)401)
         {
-            throw new WebException(string.Concat("Unauthorized.", (!string.IsNullOrEmpty(errorDetails) ? string.Concat("ErrorDetails are:" , errorDetails) : "")), (WebExceptionStatus)401);
         }
     }
 }
