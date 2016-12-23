@@ -21,7 +21,7 @@ namespace ChartMogul.API
         PlanModel CreatePlan(PlanModel plan);
         List<PlanModel> GetPlans();
         List<InvoiceModel> GetInvoices(CustomerModel customerModel);
-        InvoiceModel AddInvoice(CustomerModel customerModel, InvoiceModel invoiceModel);
+        List<InvoiceModel> AddInvoice(CustomerModel customerModel, List<InvoiceModel> invoiceModellist);
         TransactionModel AddTransaction(InvoiceModel invoicemodel, TransactionModel transactionmodel);
         List<SubscriptionModel> GetSubscriptions(CustomerModel customermodelequest);
         SubscriptionModel CancelSubscription(SubscriptionModel subscriptionModel);
@@ -140,9 +140,9 @@ namespace ChartMogul.API
             return _iInvoice.GetInvoices(customerModel,_apiRequest);
         }
 
-        public InvoiceModel AddInvoice(CustomerModel customerModel, InvoiceModel invoiceModel)
+        public List<InvoiceModel> AddInvoice(CustomerModel customerModel, List<InvoiceModel> invoiceModellist)
         {
-           return _iInvoice.AddInvoice(customerModel, _apiRequest, invoiceModel);
+           return _iInvoice.AddInvoice(customerModel, _apiRequest, invoiceModellist);
         }
 
        public TransactionModel AddTransaction(InvoiceModel invoicemodel, TransactionModel transactionmodel)
