@@ -13,11 +13,11 @@ namespace TestChartMogul.Import
         public Mock<IHttp> _http;
 
 
-        public  ParentTest()
-        {     
+        public ParentTest()
+        {
             _dataSource = new Mock<IDataSource>();
             _http = new Mock<IHttp>();
         }
- 
+
     }
 }

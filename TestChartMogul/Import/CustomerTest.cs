@@ -14,10 +14,9 @@ using System.Text;
 namespace TestChartMogul.Import
 {
     [TestClass]
-  public  class CustomerTest:ParentTest
+    public class CustomerTest : ParentTest
     {
-         private Customer _customer;
-
+        private Customer _customer;
 
         [TestInitialize]
         public void TestInitialize()
@@ -47,7 +46,7 @@ namespace TestChartMogul.Import
         public void GivenCalling_AddCustomers_AddCustomerAndReturnResponse()
         {
             _http.Setup(x => x.Post<CustomerModel, CustomerModel>(It.IsAny<CustomerModel>())).Returns(GetCustomerModel());
-            var response = _customer.AddCustomer(GetCustomerModel(),new APIRequest());
+            var response = _customer.AddCustomer(GetCustomerModel(), new APIRequest());
             Assert.IsNotNull(response);
         }
 
@@ -55,16 +54,16 @@ namespace TestChartMogul.Import
         [ExpectedException(typeof(UnAuthorizedUserException))]
         public void GivenCalling_GetCustomers_WhenUserIsNotAuthorizedThenThrowsException()
         {
-           _http.Setup(x => x.Get<CustomerResponseDataModel>()).Throws(new UnAuthorizedUserException("User is not authorized"));
-            var response = _customer.GetCustomers(new APIRequest());    
+            _http.Setup(x => x.Get<CustomerResponseDataModel>()).Throws(new UnAuthorizedUserException("User is not authorized"));
+            var response = _customer.GetCustomers(new APIRequest());
         }
 
         [TestMethod]
         [ExpectedException(typeof(SchemaInvalidException))]
         public void GivenCalling_PostCustomers_WhenSchemaIsInvalidThenThrowsException()
         {
-            _http.Setup(x => x.Post<CustomerModel,CustomerModel>(It.IsAny<CustomerModel>())).Throws(new SchemaInvalidException("Unprocessable Entity (Your request has semantic errors)"));
-            var response = _customer.AddCustomer(new CustomerModel(),new APIRequest());
+            _http.Setup(x => x.Post<CustomerModel, CustomerModel>(It.IsAny<CustomerModel>())).Throws(new SchemaInvalidException("Unprocessable Entity (Your request has semantic errors)"));
+            var response = _customer.AddCustomer(new CustomerModel(), new APIRequest());
         }
 
         [TestMethod]
