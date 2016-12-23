@@ -40,10 +40,10 @@ namespace ChartMogul.API
         private IInvoice _iInvoice;
         private ITransaction _iTransaction;
         private ISubscription _iSubscription;
-        private APIRequest _apiRequest= new APIRequest();
+        private APIRequest _apiRequest = new APIRequest();
 
-        public ChartMogulClient(ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan,IInvoice iInvoice,ITransaction iTransaction,ISubscription iSubscription)
-        {    
+        public ChartMogulClient(ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan, IInvoice iInvoice, ITransaction iTransaction, ISubscription iSubscription)
+        {
             _iCustomer = iCustomer;
             _iDataSource = iDataSource;
             _iPlan = iPlan;
@@ -55,12 +55,12 @@ namespace ChartMogul.API
 
         public ChartMogulClient()
         {
-           if (string.IsNullOrEmpty(Configuration.AccountToken))
+            if (string.IsNullOrEmpty(Configuration.AccountToken))
             {
                 throw new InvalidDataException("AccountToken cannot be null");
             }
 
-           if (string.IsNullOrEmpty(Configuration.SecretKey))
+            if (string.IsNullOrEmpty(Configuration.SecretKey))
             {
                 throw new InvalidDataException("SecretKey cannot be null");
             }
@@ -85,17 +85,17 @@ namespace ChartMogul.API
         {
             //StructureMap Still require some work
             var container = Container.For<MyRegistry>();
-            _iCustomer = container.GetInstance<ICustomer>();           
+            _iCustomer = container.GetInstance<ICustomer>();
             _iDataSource = container.GetInstance<IDataSource>();
             _iPlan = container.GetInstance<IPlan>();
             _iInvoice = container.GetInstance<IInvoice>();
             _iTransaction = container.GetInstance<ITransaction>();
-            _iSubscription= container.GetInstance<ISubscription>();
+            _iSubscription = container.GetInstance<ISubscription>();
         }
 
         public CustomerModel AddCustomer(CustomerModel customerModel)
         {
-            return _iCustomer.AddCustomer(customerModel,_apiRequest);   
+            return _iCustomer.AddCustomer(customerModel, _apiRequest);
         }
 
         public DataSourceModel AddDataSource(DataSourceModel datasourcemodal)
@@ -105,14 +105,14 @@ namespace ChartMogul.API
         }
 
         public void DeleteCustomer(CustomerModel customerModel)
-        {   
-            _iCustomer.DeleteCustomer(customerModel,_apiRequest);
+        {
+            _iCustomer.DeleteCustomer(customerModel, _apiRequest);
 
         }
 
         public void DeleteDataSource(DataSourceModel dataSourcemodel)
         {
-            _iDataSource.DeleteDataSource(dataSourcemodel,_apiRequest);
+            _iDataSource.DeleteDataSource(dataSourcemodel, _apiRequest);
         }
 
         public List<CustomerModel> GetCustomers()
@@ -122,7 +122,7 @@ namespace ChartMogul.API
 
         public List<DataSourceModel> GetDataSources()
         {
-           return  _iDataSource.GetDataSources(_apiRequest);
+            return _iDataSource.GetDataSources(_apiRequest);
         }
 
         public PlanModel CreatePlan(PlanModel plan)
@@ -131,21 +131,21 @@ namespace ChartMogul.API
         }
 
         public List<PlanModel> GetPlans()
-        {     
+        {
             return _iPlan.GetPlans(_apiRequest);
         }
 
         public List<InvoiceModel> GetInvoices(CustomerModel customerModel)
         {
-            return _iInvoice.GetInvoices(customerModel,_apiRequest);
+            return _iInvoice.GetInvoices(customerModel, _apiRequest);
         }
 
         public List<InvoiceModel> AddInvoice(CustomerModel customerModel, List<InvoiceModel> invoiceModellist)
         {
-           return _iInvoice.AddInvoice(customerModel, _apiRequest, invoiceModellist);
+            return _iInvoice.AddInvoice(customerModel, _apiRequest, invoiceModellist);
         }
 
-       public TransactionModel AddTransaction(InvoiceModel invoicemodel, TransactionModel transactionmodel)
+        public TransactionModel AddTransaction(InvoiceModel invoicemodel, TransactionModel transactionmodel)
         {
             return _iTransaction.AddTransaction(invoicemodel, transactionmodel, _apiRequest);
         }
@@ -157,7 +157,7 @@ namespace ChartMogul.API
 
         public SubscriptionModel CancelSubscription(SubscriptionModel subscriptionModel)
         {
-            return _iSubscription.CancelSubscription(subscriptionModel,_apiRequest);
+            return _iSubscription.CancelSubscription(subscriptionModel, _apiRequest);
         }
 
     }

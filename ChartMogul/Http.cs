@@ -22,7 +22,7 @@ namespace ChartMogul.API
         void Delete();
 
     }
-    public class Http: IHttp
+    public class Http : IHttp
     {
         /// <summary>
         /// Connection timeout in milliseconds
@@ -33,7 +33,7 @@ namespace ChartMogul.API
         /// JSON header value
         /// </summary>
         private const string applicationJson = "application/json";
-        
+
         /// <summary>
         /// Authenticated
         /// </summary>
@@ -47,7 +47,7 @@ namespace ChartMogul.API
         {
             _authenticated = true;
         }
-    
+
         /// <summary>
         /// Perform a GET request
         /// </summary>
@@ -80,7 +80,7 @@ namespace ChartMogul.API
         /// </summary>
         public TO Post<TI, TO>(TI item)
         {
-            HttpWebRequest request = CreateRequest( RequestMethod.Post, item, _authenticated);
+            HttpWebRequest request = CreateRequest(RequestMethod.Post, item, _authenticated);
             return SendRequest<TO>(request);
         }
 
@@ -89,7 +89,7 @@ namespace ChartMogul.API
         /// </summary>
         public TO Put<TI, TO>(TI item)
         {
-            HttpWebRequest request = CreateRequest( RequestMethod.Put, item, _authenticated);
+            HttpWebRequest request = CreateRequest(RequestMethod.Put, item, _authenticated);
             return SendRequest<TO>(request);
         }
 
@@ -113,7 +113,7 @@ namespace ChartMogul.API
         {
             if (request.HttpMethod != "POST")
             {
-               new ChartMogulException("Invalid request");
+                new ChartMogulException("Invalid request");
             }
 
             return HandleResponse<TO>(request.InputStream);
@@ -123,9 +123,9 @@ namespace ChartMogul.API
 
         private HttpWebRequest CreateRequest(RequestMethod method, object data, bool authorize)
         {
-            var request = (HttpWebRequest)HttpWebRequest.Create(string.Concat(baseUrl,ApiRequest.RouteName));
+            var request = (HttpWebRequest)HttpWebRequest.Create(string.Concat(baseUrl, ApiRequest.RouteName));
             //request.Accept = ApplicationJson;
-            request.Accept= "*/*";
+            request.Accept = "*/*";
             request.Timeout = connectionTimeout;
 
             switch (method)
@@ -199,7 +199,7 @@ namespace ChartMogul.API
             try
             {
                 using (var response = request.GetResponse())
-                {                 
+                {
                     return HandleResponse<T>(response.GetResponseStream());
                 }
             }
@@ -211,11 +211,11 @@ namespace ChartMogul.API
         }
 
         private T HandleResponse<T>(Stream responseStream)
-        {   
+        {
             using (var reader = new StreamReader(responseStream))
-            {               
-                var responseText = reader.ReadToEnd();             
-                return JsonConvert.DeserializeObject<T>(responseText);         
+            {
+                var responseText = reader.ReadToEnd();
+                return JsonConvert.DeserializeObject<T>(responseText);
             }
         }
 
@@ -236,21 +236,21 @@ namespace ChartMogul.API
                     }
                 }
                 GenerateErrorResponse(errorResponse.StatusCode, error);
-            } 
+            }
         }
 
-         private void GenerateErrorResponse(HttpStatusCode statusCode,string errorDetails)
+        private void GenerateErrorResponse(HttpStatusCode statusCode, string errorDetails)
         {
             switch (statusCode)
             {
                 case HttpStatusCode.BadRequest: throw new SchemaInvalidException(errorDetails);
-                case HttpStatusCode.Forbidden: throw new ForbiddenException(errorDetails); 
-                case HttpStatusCode.NotFound: throw new NotFoundException(errorDetails); 
-                case HttpStatusCode.Unauthorized: throw new UnAuthorizedUserException(errorDetails); 
+                case HttpStatusCode.Forbidden: throw new ForbiddenException(errorDetails);
+                case HttpStatusCode.NotFound: throw new NotFoundException(errorDetails);
+                case HttpStatusCode.Unauthorized: throw new UnAuthorizedUserException(errorDetails);
                 case HttpStatusCode.PaymentRequired: throw new RequestFailedException(errorDetails);
-                case (HttpStatusCode)422: throw new SchemaInvalidException(errorDetails); 
+                case (HttpStatusCode)422: throw new SchemaInvalidException(errorDetails);
                 default:
-                    throw new ChartMogulException(errorDetails); 
+                    throw new ChartMogulException(errorDetails);
             }
         }
 

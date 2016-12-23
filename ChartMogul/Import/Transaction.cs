@@ -11,20 +11,15 @@ namespace ChartMogul.API.Import
     public interface ITransaction
     {
         TransactionModel AddTransaction(InvoiceModel invoicemodel, TransactionModel transactionmodel, APIRequest apiRequest);
-
-
     }
-
-
-    public class Transaction:ITransaction
+    
+    public class Transaction : ITransaction
     {
         private IHttp _iHttp;
         public Transaction(IHttp ihttp)
         {
             _iHttp = ihttp;
         }
-
-      
 
         public TransactionModel AddTransaction(InvoiceModel invoicemodel, TransactionModel transactionmodel, APIRequest apiRequest)
         {

@@ -35,16 +35,14 @@ namespace ChartMogul.API.Import
             _iHttp.ApiRequest = apiRequest;
             var response = _iHttp.Post<DataSourceModel, DataSourceModel>(dataSourceModel);
             return response;
-
-            
         }
 
         public void DeleteDataSource(DataSourceModel dataSourcemodel, APIRequest apiRequest)
         {
             apiRequest.RouteName = "import/data_sources/" + dataSourcemodel.Uuid;
             _iHttp.ApiRequest = apiRequest;
-           _iHttp.Delete();
-           
+            _iHttp.Delete();
+
         }
     }
 }

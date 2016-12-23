@@ -8,6 +8,7 @@ namespace ChartMogul.API
         {
             get { return ConfigurationManager.AppSettings["AccountToken"]; }
         }
+
         public static string SecretKey
         {
             get { return ConfigurationManager.AppSettings["SecretKey"]; }

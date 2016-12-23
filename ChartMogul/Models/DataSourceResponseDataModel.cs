@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace ChartMogul.API.Models
 {
-  public class DataSourceResponseDataModel
+    public class DataSourceResponseDataModel
     {
         [JsonProperty(PropertyName = "data_sources")]
         public List<DataSourceModel> DataSources { get; set; }

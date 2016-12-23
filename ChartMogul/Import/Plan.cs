@@ -7,7 +7,7 @@ namespace ChartMogul.API.Import
 {
     public interface IPlan
     {
-        PlanModel CreatePlan(PlanModel plan,APIRequest apiRequest);
+        PlanModel CreatePlan(PlanModel plan, APIRequest apiRequest);
         List<PlanModel> GetPlans(APIRequest apiRequest);
     }
 
@@ -18,9 +18,9 @@ namespace ChartMogul.API.Import
         {
             _ihttp = ihttp;
         }
-        public PlanModel CreatePlan(PlanModel plan,APIRequest apiRequest)
+        public PlanModel CreatePlan(PlanModel plan, APIRequest apiRequest)
         {
-            apiRequest.RouteName ="import/plans";
+            apiRequest.RouteName = "import/plans";
             _ihttp.ApiRequest = apiRequest;
             var response = _ihttp.Post<PlanModel, PlanModel>(plan);
             return response;

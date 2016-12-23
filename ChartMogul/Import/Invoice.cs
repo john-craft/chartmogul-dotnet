@@ -23,16 +23,15 @@ namespace ChartMogul.API.Import
             _iHttp = iHttp;
         }
 
-        public List<InvoiceModel> AddInvoice(CustomerModel customerModel, APIRequest apiRequest,List<InvoiceModel> invoiceModelList)
+        public List<InvoiceModel> AddInvoice(CustomerModel customerModel, APIRequest apiRequest, List<InvoiceModel> invoiceModelList)
         {
             apiRequest.RouteName = string.Format("import/customers/{0}/invoices", customerModel.Uuid);
             _iHttp.ApiRequest = apiRequest;
-           // var listOfInvoices = new InvoiceResponseDataModel { Invoices = new List<InvoiceModel> { invoiceModelList } };
             var response = _iHttp.Post<List<InvoiceModel>, InvoiceResponseDataModel>(invoiceModelList);
             return response.Invoices;
         }
 
-        public List<InvoiceModel> GetInvoices(CustomerModel customerModel,APIRequest apirequest)
+        public List<InvoiceModel> GetInvoices(CustomerModel customerModel, APIRequest apirequest)
         {
             apirequest.RouteName = string.Format("import/customers/{0}/invoices", customerModel.Uuid);
             _iHttp.ApiRequest = apirequest;

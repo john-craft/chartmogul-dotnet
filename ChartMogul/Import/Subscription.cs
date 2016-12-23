@@ -12,7 +12,7 @@ namespace ChartMogul.API.Import
     public interface ISubscription
     {
         List<SubscriptionModel> GetSubscriptions(CustomerModel customermodel, APIRequest apiRequest);
-        SubscriptionModel CancelSubscription(SubscriptionModel subscriptionmodel,APIRequest apirequest);
+        SubscriptionModel CancelSubscription(SubscriptionModel subscriptionmodel, APIRequest apirequest);
     }
 
     public class Subscription : ISubscription

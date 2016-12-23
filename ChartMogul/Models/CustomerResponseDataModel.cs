@@ -14,6 +14,6 @@ namespace ChartMogul.API.Models
         public int Current_Page { get; set; }
 
         [JsonProperty(PropertyName = "total_pages")]
-        public int Total_Pages { get; set; }        
+        public int Total_Pages { get; set; }
     }
 }
