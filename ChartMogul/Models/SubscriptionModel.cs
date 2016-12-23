@@ -21,6 +21,6 @@ namespace OConnors.ChartMogul.API.Models
         public string DataSource { get; set; }
 
         [JsonProperty(PropertyName = "cancellation_dates")]
-        public DateTime CancellationDates { get; set; }
+        public DateTime[] CancellationDates { get; set; }
     }
 }

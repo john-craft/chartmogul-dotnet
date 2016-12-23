@@ -139,7 +139,7 @@ namespace OConnors.ChartMogul.API
         public bool CancelSubscription(SubscriptionModel sub, DateTime cancelledAt)
         {
             string urlPath = "import/subscriptions/" + sub.Uuid;
-            sub.CancellationDates = cancelledAt;
+          //  sub.CancellationDates = cancelledAt;
             string json = JsonConvert.SerializeObject(sub);
 
             ApiResponse resp = CallApi(urlPath, "PATCH", json);

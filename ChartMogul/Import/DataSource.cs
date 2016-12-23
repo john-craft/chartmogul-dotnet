@@ -1,4 +1,6 @@
-﻿using OConnors.ChartMogul.API.Models;
+﻿using ChartMogul.API.Models;
+using ChartMogul.API.Models.Core;
+using OConnors.ChartMogul.API.Models;
 using System;
 using System.Collections.Generic;
 
@@ -7,29 +9,42 @@ namespace ChartMogul.API.Import
 
     public interface IDataSource
     {
-        List<DataSourceModel> GetDataSources();
-        DataSourceModel AddDataSource(DataSourceModel dataSource);
-        void DeleteDataSource();
+        List<DataSourceModel> GetDataSources(APIRequest apiRequest);
+        DataSourceModel AddDataSource(DataSourceModel datasourcemodal, APIRequest apiRequest);
+        void DeleteDataSource(DataSourceModel dataSourcemodel, APIRequest apiRequest);
     }
 
     public class DataSource : IDataSource
     {
-        public DataSource()
-        { 
-        }
-        public List<DataSourceModel> GetDataSources()
+        private IHttp _iHttp;
+        public DataSource(IHttp iHttp)
         {
-            throw new NotImplementedException();
+            _iHttp = iHttp;
+        }
+        public List<DataSourceModel> GetDataSources(APIRequest apiRequest)
+        {
+            apiRequest.RouteName = "import/data_sources";
+            _iHttp.ApiRequest = apiRequest;
+            var response = _iHttp.Get<DataSourceResponseDataModel>();
+            return response.DataSources;
         }
 
-        public DataSourceModel AddDataSource(DataSourceModel dataSource)
+        public DataSourceModel AddDataSource(DataSourceModel dataSourceModel, APIRequest apiRequest)
         {
-            throw new NotImplementedException();
+            apiRequest.RouteName = "import/data_sources";
+            _iHttp.ApiRequest = apiRequest;
+            var response = _iHttp.Post<DataSourceModel, DataSourceModel>(dataSourceModel);
+            return response;
+
+            
         }
 
-        public void DeleteDataSource()
+        public void DeleteDataSource(DataSourceModel dataSourcemodel, APIRequest apiRequest)
         {
-            throw new NotImplementedException();
+            apiRequest.RouteName = "import/data_sources/" + dataSourcemodel.Uuid;
+            _iHttp.ApiRequest = apiRequest;
+           _iHttp.Delete();
+           
         }
     }
 }
