@@ -30,11 +30,8 @@ namespace ChartMogul.API.Models.Enrichment
         [JsonProperty(PropertyName = "customer-since")]
         public string CustomerSince { get; set; }
 
-        [JsonProperty(PropertyName = "tags")]
-        public string[] Tags { get; set; }
-
-        [JsonProperty(PropertyName = "custom ")]
-        public CustomModel  Custom { get; set; }
+        [JsonProperty(PropertyName = "attributes")]
+        public Attribute Attributes { get; set; }
 
         [JsonProperty(PropertyName = "address")]
         public CustomerAddressModel Address { get; set; }

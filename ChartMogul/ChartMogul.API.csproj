@@ -56,6 +56,8 @@
     <Compile Include="ChartMogulClient.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="Enrichment\Customer.cs" />
+    <Compile Include="Enrichment\Enrichment.cs" />
     <Compile Include="Enums\CountryCode.cs" />
     <Compile Include="Enums\RequestMethod.cs" />
     <Compile Include="Exceptions\RequestFailedException.cs" />
@@ -78,9 +80,13 @@
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Import\DataSource.cs" />
     <Compile Include="Models\DataSourceResponseDataModel.cs" />
+    <Compile Include="Models\Enrichment\Attribute.cs" />
     <Compile Include="Models\Enrichment\CustomerAddressModel.cs" />
+    <Compile Include="Models\Enrichment\CustomerPatchModel.cs" />
+    <Compile Include="Models\Enrichment\CustomerResponseModel.cs" />
     <Compile Include="Models\Enrichment\CustomModel.cs" />
     <Compile Include="Models\Enrichment\CustomerModel.cs" />
+    <Compile Include="Models\Enrichment\MergeCustomers.cs" />
     <Compile Include="Models\InvoiceModel.cs" />
     <Compile Include="Models\InvoiceResponseDataModel.cs" />
     <Compile Include="Models\LineItemModel.cs" />
@@ -100,7 +106,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />
-    <Folder Include="Enrichment\" />
     <Folder Include="Metrics\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

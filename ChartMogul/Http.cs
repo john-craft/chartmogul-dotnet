@@ -20,6 +20,7 @@ namespace ChartMogul.API
         TO Put<TI, TO>(TI item);
         APIRequest ApiRequest { get; set; }
         void Delete();
+        TO Patch<TI, TO>(TI item);
 
     }
     public class Http : IHttp
@@ -84,6 +85,7 @@ namespace ChartMogul.API
             return SendRequest<TO>(request);
         }
 
+
         /// <summary>
         /// Perform a POST request
         /// </summary>
@@ -101,6 +103,12 @@ namespace ChartMogul.API
         {
             HttpWebRequest request = CreateRequest(RequestMethod.Delete, null, _authenticated);
             SendRequest(request);
+        }
+
+        public TO Patch<TI, TO>(TI item)
+        {
+            HttpWebRequest request = CreateRequest(RequestMethod.Patch, item, _authenticated);
+            return SendRequest<TO>(request);
         }
 
         /// <summary>
@@ -141,6 +149,9 @@ namespace ChartMogul.API
                     break;
                 case RequestMethod.Delete:
                     request.Method = "DELETE";
+                    break;
+                case RequestMethod.Patch:
+                    request.Method = "PATCH";
                     break;
                 default:
                     throw new NotSupportedException(String.Format("Request method {0} not supported", method.ToString()));

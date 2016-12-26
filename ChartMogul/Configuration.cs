@@ -2,16 +2,23 @@
 
 namespace ChartMogul.API
 {
-    class Configuration
+    public class Configuration
     {
+        public Configuration(string accountToken,string secretKey)
+            {
+            AccountToken = accountToken;
+            SecretKey = secretKey;
+            }
         public static string AccountToken
-        {
-            get { return ConfigurationManager.AppSettings["AccountToken"]; }
+        {            
+            get;
+            set;
         }
 
         public static string SecretKey
-        {
-            get { return ConfigurationManager.AppSettings["SecretKey"]; }
+        {         
+            get;
+            set;
         }
     }
 }

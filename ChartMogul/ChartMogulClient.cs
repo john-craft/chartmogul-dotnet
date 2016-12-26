@@ -6,7 +6,7 @@ using StructureMap;
 using ChartMogul.API.Models.Core;
 using System.Text;
 using System.IO;
-
+using ChartMogul.API.Enrichment;
 namespace ChartMogul.API
 {
 
@@ -25,7 +25,6 @@ namespace ChartMogul.API
         TransactionModel AddTransaction(InvoiceModel invoicemodel, TransactionModel transactionmodel);
         List<SubscriptionModel> GetSubscriptions(CustomerModel customermodelequest);
         SubscriptionModel CancelSubscription(SubscriptionModel subscriptionModel);
-
     }
 
 
@@ -34,15 +33,25 @@ namespace ChartMogul.API
     /// </summary>
     public class ChartMogulClient : IChartMogulClient
     {
-        private ICustomer _iCustomer;
+        private Import.ICustomer _iCustomer;
         private IDataSource _iDataSource;
         private IPlan _iPlan;
         private IInvoice _iInvoice;
         private ITransaction _iTransaction;
         private ISubscription _iSubscription;
         private APIRequest _apiRequest = new APIRequest();
+        public Enrichment.Enrichment Enrichment{ get
+            {
+                var container = Container.For<MyRegistry>();
+                var enrichmentObject = container.GetInstance<Enrichment.Enrichment>();
+                enrichmentObject.ApiRequest = _apiRequest;
+                return enrichmentObject;
+            }
+            set { }
+        }
 
-        public ChartMogulClient(ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan, IInvoice iInvoice, ITransaction iTransaction, ISubscription iSubscription)
+
+        public ChartMogulClient(Import.ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan, IInvoice iInvoice, ITransaction iTransaction, ISubscription iSubscription)
         {
             _iCustomer = iCustomer;
             _iDataSource = iDataSource;
@@ -53,17 +62,18 @@ namespace ChartMogul.API
         }
 
 
-        public ChartMogulClient()
+        public ChartMogulClient(string accountKey, string secretKey)
         {
-            if (string.IsNullOrEmpty(Configuration.AccountToken))
+            if (string.IsNullOrEmpty(accountKey))
             {
                 throw new InvalidDataException("AccountToken cannot be null");
             }
 
-            if (string.IsNullOrEmpty(Configuration.SecretKey))
+            if (string.IsNullOrEmpty(secretKey))
             {
                 throw new InvalidDataException("SecretKey cannot be null");
             }
+            Configuration config = new Configuration(accountKey, secretKey);
             configureDependencies();
         }
 
@@ -85,7 +95,7 @@ namespace ChartMogul.API
         {
             //StructureMap Still require some work
             var container = Container.For<MyRegistry>();
-            _iCustomer = container.GetInstance<ICustomer>();
+            _iCustomer = container.GetInstance<Import.ICustomer>();
             _iDataSource = container.GetInstance<IDataSource>();
             _iPlan = container.GetInstance<IPlan>();
             _iInvoice = container.GetInstance<IInvoice>();
@@ -161,4 +171,4 @@ namespace ChartMogul.API
         }
 
     }
-}
+}   

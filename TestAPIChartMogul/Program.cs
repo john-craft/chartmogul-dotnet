@@ -10,7 +10,8 @@ namespace TestAPIChartMogul
     {
         static void Main(string[] args)
         {
-            ChartMogulClient Objclient = new ChartMogulClient();
+            //Configuration config = new Configuration();
+            ChartMogulClient Objclient = new ChartMogulClient("faf9d6dba50474216772139d112ddf6b", "80f481bdde66b7e089f7449c4d099dcf");
             var test = new Dictionary<string, string>();
             test.Add("test", "value");
             Objclient.AddHeaders(test);
@@ -32,8 +33,7 @@ namespace TestAPIChartMogul
 
 
                 //Uncomment this code for get customer
-                var getCustomers = Objclient.GetCustomers();
-
+                //var getCustomers = Objclient.GetCustomers();
 
                 //To Create a data Source
                 //  var datasource = Objclient.AddDataSource(new OConnors.ChartMogul.API.Models.DataSourceModel { Name = "ashish bill details1" });
@@ -128,30 +128,29 @@ namespace TestAPIChartMogul
                 //canceldate[0] = DateTime.Now;
                 //var cancelSubscription = Objclient.CancelSubscription(new SubscriptionModel { Uuid = "sub_f4f97eb2-e5f4-4b41-ad22-e5ebc4d3a665", CancellationDates = canceldate });
 
+                //To get Enrichment customers              
+                //   var getAllCustomer  = Objclient.Enrichment.GetAllCustomers();
+
+                //To get Enrichment customer details
+                //   var getCustomerDetails = Objclient.Enrichment.GetCustomerDetails("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408");
+
+                // To Search by email in enrichment Customer
+                //var customer = Objclient.Enrichment.SearchForCustomer("adam@smith.com");
+
+                //To merge Customers
+                //Objclient.Enrichment.MergeCustomers(new ChartMogul.API.Models.Enrichment.MergeCustomers { Into = new ChartMogul.API.Models.Enrichment.Into{ CustomerUUID = "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408" },From = new ChartMogul.API.Models.Enrichment.From { CustomerUUID = "cus_abf4f640-c129-11e6-be7f-bb6e00c5cf48"
+                //}
+                //});
+
+                //TO update customer in enrichment
+                //var customer = Objclient.Enrichment.UpdateCustomer(new ChartMogul.API.Models.Enrichment.CustomerPatchModel { City = "Gurgaon", Country = "US" }, "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408");
+               
 
             }
             catch (Exception ex)
             {
 
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
     }
 }
