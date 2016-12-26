@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace TestChartMogul.Import
 {
@@ -17,12 +18,29 @@ namespace TestChartMogul.Import
   public  class CustomerTest:ParentTest
     {
          private Customer _customer;
-
+        private Mock<IGetResponse> _getResponse;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _customer = new Customer(_http.Object);
+            _getResponse = new Mock<IGetResponse>();
+            _customer = new Customer(new Http(_getResponse.Object));                
+        }
+
+        public void MockHttpResponse<T>(T data)
+        {
+            string serializedData = JsonConvert.SerializeObject(data);
+            var expectedBytes = Encoding.UTF8.GetBytes(serializedData);
+            var responseStream = new MemoryStream();
+            responseStream.Write(expectedBytes, 0, expectedBytes.Length);
+            responseStream.Seek(0, SeekOrigin.Begin);
+            var request = new Mock<WebResponse>();
+            var response = new Mock<HttpWebRequest>();
+            request.Setup(c => c.GetResponseStream()).Returns(responseStream);
+            // request.Setup(c => c.GetResponseStream()).Throws(new WebException() );
+            request.Setup(c => c.GetResponseStream()).Throws(new WebException("tset", new Exception(), (WebExceptionStatus)400,request.Object)); 
+            response.Setup(c => c.GetResponse()).Returns(request.Object);
+            _getResponse.Setup(x => x.GetResponseFromServer(It.IsAny<HttpWebRequest>())).Returns(request.Object);           
         }
 
         public CustomerModel GetCustomerModel()
@@ -38,15 +56,14 @@ namespace TestChartMogul.Import
         [TestMethod]
         public void GivenCalling_GetCustomers_ReturnsListOfCustomers()
         {
-            _http.Setup(x => x.Get<CustomerResponseDataModel>()).Returns(new CustomerResponseDataModel() { Customers = new System.Collections.Generic.List<CustomerModel> { new CustomerModel() { City = "test", Company = "test" } } });
+            MockHttpResponse<CustomerModel>(GetCustomerModel());
             var response = _customer.GetCustomers(new APIRequest());
             Assert.IsNotNull(response);
         }
 
         [TestMethod]
         public void GivenCalling_AddCustomers_AddCustomerAndReturnResponse()
-        {
-            _http.Setup(x => x.Post<CustomerModel, CustomerModel>(It.IsAny<CustomerModel>())).Returns(GetCustomerModel());
+        {    
             var response = _customer.AddCustomer(GetCustomerModel(),new APIRequest());
             Assert.IsNotNull(response);
         }
@@ -54,56 +71,49 @@ namespace TestChartMogul.Import
         [TestMethod]
         [ExpectedException(typeof(UnAuthorizedUserException))]
         public void GivenCalling_GetCustomers_WhenUserIsNotAuthorizedThenThrowsException()
-        {
-           _http.Setup(x => x.Get<CustomerResponseDataModel>()).Throws(new UnAuthorizedUserException("User is not authorized"));
+        {      
             var response = _customer.GetCustomers(new APIRequest());    
         }
 
         [TestMethod]
         [ExpectedException(typeof(SchemaInvalidException))]
         public void GivenCalling_PostCustomers_WhenSchemaIsInvalidThenThrowsException()
-        {
-            _http.Setup(x => x.Post<CustomerModel,CustomerModel>(It.IsAny<CustomerModel>())).Throws(new SchemaInvalidException("Unprocessable Entity (Your request has semantic errors)"));
+        {           
             var response = _customer.AddCustomer(new CustomerModel(),new APIRequest());
         }
 
         [TestMethod]
         [ExpectedException(typeof(UnAuthorizedUserException))]
         public void GivenCalling_PostCustomers_WhenUserIsNotAuthorizedThenThrowsException()
-        {
-            _http.Setup(x => x.Post<CustomerModel, CustomerModel>(It.IsAny<CustomerModel>())).Throws(new UnAuthorizedUserException("User is not authorized"));
+        {          
             var response = _customer.AddCustomer(new CustomerModel(), new APIRequest());
         }
 
         [TestMethod]
         [ExpectedException(typeof(ChartMogulException))]
         public void GivenCalling_PostCustomers_WhenCustomerExternalUUIDAlreadyExistThenThrowsException()
-        {
-            _http.Setup(x => x.Post<CustomerModel, CustomerModel>(It.IsAny<CustomerModel>())).Throws(new ChartMogulException("Customer with same external uuid already exist"));
+        {        
             var response = _customer.AddCustomer(new CustomerModel(), new APIRequest());
         }
 
         [TestMethod]
         [ExpectedException(typeof(NotFoundException))]
         public void GivenCalling_PostCustomers_WhenUrlIsNotThenThrowsNotFoundException()
-        {
-            _http.Setup(x => x.Post<CustomerModel, CustomerModel>(It.IsAny<CustomerModel>())).Throws(new NotFoundException("Server not found"));
+        {         
             var response = _customer.AddCustomer(new CustomerModel(), new APIRequest());
         }
 
         [TestMethod]
         [ExpectedException(typeof(RequestFailedException))]
         public void GivenCalling_PostCustomers_RequestFailsThenThrowException()
-        {
-            _http.Setup(x => x.Post<CustomerModel, CustomerModel>(It.IsAny<CustomerModel>())).Throws(new RequestFailedException("Request failed with status code 402"));
+        {          
             var response = _customer.AddCustomer(new CustomerModel(), new APIRequest());
         }
 
         [TestMethod]
         [ExpectedException(typeof(ForbiddenException))]
         public void GivenCalling_PostCustomers_ThrowsForbiddenExceptionWhen()
-        {
-            _http.Setup(x => x.Post<CustomerModel, CustomerModel>(It.IsAny<CustomerModel>())).Throws(new ForbiddenException("The requested action is forbidden."));
+        {          
             var response = _customer.AddCustomer(new CustomerModel(), new APIRequest());
         }
 

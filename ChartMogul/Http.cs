@@ -24,6 +24,11 @@ namespace ChartMogul.API
     }
     public class Http: IHttp
     {
+        private readonly IGetResponse _getResponse;
+        public Http(IGetResponse getResponse)
+        {
+            _getResponse = getResponse;
+        }
         /// <summary>
         /// Connection timeout in milliseconds
         /// </summary>
@@ -33,11 +38,11 @@ namespace ChartMogul.API
         /// JSON header value
         /// </summary>
         private const string applicationJson = "application/json";
-        
+
         /// <summary>
         /// Authenticated
         /// </summary>
-        private readonly bool _authenticated;
+        private readonly bool _authenticated = true;
 
         public APIRequest ApiRequest { get; set; }
         /// <summary>
@@ -183,7 +188,7 @@ namespace ChartMogul.API
         {
             try
             {
-                using (var response = request.GetResponse())
+                using (var response =_getResponse.GetResponseFromServer(request))
                 {
                     // NO action to take
                 }
@@ -198,7 +203,7 @@ namespace ChartMogul.API
         {
             try
             {
-                using (var response = request.GetResponse())
+                using (var response = _getResponse.GetResponseFromServer(request))
                 {                 
                     return HandleResponse<T>(response.GetResponseStream());
                 }
@@ -221,7 +226,7 @@ namespace ChartMogul.API
 
         private void HandleError(WebException exc)
         {
-            using (var errorResponse = (HttpWebResponse)exc.Response)
+            var errorResponse = (HttpWebResponse)exc.Response;
             {
                 string error = string.Empty;
                 using (var reader = new StreamReader(errorResponse.GetResponseStream()))

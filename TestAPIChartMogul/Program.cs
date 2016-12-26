@@ -32,7 +32,7 @@ namespace TestAPIChartMogul
 
 
                 //Uncomment this code for get customer
-                //  var getCustomers= Objclient.GetCustomers();
+                var getCustomers = Objclient.GetCustomers();
 
 
                 //To Create a data Source
@@ -49,7 +49,7 @@ namespace TestAPIChartMogul
                 // Objclient.DeleteDataSource(new OConnors.ChartMogul.API.Models.DataSourceModel { Uuid= "ds_7ab8ff74-c820-11e6-bb5a-eb95a5d49c22"});
 
                 //Uncomment this code for get plans
-              //  var getPlans = Objclient.GetPlans();
+                //  var getPlans = Objclient.GetPlans();
 
 
 
@@ -65,7 +65,7 @@ namespace TestAPIChartMogul
                 //});
 
                 //Get Invoices
-              //  var invoices = Objclient.GetInvoices(new OConnors.ChartMogul.API.Models.CustomerModel { Uuid = "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408" });
+                //  var invoices = Objclient.GetInvoices(new OConnors.ChartMogul.API.Models.CustomerModel { Uuid = "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408" });
 
 
                 //Import Invoices
@@ -120,7 +120,7 @@ namespace TestAPIChartMogul
 
 
                 //GetSubscription
-                var SubscriptionList = Objclient.GetSubscriptions(new CustomerModel { Uuid = "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408" });
+                //var SubscriptionList = Objclient.GetSubscriptions(new CustomerModel { Uuid = "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408" });
 
 
 
