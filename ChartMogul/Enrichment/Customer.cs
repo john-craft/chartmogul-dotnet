@@ -18,8 +18,7 @@ namespace ChartMogul.API.Enrichment
 
     public class Customer : ICustomer
     {
-        public Dictionary<string, string> headers;
-        private IHttp _iHttp;
+       private IHttp _iHttp;
         public Customer(IHttp iHttp)
         {
             _iHttp = iHttp;

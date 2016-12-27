@@ -14,6 +14,6 @@ namespace ChartMogul.API.Models.Enrichment
 
         [JsonProperty(PropertyName = "custom ")]
         public CustomModel Custom { get; set; }
-
+     
     }
 }

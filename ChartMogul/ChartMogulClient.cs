@@ -9,29 +9,10 @@ using System.IO;
 using ChartMogul.API.Enrichment;
 namespace ChartMogul.API
 {
-
-    public interface IChartMogulClient
-    {
-        CustomerModel AddCustomer(CustomerModel customerModel);
-        List<CustomerModel> GetCustomers();
-        void DeleteCustomer(CustomerModel customerModel);
-        List<DataSourceModel> GetDataSources();
-        DataSourceModel AddDataSource(DataSourceModel datasourcemodal);
-        void DeleteDataSource(DataSourceModel dataSourcemodel);
-        PlanModel CreatePlan(PlanModel plan);
-        List<PlanModel> GetPlans();
-        List<InvoiceModel> GetInvoices(CustomerModel customerModel);
-        List<InvoiceModel> AddInvoice(CustomerModel customerModel, List<InvoiceModel> invoiceModellist);
-        TransactionModel AddTransaction(InvoiceModel invoicemodel, TransactionModel transactionmodel);
-        List<SubscriptionModel> GetSubscriptions(CustomerModel customermodelequest);
-        SubscriptionModel CancelSubscription(SubscriptionModel subscriptionModel);
-    }
-
-
     /// <summary>
     /// Master client for interacting with ChartMogulClient services
     /// </summary>
-    public class ChartMogulClient : IChartMogulClient
+   public class ChartMogulClient 
     {
         private Import.ICustomer _iCustomer;
         private IDataSource _iDataSource;
@@ -46,8 +27,17 @@ namespace ChartMogul.API
                 var enrichmentObject = container.GetInstance<Enrichment.Enrichment>();
                 enrichmentObject.ApiRequest = _apiRequest;
                 return enrichmentObject;
+            }    
+        }
+
+        public Import.Import Import {
+            get
+            {
+                var container = Container.For<MyRegistry>();
+                var importObject = container.GetInstance<Import.Import>();
+                importObject.ApiRequest = _apiRequest;
+                return importObject;
             }
-            set { }
         }
 
 
@@ -74,7 +64,7 @@ namespace ChartMogul.API
                 throw new InvalidDataException("SecretKey cannot be null");
             }
             Configuration config = new Configuration(accountKey, secretKey);
-            configureDependencies();
+      //      configureDependencies();
         }
 
 
@@ -88,86 +78,6 @@ namespace ChartMogul.API
             {
                 _apiRequest.SetHeader(entry.Key, entry.Value);
             }
-        }
-
-
-        private void configureDependencies()
-        {
-            //StructureMap Still require some work
-            var container = Container.For<MyRegistry>();
-            _iCustomer = container.GetInstance<Import.ICustomer>();
-            _iDataSource = container.GetInstance<IDataSource>();
-            _iPlan = container.GetInstance<IPlan>();
-            _iInvoice = container.GetInstance<IInvoice>();
-            _iTransaction = container.GetInstance<ITransaction>();
-            _iSubscription = container.GetInstance<ISubscription>();
-        }
-
-        public CustomerModel AddCustomer(CustomerModel customerModel)
-        {
-            return _iCustomer.AddCustomer(customerModel, _apiRequest);
-        }
-
-        public DataSourceModel AddDataSource(DataSourceModel datasourcemodal)
-        {
-            //dataSourceName
-            return _iDataSource.AddDataSource(datasourcemodal, _apiRequest);
-        }
-
-        public void DeleteCustomer(CustomerModel customerModel)
-        {
-            _iCustomer.DeleteCustomer(customerModel, _apiRequest);
-
-        }
-
-        public void DeleteDataSource(DataSourceModel dataSourcemodel)
-        {
-            _iDataSource.DeleteDataSource(dataSourcemodel, _apiRequest);
-        }
-
-        public List<CustomerModel> GetCustomers()
-        {
-            return _iCustomer.GetCustomers(_apiRequest);
-        }
-
-        public List<DataSourceModel> GetDataSources()
-        {
-            return _iDataSource.GetDataSources(_apiRequest);
-        }
-
-        public PlanModel CreatePlan(PlanModel plan)
-        {
-            return _iPlan.CreatePlan(plan, _apiRequest);
-        }
-
-        public List<PlanModel> GetPlans()
-        {
-            return _iPlan.GetPlans(_apiRequest);
-        }
-
-        public List<InvoiceModel> GetInvoices(CustomerModel customerModel)
-        {
-            return _iInvoice.GetInvoices(customerModel, _apiRequest);
-        }
-
-        public List<InvoiceModel> AddInvoice(CustomerModel customerModel, List<InvoiceModel> invoiceModellist)
-        {
-            return _iInvoice.AddInvoice(customerModel, _apiRequest, invoiceModellist);
-        }
-
-        public TransactionModel AddTransaction(InvoiceModel invoicemodel, TransactionModel transactionmodel)
-        {
-            return _iTransaction.AddTransaction(invoicemodel, transactionmodel, _apiRequest);
-        }
-
-        public List<SubscriptionModel> GetSubscriptions(CustomerModel customermodel)
-        {
-            return _iSubscription.GetSubscriptions(customermodel, _apiRequest);
-        }
-
-        public SubscriptionModel CancelSubscription(SubscriptionModel subscriptionModel)
-        {
-            return _iSubscription.CancelSubscription(subscriptionModel, _apiRequest);
         }
 
     }

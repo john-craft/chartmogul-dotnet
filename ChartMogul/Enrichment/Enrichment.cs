@@ -11,10 +11,10 @@ namespace ChartMogul.API.Enrichment
     public interface IEnrichment
     {
         CustomerModel UpdateCustomer(CustomerPatchModel customerPatchModel, string customerUUID);
-        CustomerModel GetCustomerDetails( string customerUUID);
+        CustomerModel GetCustomerDetails(string customerUUID);
         List<CustomerModel> GetAllCustomers();
-        List<CustomerModel> SearchForCustomer( string email);
-        void MergeCustomers( MergeCustomers mergeCustomers);
+        List<CustomerModel> SearchForCustomer(string email);
+        void MergeCustomers(MergeCustomers mergeCustomers);
     }
     public class Enrichment: IEnrichment
     {

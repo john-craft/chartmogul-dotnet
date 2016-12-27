@@ -11,7 +11,7 @@ namespace TestAPIChartMogul
         static void Main(string[] args)
         {
             //Configuration config = new Configuration();
-            ChartMogulClient Objclient = new ChartMogulClient("faf9d6dba50474216772139d112ddf6b", "80f481bdde66b7e089f7449c4d099dcf");
+            ChartMogulClient Objclient = new ChartMogulClient("", "");
             var test = new Dictionary<string, string>();
             test.Add("test", "value");
             Objclient.AddHeaders(test);
@@ -20,42 +20,42 @@ namespace TestAPIChartMogul
             try
             {
 
-                //Uncomment this code for post
-                //var result = Objclient.AddCustomer(new OConnors.ChartMogul.API.Models.CustomerModel
-                // {
-                //     Data_Source_Uuid = "ds_fa1e14c8-c1fb-11e6-a9ee-47d77bcf3ed5",
-                //     External_Id = Guid.NewGuid().ToString(),
-                //     Name = "Adam Smith",
-                //     Email = "adam@smith.com",
-                //     Country = "US",
-                //     City = "New York"
-                // });
+                // Uncomment this code for post
+                //var result = Objclient.Import.AddCustomer(new OConnors.ChartMogul.API.Models.CustomerModel
+                //{
+                //    Data_Source_Uuid = "ds_fa1e14c8-c1fb-11e6-a9ee-47d77bcf3ed5",
+                //    External_Id = Guid.NewGuid().ToString(),
+                //    Name = "Adam Smith",
+                //    Email = "adam@smith.com",
+                //    Country = "US",
+                //    City = "New York"
+                //});
 
 
                 //Uncomment this code for get customer
-                //var getCustomers = Objclient.GetCustomers();
+                //var getCustomers = Objclient.Import.GetCustomers();
 
                 //To Create a data Source
-                //  var datasource = Objclient.AddDataSource(new OConnors.ChartMogul.API.Models.DataSourceModel { Name = "ashish bill details1" });
+                //  var datasource = Objclient.Import.AddDataSource(new OConnors.ChartMogul.API.Models.DataSourceModel { Name = "ashish bill details1" });
 
 
                 //To delete a customer
-                // Objclient.DeleteCustomer(new OConnors.ChartMogul.API.Models.CustomerModel { Uuid = "cus_34995d84-f1db-4fde-a9cd-29ce6959cf10"});
+                // Objclient.Import.DeleteCustomer(new OConnors.ChartMogul.API.Models.CustomerModel { Uuid = "cus_34995d84-f1db-4fde-a9cd-29ce6959cf10"});
 
                 //To Get DataSources
-                //var datasources = Objclient.GetDataSources();
+             //   var datasources = Objclient.Import.GetDataSources();
 
                 //To Delete a DataSource
-                // Objclient.DeleteDataSource(new OConnors.ChartMogul.API.Models.DataSourceModel { Uuid= "ds_7ab8ff74-c820-11e6-bb5a-eb95a5d49c22"});
+                // Objclient.Import.DeleteDataSource(new OConnors.ChartMogul.API.Models.DataSourceModel { Uuid= "ds_7ab8ff74-c820-11e6-bb5a-eb95a5d49c22"});
 
                 //Uncomment this code for get plans
-                //  var getPlans = Objclient.GetPlans();
+                //  var getPlans = Objclient.Import.GetPlans();
 
 
 
 
                 //Uncomment this code to create plan
-                //var result = Objclient.CreatePlan(new OConnors.ChartMogul.API.Models.PlanModel
+                //var result = Objclient.Import.CreatePlan(new OConnors.ChartMogul.API.Models.PlanModel
                 //{
                 //    DataSource = "ds_fa1e14c8-c1fb-11e6-a9ee-47d77bcf3ed5",
                 //    ExternalId = Guid.NewGuid().ToString(),
@@ -65,7 +65,7 @@ namespace TestAPIChartMogul
                 //});
 
                 //Get Invoices
-                //  var invoices = Objclient.GetInvoices(new OConnors.ChartMogul.API.Models.CustomerModel { Uuid = "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408" });
+                //  var invoices = Objclient.Import.GetInvoices(new OConnors.ChartMogul.API.Models.CustomerModel { Uuid = "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408" });
 
 
                 //Import Invoices
@@ -99,7 +99,7 @@ namespace TestAPIChartMogul
                 //    Transactions = new List<Transaction> { transac }
                 //};
 
-                //var Invoice = Objclient.AddInvoice(new OConnors.ChartMogul.API.Models.CustomerModel
+                //var Invoice = Objclient.Import.AddInvoice(new OConnors.ChartMogul.API.Models.CustomerModel
                 //{ Uuid = "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408" }, inv);
 
 
@@ -120,22 +120,22 @@ namespace TestAPIChartMogul
 
 
                 //GetSubscription
-                //var SubscriptionList = Objclient.GetSubscriptions(new CustomerModel { Uuid = "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408"});
+                //var SubscriptionList = Objclient.Import.GetSubscriptions(new CustomerModel { Uuid = "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408"});
 
 
                 //Cancel Subscription
                 //DateTime[] canceldate = new DateTime[1];
                 //canceldate[0] = DateTime.Now;
-                //var cancelSubscription = Objclient.CancelSubscription(new SubscriptionModel { Uuid = "sub_f4f97eb2-e5f4-4b41-ad22-e5ebc4d3a665", CancellationDates = canceldate });
+                //var cancelSubscription = Objclient.Import.CancelSubscription(new SubscriptionModel { Uuid = "sub_f4f97eb2-e5f4-4b41-ad22-e5ebc4d3a665", CancellationDates = canceldate });
 
                 //To get Enrichment customers              
-                //   var getAllCustomer  = Objclient.Enrichment.GetAllCustomers();
+                //   var getAllCustomer  = Objclient.Import.Enrichment.GetAllCustomers();
 
                 //To get Enrichment customer details
-                //   var getCustomerDetails = Objclient.Enrichment.GetCustomerDetails("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408");
+                //   var getCustomerDetails = Objclient.Import.Enrichment.GetCustomerDetails("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408");
 
                 // To Search by email in enrichment Customer
-                //var customer = Objclient.Enrichment.SearchForCustomer("adam@smith.com");
+                //var customer = Objclient.Import.Enrichment.SearchForCustomer("adam@smith.com");
 
                 //To merge Customers
                 //Objclient.Enrichment.MergeCustomers(new ChartMogul.API.Models.Enrichment.MergeCustomers { Into = new ChartMogul.API.Models.Enrichment.Into{ CustomerUUID = "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408" },From = new ChartMogul.API.Models.Enrichment.From { CustomerUUID = "cus_abf4f640-c129-11e6-be7f-bb6e00c5cf48"
@@ -144,7 +144,7 @@ namespace TestAPIChartMogul
 
                 //TO update customer in enrichment
                 //var customer = Objclient.Enrichment.UpdateCustomer(new ChartMogul.API.Models.Enrichment.CustomerPatchModel { City = "Gurgaon", Country = "US" }, "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408");
-               
+
 
             }
             catch (Exception ex)
