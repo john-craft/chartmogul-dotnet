@@ -1,15 +1,11 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChartMogul.API.Models.Enrichment
 {
   public class CustomModel
     {
-        [JsonProperty(PropertyName = "Custom")]
+        [JsonProperty(PropertyName = "custom")]
         public Dictionary<string, string> Custom { get; set; }
 
     }

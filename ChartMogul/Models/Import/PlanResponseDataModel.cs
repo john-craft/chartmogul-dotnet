@@ -1,14 +1,13 @@
 ﻿using Newtonsoft.Json;
-using OConnors.ChartMogul.API.Models;
+using OConnors.ChartMogul.API.Models.Import;
 using System.Collections.Generic;
 
-
-namespace ChartMogul.API.Models
+namespace ChartMogul.API.Models.Import
 {
-    public class CustomerResponseDataModel
+    public class PlanResponseDataModel
     {
-        [JsonProperty(PropertyName = "customers")]
-        public List<CustomerModel> Customers { get; set; }
+        [JsonProperty(PropertyName = "plans")]
+        public List<PlanModel> Plans { get; set; }
 
         [JsonProperty(PropertyName = "current_page")]
         public int Current_Page { get; set; }

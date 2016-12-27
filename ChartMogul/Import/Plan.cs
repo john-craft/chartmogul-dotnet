@@ -2,6 +2,8 @@
 using OConnors.ChartMogul.API.Models;
 using System.Collections.Generic;
 using ChartMogul.API.Models;
+using OConnors.ChartMogul.API.Models.Import;
+using ChartMogul.API.Models.Import;
 
 namespace ChartMogul.API.Import
 {

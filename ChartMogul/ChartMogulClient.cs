@@ -1,12 +1,8 @@
-﻿using ChartMogul.API.Import;
-using OConnors.ChartMogul.API.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using StructureMap;
 using ChartMogul.API.Models.Core;
-using System.Text;
 using System.IO;
-using ChartMogul.API.Enrichment;
+
 namespace ChartMogul.API
 {
     /// <summary>
@@ -14,12 +10,6 @@ namespace ChartMogul.API
     /// </summary>
    public class ChartMogulClient 
     {
-        private Import.ICustomer _iCustomer;
-        private IDataSource _iDataSource;
-        private IPlan _iPlan;
-        private IInvoice _iInvoice;
-        private ITransaction _iTransaction;
-        private ISubscription _iSubscription;
         private APIRequest _apiRequest = new APIRequest();
         public Enrichment.Enrichment Enrichment{ get
             {

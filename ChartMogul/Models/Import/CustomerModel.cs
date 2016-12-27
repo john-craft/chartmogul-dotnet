@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace OConnors.ChartMogul.API.Models
+namespace OConnors.ChartMogul.API.Models.Import
 {
     public class CustomerModel
     {

@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
-using OConnors.ChartMogul.API.Models;
+using OConnors.ChartMogul.API.Models.Import;
 using System;
 using System.Collections.Generic;
 
 
-namespace ChartMogul.API.Models
+namespace ChartMogul.API.Models.Import
 {
     public class DataSourceResponseDataModel
     {

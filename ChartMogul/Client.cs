@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OConnors.ChartMogul.API.Models;
+using OConnors.ChartMogul.API.Models.Import;
 using System;
 using System.Collections.Generic;
 using System.IO;

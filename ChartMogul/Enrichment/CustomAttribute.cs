@@ -1,10 +1,5 @@
 ﻿using ChartMogul.API.Models.Core;
 using ChartMogul.API.Models.Enrichment;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChartMogul.API.Enrichment
 {
@@ -12,7 +7,7 @@ namespace ChartMogul.API.Enrichment
     {
         CustomModel AddCustomAttribute(string customerUUID, APIRequest apiRequest, AddCustomAttributeModel customModelToBeAdded);
         CustomerResponseModel AddCustomAttributeToCustomerWithEmail(string email, APIRequest apiRequest, AddCustomAttributeModel customAttributes);
-        CustomModel UpdateCustomAttributesOfCustomer(string customerUUID, APIRequest apiRequest, AddCustomAttributeModel addCustomAttributeModel);
+        CustomModel UpdateCustomAttributesOfCustomer(string customerUUID, APIRequest apiRequest, CustomModel addCustomAttributeModel);
     }
     public class CustomAttribute: ICustomAttribute
     {
@@ -38,11 +33,11 @@ namespace ChartMogul.API.Enrichment
             return response;
         }
 
-        public CustomModel UpdateCustomAttributesOfCustomer(string customerUUID, APIRequest apiRequest, AddCustomAttributeModel addCustomAttributeModel)
+        public CustomModel UpdateCustomAttributesOfCustomer(string customerUUID, APIRequest apiRequest, CustomModel addCustomAttributeModel)
         {
             apiRequest.RouteName = string.Concat("customers/",customerUUID,"/attributes/custom");
             _iHttp.ApiRequest = apiRequest;
-            var response = _iHttp.Put<AddCustomAttributeModel, CustomModel>(addCustomAttributeModel);
+            var response = _iHttp.Put<CustomModel, CustomModel>(addCustomAttributeModel);
             return response;
         }
 

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace OConnors.ChartMogul.API.Models
+namespace OConnors.ChartMogul.API.Models.Import
 {
     public class LineItemModel
     {

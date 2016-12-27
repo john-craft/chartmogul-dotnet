@@ -20,7 +20,7 @@ namespace ChartMogul.API.Enrichment
         CustomerResponseModel AddTagsToCustomerWithEmail(string customerUUID, CustomerTag customerTag);
         CustomModel AddCustomAttribute(string customerUUID, AddCustomAttributeModel customAttributes);
         CustomerResponseModel AddCustomAttributeToCustomerWithEmail(string email, AddCustomAttributeModel customAttributes);
-        CustomModel UpdateCustomAttributesOfCustomer(string customerUUID, AddCustomAttributeModel addCustomAttributeModel);
+        CustomModel UpdateCustomAttributesOfCustomer(string customerUUID, CustomModel addCustomAttributeModel);
     }
     public class Enrichment: IEnrichment
     {
@@ -92,7 +92,7 @@ namespace ChartMogul.API.Enrichment
             return _customAttribute.AddCustomAttributeToCustomerWithEmail(email, ApiRequest, customAttributes);
         }
 
-        public CustomModel UpdateCustomAttributesOfCustomer(string customerUUID, AddCustomAttributeModel addCustomAttributeModel)
+        public CustomModel UpdateCustomAttributesOfCustomer(string customerUUID, CustomModel addCustomAttributeModel)
         {
             return _customAttribute.UpdateCustomAttributesOfCustomer(customerUUID, ApiRequest, addCustomAttributeModel);
         }

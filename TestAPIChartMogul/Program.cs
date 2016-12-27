@@ -34,7 +34,7 @@ namespace TestAPIChartMogul
 
 
                 //Uncomment this code for get customer
-                //var getCustomers = Objclient.Import.GetCustomers();
+              //  var getCustomers = Objclient.Import.GetCustomers();
 
                 //To Create a data Source
                 //  var datasource = Objclient.Import.AddDataSource(new OConnors.ChartMogul.API.Models.DataSourceModel { Name = "ashish bill details1" });
@@ -147,7 +147,7 @@ namespace TestAPIChartMogul
                 //var customer = Objclient.Enrichment.UpdateCustomer(new ChartMogul.API.Models.Enrichment.CustomerPatchModel { City = "Gurgaon", Country = "US" }, "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408");
 
                 //To Retrieve customer attributes
-                //var response = Objclient.Enrichment.GetCustomerAttribute("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408");
+                // var response = Objclient.Enrichment.GetCustomerAttribute("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408");
 
                 //To add tags to customer
                 //var response = Objclient.Enrichment.AddTagsToCustomer("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408", new string[3] { "test", "test", "test"});
@@ -165,7 +165,11 @@ namespace TestAPIChartMogul
                 //   var response = Objclient.Enrichment.AddCustomAttributeToCustomerWithEmail("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408", new AddCustomAttributeModel { Email = "adam@smith.com", Custom = new List<Custom> { new Custom { Key = "testKey", Value = "testValue", Type = "String" } } });
 
                 //To Update Custom Attributes of a Customer
-              //  var response = Objclient.Enrichment.UpdateCustomAttributesOfCustomer("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408", new AddCustomAttributeModel { Custom = new List<Custom> { new Custom { Key = "testKey", Value = "testValue", Type = "String" } } });
+                //var dictionary = new Dictionary<string, string>();
+                //dictionary.Add("testKey", "value");
+                //var response = Objclient.Enrichment.UpdateCustomAttributesOfCustomer("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408", new CustomModel { Custom = dictionary });
+
+
             }
             catch (Exception ex)
             {
