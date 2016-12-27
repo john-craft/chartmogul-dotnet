@@ -41,17 +41,6 @@ namespace ChartMogul.API
         }
 
 
-        public ChartMogulClient(Import.ICustomer iCustomer, IDataSource iDataSource, IPlan iPlan, IInvoice iInvoice, ITransaction iTransaction, ISubscription iSubscription)
-        {
-            _iCustomer = iCustomer;
-            _iDataSource = iDataSource;
-            _iPlan = iPlan;
-            _iInvoice = iInvoice;
-            _iTransaction = iTransaction;
-            _iSubscription = iSubscription;
-        }
-
-
         public ChartMogulClient(string accountKey, string secretKey)
         {
             if (string.IsNullOrEmpty(accountKey))

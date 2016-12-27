@@ -21,6 +21,7 @@ namespace ChartMogul.API
         APIRequest ApiRequest { get; set; }
         void Delete();
         TO Patch<TI, TO>(TI item);
+        TO Delete<TI, TO>(TI item);
 
     }
     public class Http : IHttp
@@ -108,6 +109,12 @@ namespace ChartMogul.API
         public TO Patch<TI, TO>(TI item)
         {
             HttpWebRequest request = CreateRequest(RequestMethod.Patch, item, _authenticated);
+            return SendRequest<TO>(request);
+        }
+
+        public TO Delete<TI,TO>(TI item)
+        {
+            HttpWebRequest request = CreateRequest(RequestMethod.Delete, item, _authenticated);
             return SendRequest<TO>(request);
         }
 
@@ -225,8 +232,8 @@ namespace ChartMogul.API
         {
             using (var reader = new StreamReader(responseStream))
             {
-                var responseText = reader.ReadToEnd();
-                return JsonConvert.DeserializeObject<T>(responseText);
+               var responseText = reader.ReadToEnd();  
+               return JsonConvert.DeserializeObject<T>(responseText);
             }
         }
 

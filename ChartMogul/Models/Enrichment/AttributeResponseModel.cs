@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace ChartMogul.API.Models.Enrichment
 {
-  public class CustomModel
+    public class AttributeResponseModel
     {
-        [JsonProperty(PropertyName = "Custom")]
-        public Dictionary<string, string> Custom { get; set; }
-
+        [JsonProperty(PropertyName= "attributes")]
+        public Attribute Attributes { get; set; }
     }
 }

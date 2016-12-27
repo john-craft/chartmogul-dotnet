@@ -1,4 +1,5 @@
 ﻿using ChartMogul.API;
+using ChartMogul.API.Models.Enrichment;
 using OConnors.ChartMogul.API;
 using OConnors.ChartMogul.API.Models;
 using System;
@@ -43,7 +44,7 @@ namespace TestAPIChartMogul
                 // Objclient.Import.DeleteCustomer(new OConnors.ChartMogul.API.Models.CustomerModel { Uuid = "cus_34995d84-f1db-4fde-a9cd-29ce6959cf10"});
 
                 //To Get DataSources
-             //   var datasources = Objclient.Import.GetDataSources();
+                //   var datasources = Objclient.Import.GetDataSources();
 
                 //To Delete a DataSource
                 // Objclient.Import.DeleteDataSource(new OConnors.ChartMogul.API.Models.DataSourceModel { Uuid= "ds_7ab8ff74-c820-11e6-bb5a-eb95a5d49c22"});
@@ -145,7 +146,26 @@ namespace TestAPIChartMogul
                 //TO update customer in enrichment
                 //var customer = Objclient.Enrichment.UpdateCustomer(new ChartMogul.API.Models.Enrichment.CustomerPatchModel { City = "Gurgaon", Country = "US" }, "cus_635608cb-9b6d-4a59-a03d-15f00fa0e408");
 
+                //To Retrieve customer attributes
+                //var response = Objclient.Enrichment.GetCustomerAttribute("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408");
 
+                //To add tags to customer
+                //var response = Objclient.Enrichment.AddTagsToCustomer("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408", new string[3] { "test", "test", "test"});
+
+                //To add tags to customer with specified email
+                // var response = Objclient.Enrichment.AddTagsToCustomerWithEmail("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408", new CustomerTag { Tags = new string[3] { "test1", "test2", "test3" },Email = "adam@smith.com" });
+
+                //To remove tags from customer
+                // var response = Objclient.Enrichment.RemoveTagsFromCustomer("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408", new string[1] { "test" });
+
+                //To add custom attribute
+                //var response = Objclient.Enrichment.AddCustomAttribute("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408", new AddCustomAttributeModel { Custom = new List<Custom> { new Custom { Key = "testKey", Value = "testValue", Type = "String" } } });
+
+                //To add custom attribute to customer with email
+                //   var response = Objclient.Enrichment.AddCustomAttributeToCustomerWithEmail("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408", new AddCustomAttributeModel { Email = "adam@smith.com", Custom = new List<Custom> { new Custom { Key = "testKey", Value = "testValue", Type = "String" } } });
+
+                //To Update Custom Attributes of a Customer
+              //  var response = Objclient.Enrichment.UpdateCustomAttributesOfCustomer("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408", new AddCustomAttributeModel { Custom = new List<Custom> { new Custom { Key = "testKey", Value = "testValue", Type = "String" } } });
             }
             catch (Exception ex)
             {

@@ -15,14 +15,26 @@ namespace ChartMogul.API.Enrichment
         List<CustomerModel> GetAllCustomers();
         List<CustomerModel> SearchForCustomer(string email);
         void MergeCustomers(MergeCustomers mergeCustomers);
+        CustomerTag GetCustomerAttribute(string customerUUID);
+        string[] AddTagsToCustomer(string customerUUID, string[] tags);
+        CustomerResponseModel AddTagsToCustomerWithEmail(string customerUUID, CustomerTag customerTag);
+        CustomModel AddCustomAttribute(string customerUUID, AddCustomAttributeModel customAttributes);
+        CustomerResponseModel AddCustomAttributeToCustomerWithEmail(string email, AddCustomAttributeModel customAttributes);
+        CustomModel UpdateCustomAttributesOfCustomer(string customerUUID, AddCustomAttributeModel addCustomAttributeModel);
     }
     public class Enrichment: IEnrichment
     {
         public ICustomer _customer;
-        public APIRequest ApiRequest { get; set; } 
-        public Enrichment(ICustomer customer)
+        public ICustomerAttribute _customerAttribute;
+        public ITags _tags;
+        public APIRequest ApiRequest { get; set; }
+        public ICustomAttribute _customAttribute;
+        public Enrichment(ICustomer customer, ICustomerAttribute customerAttribute, ITags tags, ICustomAttribute customAttribute)
         {
-            _customer = customer;       
+            _customer = customer;
+            _customerAttribute = customerAttribute;
+            _tags = tags;
+            _customAttribute = customAttribute;
         }
 
         public CustomerModel UpdateCustomer(CustomerPatchModel customerPatchModel, string customerUUID)
@@ -50,5 +62,39 @@ namespace ChartMogul.API.Enrichment
             _customer.MergeCustomers(ApiRequest, mergeCustomers);
         }
 
+        public CustomerTag GetCustomerAttribute(string customerUUID)
+        {
+           return _customerAttribute.GetCustomerAttribute(customerUUID, ApiRequest);
+        }
+
+        public string[] AddTagsToCustomer(string customerUUID,string[] tags)
+        {
+            return _tags.AddTagsToCustomer(customerUUID,ApiRequest,tags);
+        }
+
+        public CustomerResponseModel AddTagsToCustomerWithEmail(string customerUUID, CustomerTag customerTag)
+        {
+            return _tags.AddTagsToCustomerWithEmail(customerUUID, ApiRequest, customerTag);
+        }
+
+        public string[] RemoveTagsFromCustomer(string customerUUID,string[] tagsToBeRemoved)
+        {
+            return _tags.RemoveTagsFromCustomer(customerUUID, ApiRequest, tagsToBeRemoved);
+        }
+
+        public CustomModel AddCustomAttribute(string customerUUID,AddCustomAttributeModel customAttributes)
+        {
+            return _customAttribute.AddCustomAttribute(customerUUID, ApiRequest, customAttributes);
+        }
+
+        public CustomerResponseModel AddCustomAttributeToCustomerWithEmail(string email, AddCustomAttributeModel customAttributes)
+        {
+            return _customAttribute.AddCustomAttributeToCustomerWithEmail(email, ApiRequest, customAttributes);
+        }
+
+        public CustomModel UpdateCustomAttributesOfCustomer(string customerUUID, AddCustomAttributeModel addCustomAttributeModel)
+        {
+            return _customAttribute.UpdateCustomAttributesOfCustomer(customerUUID, ApiRequest, addCustomAttributeModel);
+        }
     }
 }
