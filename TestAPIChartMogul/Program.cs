@@ -12,7 +12,7 @@ namespace TestAPIChartMogul
         static void Main(string[] args)
         {
             //Configuration config = new Configuration();
-            ChartMogulClient Objclient = new ChartMogulClient("", "");
+            ChartMogulClient Objclient = new ChartMogulClient("faf9d6dba50474216772139d112ddf6b","80f481bdde66b7e089f7449c4d099dcf");
             var test = new Dictionary<string, string>();
             test.Add("test", "value");
             Objclient.AddHeaders(test);
@@ -34,7 +34,7 @@ namespace TestAPIChartMogul
 
 
                 //Uncomment this code for get customer
-              //  var getCustomers = Objclient.Import.GetCustomers();
+                //  var getCustomers = Objclient.Import.GetCustomers();
 
                 //To Create a data Source
                 //  var datasource = Objclient.Import.AddDataSource(new OConnors.ChartMogul.API.Models.DataSourceModel { Name = "ashish bill details1" });
@@ -169,6 +169,8 @@ namespace TestAPIChartMogul
                 //dictionary.Add("testKey", "value");
                 //var response = Objclient.Enrichment.UpdateCustomAttributesOfCustomer("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408", new CustomModel { Custom = dictionary });
 
+                //To remove custom attributes from a customer
+              //  var response = Objclient.Enrichment.RemoveCustomAttributeFromCustomer("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408", new RemoveCustomAttributeModel { Custom = new string[1] { "testKey" } });
 
             }
             catch (Exception ex)

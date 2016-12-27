@@ -79,6 +79,7 @@
     <Compile Include="Import\Subscription.cs" />
     <Compile Include="Import\Transaction.cs" />
     <Compile Include="Models\Core\APIRequest.cs" />
+    <Compile Include="Models\Enrichment\RemoveCustomAttributeModel.cs" />
     <Compile Include="Models\Import\DataSourceModel.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Models\Import\CustomerModel.cs" />

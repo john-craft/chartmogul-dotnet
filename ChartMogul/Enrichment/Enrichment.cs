@@ -96,5 +96,10 @@ namespace ChartMogul.API.Enrichment
         {
             return _customAttribute.UpdateCustomAttributesOfCustomer(customerUUID, ApiRequest, addCustomAttributeModel);
         }
+
+        public CustomModel RemoveCustomAttributeFromCustomer(string customerUUID, RemoveCustomAttributeModel removeCustomAttributeModel)
+        {
+            return _customAttribute.RemoveCustomAttributeFromCustomer(customerUUID, ApiRequest, removeCustomAttributeModel);
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace ChartMogul.API.Enrichment
         CustomModel AddCustomAttribute(string customerUUID, APIRequest apiRequest, AddCustomAttributeModel customModelToBeAdded);
         CustomerResponseModel AddCustomAttributeToCustomerWithEmail(string email, APIRequest apiRequest, AddCustomAttributeModel customAttributes);
         CustomModel UpdateCustomAttributesOfCustomer(string customerUUID, APIRequest apiRequest, CustomModel addCustomAttributeModel);
+        CustomModel RemoveCustomAttributeFromCustomer(string customerUUID, APIRequest apiRequest, RemoveCustomAttributeModel removeCustomAttributeModel);
     }
     public class CustomAttribute: ICustomAttribute
     {
@@ -38,6 +39,14 @@ namespace ChartMogul.API.Enrichment
             apiRequest.RouteName = string.Concat("customers/",customerUUID,"/attributes/custom");
             _iHttp.ApiRequest = apiRequest;
             var response = _iHttp.Put<CustomModel, CustomModel>(addCustomAttributeModel);
+            return response;
+        }
+
+        public CustomModel RemoveCustomAttributeFromCustomer(string customerUUID, APIRequest apiRequest, RemoveCustomAttributeModel removeCustomAttributeModel)
+        {
+            apiRequest.RouteName = string.Concat("customers/", customerUUID, "/attributes/custom");
+            _iHttp.ApiRequest = apiRequest;
+            var response = _iHttp.Delete<RemoveCustomAttributeModel, CustomModel>(removeCustomAttributeModel);
             return response;
         }
 
