@@ -3,26 +3,31 @@ using ChartMogul.API.Exceptions;
 using ChartMogul.API.Import;
 using ChartMogul.API.Models;
 using ChartMogul.API.Models.Core;
-using ChartMogul.API.Models.Import;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using OConnors.ChartMogul.API.Models.Import;
+using OConnors.ChartMogul.API.Models;
 using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using Newtonsoft.Json;
+using OConnors.ChartMogul.API.Models.Import;
+using ChartMogul.API.Models.Import;
+using System.Collections.Generic;
 
 namespace TestChartMogul.Import
 {
     [TestClass]
-    public class CustomerTest : ParentTest
+  public  class CustomerTest:ParentTest
     {
-        private Customer _customer;
+         private Customer _customer;
+       // private Mock<IGetResponse> _getResponse;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _customer = new Customer(_http.Object);
+            _getResponse = new Mock<IGetResponse>();
+            _customer = new Customer(new Http(_getResponse.Object));                
         }
 
         public CustomerModel GetCustomerModel()
@@ -35,10 +40,19 @@ namespace TestChartMogul.Import
             };
         }
 
+        public CustomerResponseDataModel GetCustomerResponseDataModel()
+        {
+            return new CustomerResponseDataModel()
+            {
+                Customers = new List<CustomerModel>() { GetCustomerModel() }
+
+            };
+        }
+
         [TestMethod]
         public void GivenCalling_GetCustomers_ReturnsListOfCustomers()
         {
-            _http.Setup(x => x.Get<CustomerResponseDataModel>()).Returns(new CustomerResponseDataModel() { Customers = new System.Collections.Generic.List<CustomerModel> { new CustomerModel() { City = "test", Company = "test" } } });
+            MockHttpResponse<CustomerResponseDataModel>(GetCustomerResponseDataModel());
             var response = _customer.GetCustomers(new APIRequest());
             Assert.IsNotNull(response);
         }
@@ -46,8 +60,8 @@ namespace TestChartMogul.Import
         [TestMethod]
         public void GivenCalling_AddCustomers_AddCustomerAndReturnResponse()
         {
-            _http.Setup(x => x.Post<CustomerModel, CustomerModel>(It.IsAny<CustomerModel>())).Returns(GetCustomerModel());
-            var response = _customer.AddCustomer(GetCustomerModel(), new APIRequest());
+            MockHttpResponse<CustomerModel>(GetCustomerModel());
+            var response = _customer.AddCustomer(GetCustomerModel(),new APIRequest());
             Assert.IsNotNull(response);
         }
 
@@ -55,56 +69,62 @@ namespace TestChartMogul.Import
         [ExpectedException(typeof(UnAuthorizedUserException))]
         public void GivenCalling_GetCustomers_WhenUserIsNotAuthorizedThenThrowsException()
         {
-            _http.Setup(x => x.Get<CustomerResponseDataModel>()).Throws(new UnAuthorizedUserException("User is not authorized"));
-            var response = _customer.GetCustomers(new APIRequest());
+            MockHttpErrorResponse(HttpStatusCode.Unauthorized,"The remote server returned an error: (401) Unauthorized.");
+            var response = _customer.GetCustomers(new APIRequest());    
         }
 
         [TestMethod]
         [ExpectedException(typeof(SchemaInvalidException))]
-        public void GivenCalling_PostCustomers_WhenSchemaIsInvalidThenThrowsException()
+        public void GivenCalling_AddCustomers_WhenSchemaIsInvalidThenThrowsException()
         {
-            _http.Setup(x => x.Post<CustomerModel, CustomerModel>(It.IsAny<CustomerModel>())).Throws(new SchemaInvalidException("Unprocessable Entity (Your request has semantic errors)"));
-            var response = _customer.AddCustomer(new CustomerModel(), new APIRequest());
+            MockHttpErrorResponse(HttpStatusCode.BadRequest, "Scheme is invalid. Required parameter external id is missing");
+            var response = _customer.AddCustomer(new CustomerModel(),new APIRequest());
         }
 
         [TestMethod]
         [ExpectedException(typeof(UnAuthorizedUserException))]
-        public void GivenCalling_PostCustomers_WhenUserIsNotAuthorizedThenThrowsException()
+        public void GivenCalling_AddCustomers_WhenUserIsNotAuthorizedThenThrowsException()
         {
-            _http.Setup(x => x.Post<CustomerModel, CustomerModel>(It.IsAny<CustomerModel>())).Throws(new UnAuthorizedUserException("User is not authorized"));
+            MockHttpErrorResponse(HttpStatusCode.Unauthorized, "The remote server returned an error: (401) Unauthorized.");
             var response = _customer.AddCustomer(new CustomerModel(), new APIRequest());
         }
 
         [TestMethod]
         [ExpectedException(typeof(ChartMogulException))]
-        public void GivenCalling_PostCustomers_WhenCustomerExternalUUIDAlreadyExistThenThrowsException()
+        public void GivenCalling_AddCustomers_WhenCustomerExternalUUIDAlreadyExistThenThrowsException()
         {
-            _http.Setup(x => x.Post<CustomerModel, CustomerModel>(It.IsAny<CustomerModel>())).Throws(new ChartMogulException("Customer with same external uuid already exist"));
+            MockHttpErrorResponse(HttpStatusCode.NotAcceptable, "External Id already exist");
             var response = _customer.AddCustomer(new CustomerModel(), new APIRequest());
         }
 
         [TestMethod]
         [ExpectedException(typeof(NotFoundException))]
-        public void GivenCalling_PostCustomers_WhenUrlIsNotThenThrowsNotFoundException()
+        public void GivenCalling_AddCustomers_WhenUrlIsNotThenThrowsNotFoundException()
         {
-            _http.Setup(x => x.Post<CustomerModel, CustomerModel>(It.IsAny<CustomerModel>())).Throws(new NotFoundException("Server not found"));
+            MockHttpErrorResponse(HttpStatusCode.NotFound, "Requested method not found");
             var response = _customer.AddCustomer(new CustomerModel(), new APIRequest());
         }
 
         [TestMethod]
         [ExpectedException(typeof(RequestFailedException))]
-        public void GivenCalling_PostCustomers_RequestFailsThenThrowException()
+        public void GivenCalling_AddCustomers_RequestFailsThenThrowException()
         {
-            _http.Setup(x => x.Post<CustomerModel, CustomerModel>(It.IsAny<CustomerModel>())).Throws(new RequestFailedException("Request failed with status code 402"));
+            MockHttpErrorResponse(HttpStatusCode.PaymentRequired, "Request failed");
             var response = _customer.AddCustomer(new CustomerModel(), new APIRequest());
         }
 
         [TestMethod]
         [ExpectedException(typeof(ForbiddenException))]
-        public void GivenCalling_PostCustomers_ThrowsForbiddenExceptionWhen()
+        public void GivenCalling_AddCustomers_ThrowsForbiddenExceptionWhen()
         {
-            _http.Setup(x => x.Post<CustomerModel, CustomerModel>(It.IsAny<CustomerModel>())).Throws(new ForbiddenException("The requested action is forbidden."));
+            MockHttpErrorResponse(HttpStatusCode.Forbidden, "Request forbidden");
             var response = _customer.AddCustomer(new CustomerModel(), new APIRequest());
+        }
+
+        [TestMethod]
+        public void GivenCalling_DeleteCustomer_ThrowsNoExceptionIfSuccess()
+        {         
+          _customer.DeleteCustomer(new CustomerModel(), new APIRequest());
         }
 
     }

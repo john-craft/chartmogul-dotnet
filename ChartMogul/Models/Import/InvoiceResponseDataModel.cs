@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ChartMogul.API.Models.Import
 {
-    class InvoiceResponseDataModel
+   public class InvoiceResponseDataModel
     {
         [JsonProperty(PropertyName = "invoices")]
         public List<InvoiceModel> Invoices { get; set; }

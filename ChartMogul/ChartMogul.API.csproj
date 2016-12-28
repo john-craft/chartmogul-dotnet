@@ -71,6 +71,7 @@
     <Compile Include="Exceptions\ResponseException.cs" />
     <Compile Include="Exceptions\SchemaInvalidException.cs" />
     <Compile Include="Exceptions\UnAuthorizedUserException.cs" />
+    <Compile Include="GetResponse.cs" />
     <Compile Include="Http.cs" />
     <Compile Include="Import\Customer.cs" />
     <Compile Include="Import\Import.cs" />
