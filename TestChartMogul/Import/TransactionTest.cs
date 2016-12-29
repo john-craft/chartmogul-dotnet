@@ -70,6 +70,22 @@ namespace TestChartMogul.Import
         }
 
         [TestMethod]
+        [ExpectedException(typeof(UnAuthorizedUserException))]
+        public void GivenCalling_AddTransactions_WhenUserIsNotAuthorizedThrowsAnException()
+        {
+            MockHttpErrorResponse(HttpStatusCode.Unauthorized, "The remote server returned an error: (401) Unauthorized.");
+            var response = _transaction.AddTransaction(GetInvoiceModel(), GetTransactionModel(), new APIRequest());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ChartMogulException))]
+        public void GivenCalling_AddTransactions_WhenServerIsNotRespondingThenThrowsException()
+        {
+            MockHttpErrorResponse(HttpStatusCode.GatewayTimeout, "The remote server returned an error: (504)");
+            var response = _transaction.AddTransaction(GetInvoiceModel(), GetTransactionModel(), new APIRequest());
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(SchemaInvalidException))]
         public void GivenCalling_AddTransactions_WhenSchemaIsInvalidThenThrowsException()
         {

@@ -38,7 +38,7 @@ namespace TestChartMogul.Import
             var response = new Mock<HttpWebRequest>();
             request.Setup(c => c.GetResponseStream()).Throws(new WebException(message, new Exception(), (WebExceptionStatus)400, httpWebResponse.Object));
             response.Setup(c => c.GetResponse()).Returns(request.Object);
-            _getResponse.Setup(x => x.GetResponseFromServer(It.IsAny<HttpWebRequest>())).Returns(request.Object);
+            _getResponse.Setup(x => x.GetResponseFromServer(It.IsAny<HttpWebRequest>())).Throws(new WebException(message, new Exception(), (WebExceptionStatus)400, httpWebResponse.Object));
         }
 
         public void MockHttpResponse<T>(T data)

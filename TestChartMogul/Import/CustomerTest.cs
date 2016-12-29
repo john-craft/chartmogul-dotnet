@@ -58,20 +58,29 @@ namespace TestChartMogul.Import
         }
 
         [TestMethod]
+        [ExpectedException(typeof(UnAuthorizedUserException))]
+        public void GivenCalling_GetCustomers_WhenUserIsNotAuthorizedThenThrowsException()
+        {
+            MockHttpErrorResponse(HttpStatusCode.Unauthorized, "The remote server returned an error: (401) Unauthorized.");
+            var response = _customer.GetCustomers(new APIRequest());
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(ChartMogulException))]
+        public void GivenCalling_GetCustomers_WhenServerIsNotRespondingThenThrowsException()
+        {
+            MockHttpErrorResponse(HttpStatusCode.GatewayTimeout, "The remote server returned an error: (504)");
+            var response = _customer.GetCustomers(new APIRequest());
+        }
+
+        [TestMethod]
         public void GivenCalling_AddCustomers_AddCustomerAndReturnResponse()
         {
             MockHttpResponse<CustomerModel>(GetCustomerModel());
             var response = _customer.AddCustomer(GetCustomerModel(),new APIRequest());
             Assert.IsNotNull(response);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(UnAuthorizedUserException))]
-        public void GivenCalling_GetCustomers_WhenUserIsNotAuthorizedThenThrowsException()
-        {
-            MockHttpErrorResponse(HttpStatusCode.Unauthorized,"The remote server returned an error: (401) Unauthorized.");
-            var response = _customer.GetCustomers(new APIRequest());    
-        }
+        }      
 
         [TestMethod]
         [ExpectedException(typeof(SchemaInvalidException))]
@@ -94,7 +103,7 @@ namespace TestChartMogul.Import
         public void GivenCalling_AddCustomers_WhenCustomerExternalUUIDAlreadyExistThenThrowsException()
         {
             MockHttpErrorResponse(HttpStatusCode.NotAcceptable, "External Id already exist");
-            var response = _customer.AddCustomer(new CustomerModel(), new APIRequest());
+            var response = _customer.AddCustomer(GetCustomerModel(), new APIRequest());
         }
 
         [TestMethod]
@@ -115,7 +124,7 @@ namespace TestChartMogul.Import
 
         [TestMethod]
         [ExpectedException(typeof(ForbiddenException))]
-        public void GivenCalling_AddCustomers_ThrowsForbiddenExceptionWhen()
+        public void GivenCalling_AddCustomers_ThrowsForbiddenException()
         {
             MockHttpErrorResponse(HttpStatusCode.Forbidden, "Request forbidden");
             var response = _customer.AddCustomer(new CustomerModel(), new APIRequest());
@@ -125,6 +134,23 @@ namespace TestChartMogul.Import
         public void GivenCalling_DeleteCustomer_ThrowsNoExceptionIfSuccess()
         {         
           _customer.DeleteCustomer(new CustomerModel(), new APIRequest());
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(UnAuthorizedUserException))]
+        public void GivenCalling_DeleteCustomer_ThrowsUserUnAuthorizedException()
+        {
+            MockHttpErrorResponse(HttpStatusCode.Unauthorized, "The remote server returned an error: (401) Unauthorized.");          
+            _customer.DeleteCustomer(new CustomerModel(), new APIRequest());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ChartMogulException))]
+        public void GivenCalling_DeleteCustomer_ThrowsExceptionWhenServerIsNotResponding()
+        {
+            MockHttpErrorResponse(HttpStatusCode.GatewayTimeout, "The remote server returned an error: (504)");
+            _customer.DeleteCustomer(new CustomerModel(), new APIRequest());
         }
 
     }

@@ -61,20 +61,29 @@ namespace TestChartMogul.Import
         }
 
         [TestMethod]
-        public void GivenCalling_AddPlans_AddPlanAndReturnResponse()
-        {
-            MockHttpResponse<PlanModel>(GetPlanModel());
-            var response = _plan.CreatePlan(GetPlanModel(), new APIRequest());
-            Assert.IsNotNull(response);
-        }
-
-        [TestMethod]
         [ExpectedException(typeof(UnAuthorizedUserException))]
         public void GivenCalling_GetPlans_WhenUserIsNotAuthorizedThenThrowsException()
         {
             MockHttpErrorResponse(HttpStatusCode.Unauthorized, "The remote server returned an error: (401) Unauthorized.");
             var response = _plan.GetPlans(new APIRequest());
         }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(ChartMogulException))]
+        public void GivenCalling_GetPlans_WhenServerIsNotRespondingThenThrowsException()
+        {
+            MockHttpErrorResponse(HttpStatusCode.GatewayTimeout, "The remote server returned an error: (504)");
+            var response = _plan.GetPlans(new APIRequest());
+        }
+
+        [TestMethod]
+        public void GivenCalling_AddPlans_AddPlanAndReturnResponse()
+        {
+            MockHttpResponse<PlanModel>(GetPlanModel());
+            var response = _plan.CreatePlan(GetPlanModel(), new APIRequest());
+            Assert.IsNotNull(response);
+        } 
 
         [TestMethod]
         [ExpectedException(typeof(SchemaInvalidException))]
@@ -118,10 +127,12 @@ namespace TestChartMogul.Import
 
         [TestMethod]
         [ExpectedException(typeof(ForbiddenException))]
-        public void GivenCalling_AddPlans_ThrowsForbiddenExceptionWhen()
+        public void GivenCalling_AddPlans_ThrowsForbiddenException()
         {
             MockHttpErrorResponse(HttpStatusCode.Forbidden, "Request forbidden");
             var response = _plan.CreatePlan(new PlanModel(), new APIRequest());
-        }   
+        }  
+        
+         
     }
 }

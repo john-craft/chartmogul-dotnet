@@ -59,12 +59,13 @@ namespace TestChartMogul.Import
         }
 
         [TestMethod]
-        public void GivenCalling_AddDataSources_AddDataSourceAndReturnResponse()
+        [ExpectedException(typeof(ChartMogulException))]
+        public void GivenCalling_GetDataSources_WhenServerIsNotRespondingThenThrowsException()
         {
-            MockHttpResponse<DataSourceModel>(GetDataSourceModel());
-            var response = _dataSource.AddDataSource(GetDataSourceModel(), new APIRequest());
-            Assert.IsNotNull(response);
+            MockHttpErrorResponse(HttpStatusCode.GatewayTimeout, "The remote server returned an error: (504)");
+            var response = _dataSource.GetDataSources(new APIRequest());
         }
+
 
         [TestMethod]
         [ExpectedException(typeof(UnAuthorizedUserException))]
@@ -72,6 +73,14 @@ namespace TestChartMogul.Import
         {
             MockHttpErrorResponse(HttpStatusCode.Unauthorized, "The remote server returned an error: (401) Unauthorized.");
             var response = _dataSource.GetDataSources(new APIRequest());
+        }
+
+        [TestMethod]
+        public void GivenCalling_AddDataSources_AddDataSourceAndReturnResponse()
+        {
+            MockHttpResponse<DataSourceModel>(GetDataSourceModel());
+            var response = _dataSource.AddDataSource(GetDataSourceModel(), new APIRequest());
+            Assert.IsNotNull(response);
         }
 
         [TestMethod]
@@ -95,7 +104,7 @@ namespace TestChartMogul.Import
         public void GivenCalling_AddDataSources_WhenDataSourceExternalUUIDAlreadyExistThenThrowsException()
         {
             MockHttpErrorResponse(HttpStatusCode.NotAcceptable, "External Id already exist");
-            var response = _dataSource.AddDataSource(new DataSourceModel(), new APIRequest());
+            var response = _dataSource.AddDataSource(GetDataSourceModel(), new APIRequest());
         }
 
         [TestMethod]
@@ -116,7 +125,7 @@ namespace TestChartMogul.Import
 
         [TestMethod]
         [ExpectedException(typeof(ForbiddenException))]
-        public void GivenCalling_AddDataSources_ThrowsForbiddenExceptionWhen()
+        public void GivenCalling_AddDataSources_ThrowsForbiddenException()
         {
             MockHttpErrorResponse(HttpStatusCode.Forbidden, "Request forbidden");
             var response = _dataSource.AddDataSource(new DataSourceModel(), new APIRequest());
@@ -124,7 +133,23 @@ namespace TestChartMogul.Import
 
         [TestMethod]
         public void GivenCalling_DeleteDataSource_ThrowsNoExceptionIfSuccess()
+        {          
+            _dataSource.DeleteDataSource(new DataSourceModel(), new APIRequest());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ChartMogulException))]
+        public void GivenCalling_DeleteDataSource_ThrowsExceptionWhenServerIsNotResponding()
         {
+            MockHttpErrorResponse(HttpStatusCode.GatewayTimeout, "The remote server returned an error: (504)");
+            _dataSource.DeleteDataSource(new DataSourceModel(), new APIRequest());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UnAuthorizedUserException))]
+        public void GivenCalling_DeleteDataSource_ThrowsUserUnAuthorizedException()
+        {
+            MockHttpErrorResponse(HttpStatusCode.Unauthorized, "The remote server returned an error: (401) Unauthorized.");
             _dataSource.DeleteDataSource(new DataSourceModel(), new APIRequest());
         }
 

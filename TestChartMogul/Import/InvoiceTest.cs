@@ -97,19 +97,27 @@ namespace TestChartMogul.Import
         }
 
         [TestMethod]
+        [ExpectedException(typeof(UnAuthorizedUserException))]
+        public void GivenCalling_GetInvoices_WhenUserIsNotAuthorizedThenThrowsException()
+        {
+            MockHttpErrorResponse(HttpStatusCode.Unauthorized, "The remote server returned an error: (401) Unauthorized.");
+            var response = _invoice.GetInvoices(new CustomerModel(), new APIRequest());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ChartMogulException))]
+        public void GivenCalling_GetInvoices_WhenServerIsNotRespondingThenThrowsException()
+        {
+            MockHttpErrorResponse(HttpStatusCode.GatewayTimeout, "The remote server returned an error: (504)");
+            var response = _invoice.GetInvoices(new CustomerModel(), new APIRequest());
+        }
+
+        [TestMethod]
         public void GivenCalling_AddInvoices_AddInvoiceAndReturnResponse()
         {
             MockHttpResponse<InvoiceResponseDataModel>(GetInvoiceResponseDataModel());
             var response = _invoice.AddInvoice(GetCustomerModel(), new APIRequest(),new List<InvoiceModel>() { GetInvoiceModel() });
             Assert.IsNotNull(response);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(UnAuthorizedUserException))]
-        public void GivenCalling_GetInvoices_WhenUserIsNotAuthorizedThenThrowsException()
-        {
-            MockHttpErrorResponse(HttpStatusCode.Unauthorized, "The remote server returned an error: (401) Unauthorized.");
-            var response = _invoice.GetInvoices(new CustomerModel(),new APIRequest());
         }
 
         [TestMethod]
@@ -130,10 +138,10 @@ namespace TestChartMogul.Import
 
         [TestMethod]
         [ExpectedException(typeof(ChartMogulException))]
-        public void GivenCalling_AddInvoices_WhenInvoiceExternalUUIDAlreadyExistThenThrowsException()
+        public void GivenCalling_AddInvoices_WhenInvoiceCurrencyIsInvalidThenThrowsException()
         {
-            MockHttpErrorResponse(HttpStatusCode.NotAcceptable, "External Id already exist");
-            var response = _invoice.AddInvoice(new CustomerModel(), new APIRequest(), new List<InvoiceModel>());
+            MockHttpErrorResponse(HttpStatusCode.NotAcceptable, "Currency code is invalid");
+            var response = _invoice.AddInvoice(GetCustomerModel(), new APIRequest(), new List<InvoiceModel>());
         }
 
         [TestMethod]
@@ -154,7 +162,7 @@ namespace TestChartMogul.Import
 
         [TestMethod]
         [ExpectedException(typeof(ForbiddenException))]
-        public void GivenCalling_AddInvoices_ThrowsForbiddenExceptionWhen()
+        public void GivenCalling_AddInvoices_ThrowsForbiddenException()
         {
             MockHttpErrorResponse(HttpStatusCode.Forbidden, "Request forbidden");
             var response = _invoice.AddInvoice(new CustomerModel(), new APIRequest(), new List<InvoiceModel>());

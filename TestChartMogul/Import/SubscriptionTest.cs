@@ -78,6 +78,14 @@ namespace TestChartMogul.Import
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ChartMogulException))]
+        public void GivenCalling_GetSubscriptions_WhenServerIsNotRespondingThenThrowsException()
+        {
+            MockHttpErrorResponse(HttpStatusCode.GatewayTimeout, "The remote server returned an error: (504)");
+            var response = _subscription.GetSubscriptions(GetCustomerModel(), new APIRequest());
+        }
+
+        [TestMethod]
         public void GivenCalling_CancelSubscriptions_CancelSubscriptionAndReturnResponse()
         {
             MockHttpResponse<SubscriptionModel>(GetSubscriptionModel());
@@ -90,6 +98,14 @@ namespace TestChartMogul.Import
         public void GivenCalling_CancelSubscriptions_WhenUserIsNotAuthorizedThrowsAnException()
         {
             MockHttpErrorResponse(HttpStatusCode.Unauthorized, "The remote server returned an error: (401) Unauthorized.");
+            var response = _subscription.CancelSubscription(GetSubscriptionModel(), new APIRequest());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ChartMogulException))]
+        public void GivenCalling_CancelSubscriptions_WhenServerIsNotRespondingThrowsAnException()
+        {
+            MockHttpErrorResponse(HttpStatusCode.GatewayTimeout, "The remote server returned an error: (504)");
             var response = _subscription.CancelSubscription(GetSubscriptionModel(), new APIRequest());
         }
 
