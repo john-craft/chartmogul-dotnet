@@ -79,6 +79,7 @@
     <Compile Include="Import\Plan.cs" />
     <Compile Include="Import\Subscription.cs" />
     <Compile Include="Import\Transaction.cs" />
+    <Compile Include="Metrics\Metrics.cs" />
     <Compile Include="Models\Core\APIRequest.cs" />
     <Compile Include="Models\Enrichment\RemoveCustomAttributeModel.cs" />
     <Compile Include="Models\Import\DataSourceModel.cs" />
@@ -104,6 +105,19 @@
     <Compile Include="Models\Import\CustomerResponseDataModel.cs" />
     <Compile Include="Models\Import\PlanResponseDataModel.cs" />
     <Compile Include="Models\Import\SubscriptionResponseDataModel.cs" />
+    <Compile Include="Models\Metrics\ARPAModel.cs" />
+    <Compile Include="Models\Metrics\ARRModel.cs" />
+    <Compile Include="Models\Metrics\ASPModel.cs" />
+    <Compile Include="Models\Metrics\CustomerActivityModel.cs" />
+    <Compile Include="Models\Metrics\CustomerChurnRateModel.cs" />
+    <Compile Include="Models\Metrics\CustomerCountModel.cs" />
+    <Compile Include="Models\Metrics\CustomerSubscriptionModel.cs" />
+    <Compile Include="Models\Metrics\KeyMetricsModel.cs" />
+    <Compile Include="Models\Metrics\CustomerLTVModel.cs" />
+    <Compile Include="Models\Metrics\MetricsQueryParams.cs" />
+    <Compile Include="Models\Metrics\MRRChurnRateModel.cs" />
+    <Compile Include="Models\Metrics\MRRModel.cs" />
+    <Compile Include="Models\Metrics\Summary.cs" />
     <Compile Include="Payment.cs" />
     <Compile Include="Models\Import\PlanModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -117,7 +131,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />
-    <Folder Include="Metrics\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

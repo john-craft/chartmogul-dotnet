@@ -30,6 +30,17 @@ namespace ChartMogul.API
             }
         }
 
+        public Metrics.Metrics Metrics
+        {
+            get
+            {
+                var container = Container.For<MyRegistry>();
+                var metricsObject = container.GetInstance<Metrics.Metrics>();
+                metricsObject.ApiRequest = _apiRequest;
+                return metricsObject;
+            }
+        }
+
 
         public ChartMogulClient(string accountKey, string secretKey)
         {

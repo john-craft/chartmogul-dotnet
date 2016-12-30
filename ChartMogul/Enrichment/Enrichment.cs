@@ -38,7 +38,7 @@ namespace ChartMogul.API.Enrichment
         }
 
         public CustomerModel UpdateCustomer(CustomerPatchModel customerPatchModel, string customerUUID)
-        {            
+        {                    
           return  _customer.UpdateCustomer(customerPatchModel, ApiRequest, customerUUID);
         }
 

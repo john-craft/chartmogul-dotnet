@@ -1,5 +1,6 @@
 ﻿using ChartMogul.API;
 using ChartMogul.API.Models.Enrichment;
+using ChartMogul.API.Models.Metrics;
 using OConnors.ChartMogul.API;
 using OConnors.ChartMogul.API.Models;
 using System;
@@ -12,7 +13,7 @@ namespace TestAPIChartMogul
         static void Main(string[] args)
         {
             //Configuration config = new Configuration();
-            ChartMogulClient Objclient = new ChartMogulClient("","");
+            ChartMogulClient Objclient = new ChartMogulClient("", "");
             var test = new Dictionary<string, string>();
             test.Add("test", "value");
             Objclient.AddHeaders(test);
@@ -33,8 +34,8 @@ namespace TestAPIChartMogul
                 //});
 
 
-             //   Uncomment this code for get customer
-              //    var getCustomers = Objclient.Import.GetCustomers();
+                //   Uncomment this code for get customer
+                //    var getCustomers = Objclient.Import.GetCustomers();
 
                 //To Create a data Source
                 //  var datasource = Objclient.Import.AddDataSource(new OConnors.ChartMogul.API.Models.DataSourceModel { Name = "ashish bill details1" });
@@ -172,6 +173,68 @@ namespace TestAPIChartMogul
                 //To remove custom attributes from a customer
                 //  var response = Objclient.Enrichment.RemoveCustomAttributeFromCustomer("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408", new RemoveCustomAttributeModel { Custom = new string[1] { "testKey" } });
 
+                //To get all metrics
+                //var queryParams = new MetricsQueryParams();
+                //queryParams.StartDate = "2016-05-11";
+                //queryParams.EndDate = "2016-12-30";
+                //queryParams.Geo = "US";
+                //queryParams.Interval = "month";
+                //var response = Objclient.Metrics.GetAllKeyMetrics(queryParams);
+
+                //Retrieve Average Revenue Per Account (ARPA)
+                //var queryParams = new MetricsQueryParams();
+                //queryParams.StartDate = "2016-05-11";
+                //queryParams.EndDate = "2016-12-30";
+                //var response = Objclient.Metrics.GetArpaForSpecifiedTimePeriod(queryParams);
+
+                //Retrieves the Annualized Run Rate (ARR), for the specified time period.
+                //var queryParams = new MetricsQueryParams();
+                //queryParams.StartDate = "2016-05-11";
+                //queryParams.EndDate = "2016-12-30";
+                //var response = Objclient.Metrics.GetArrForSpecifiedTimePeriod(queryParams);
+
+
+                //Retrieves the Average Sale Price (ASP), for the specified time period.
+
+                //var queryParams = new MetricsQueryParams();
+                //queryParams.StartDate = "2016-05-11";
+                //queryParams.EndDate = "2016-12-30";
+                //var response = Objclient.Metrics.GetASPForSpecifiedTimePeriod(queryParams);
+
+
+                //Returns a list of activities for a given customer.
+                //var response = Objclient.Metrics.GetCustomerActivities("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408");
+
+
+                //   Retrieves the Customer Churn Rate, for the specified time period.       
+                //var queryParams = new MetricsQueryParams();
+                //queryParams.StartDate = "2016-05-11";
+                //queryParams.EndDate = "2016-12-30";
+                //var response = Objclient.Metrics.GetCustomerChurnRate(queryParams);
+
+                //Retrieves the number of active customers, for the specified time period.
+                //var queryParams = new MetricsQueryParams();
+                //queryParams.StartDate = "2016-05-11";
+                //queryParams.EndDate = "2016-12-30";
+                //var response = Objclient.Metrics.GetCustomerCount(queryParams);
+
+                //Retrieves the Customer Lifetime Value (LTV), for the specified time period.
+                //var queryParams = new MetricsQueryParams();
+                //queryParams.StartDate = "2016-05-11";
+                //queryParams.EndDate = "2016-12-30";
+                //var response = Objclient.Metrics.GetLTV(queryParams);
+
+                //Retrieves the Net MRR Churn Rate, for the specified time period.
+                //var queryParams = new MetricsQueryParams();
+                //queryParams.StartDate = "2016-05-11";
+                //queryParams.EndDate = "2016-12-30";
+                //var response = Objclient.Metrics.GetMRRChurnRate(queryParams);
+
+                //Retrieves the Monthly Recurring Revenue (MRR), for the specified time period.
+                //var queryParams = new MetricsQueryParams();
+                //queryParams.StartDate = "2016-05-11";
+                //queryParams.EndDate = "2016-12-30";
+                //var response = Objclient.Metrics.GetMrrForSpecifiedTimePeriod(queryParams);
             }
             catch (Exception ex)
             {
