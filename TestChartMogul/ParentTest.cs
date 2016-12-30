@@ -8,19 +8,13 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-namespace TestChartMogul.Import
+namespace TestChartMogul
 {
     [TestClass]
     public class ParentTest
     {
 
-        public Mock<IDataSource> _dataSource;     
-        public Mock<IGetResponse> _getResponse;
-
-        public ParentTest()
-        {
-            _dataSource = new Mock<IDataSource>();         
-        }
+        public Mock<IGetResponse> _getResponse;   
 
         public void MockHttpErrorResponse(HttpStatusCode statusCode, string message)
         {

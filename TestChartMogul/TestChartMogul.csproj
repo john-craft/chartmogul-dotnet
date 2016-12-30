@@ -62,17 +62,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Enrichment\CustomAttributeTest.cs" />
+    <Compile Include="Enrichment\CustomerAttributeTest.cs" />
+    <Compile Include="Enrichment\CustomerTest.cs" />
+    <Compile Include="Enrichment\TagsTest.cs" />
     <Compile Include="Import\CustomerTest.cs" />
     <Compile Include="Import\DataSourceTest.cs" />
     <Compile Include="Import\InvoiceTest.cs" />
-    <Compile Include="Import\ParentTest.cs" />
+    <Compile Include="ParentTest.cs" />
     <Compile Include="Import\PlanTest.cs" />
     <Compile Include="Import\SubscriptionTest.cs" />
     <Compile Include="Import\TransactionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Enrichment\" />
     <Folder Include="Metrics\" />
   </ItemGroup>
   <ItemGroup>

@@ -111,7 +111,7 @@ namespace TestChartMogul.Import
 
         [TestMethod]
         [ExpectedException(typeof(NotFoundException))]
-        public void GivenCalling_AddPlans_WhenUrlIsNotThenThrowsNotFoundException()
+        public void GivenCalling_AddPlans_WhenUrlIsNotValidThenThrowsNotFoundException()
         {
             MockHttpErrorResponse(HttpStatusCode.NotFound, "Requested method not found");
             var response = _plan.CreatePlan(new PlanModel(), new APIRequest());

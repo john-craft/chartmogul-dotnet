@@ -21,7 +21,6 @@ namespace TestChartMogul.Import
     public class DataSourceTest : ParentTest
     {
         private DataSource _dataSource;
-        // private Mock<IGetResponse> _getResponse;
 
         [TestInitialize]
         public void TestInitialize()
@@ -109,7 +108,7 @@ namespace TestChartMogul.Import
 
         [TestMethod]
         [ExpectedException(typeof(NotFoundException))]
-        public void GivenCalling_AddDataSources_WhenUrlIsNotThenThrowsNotFoundException()
+        public void GivenCalling_AddDataSources_WhenUrlIsNotValidThenThrowsNotFoundException()
         {
             MockHttpErrorResponse(HttpStatusCode.NotFound, "Requested method not found");
             var response = _dataSource.AddDataSource(new DataSourceModel(), new APIRequest());

@@ -111,7 +111,7 @@ namespace TestChartMogul.Import
 
         [TestMethod]
         [ExpectedException(typeof(NotFoundException))]
-        public void GivenCalling_AddTransactions_WhenUrlIsNotThenThrowsNotFoundException()
+        public void GivenCalling_AddTransactions_WhenUrlIsNotValidThenThrowsNotFoundException()
         {
             MockHttpErrorResponse(HttpStatusCode.NotFound, "Requested method not found");
             var response = _transaction.AddTransaction(GetInvoiceModel(), new TransactionModel(), new APIRequest());

@@ -4,16 +4,16 @@ namespace ChartMogul.API.Models.Enrichment
 {
     public class CustomerModel
     {
-        [JsonProperty(PropertyName = "id ")]
-        public string id { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
         [JsonProperty(PropertyName = "uuid")]
-        public string uuid { get; set; }
+        public string Uuid { get; set; }
 
-        [JsonProperty(PropertyName = "external_id ")]
+        [JsonProperty(PropertyName = "external_id")]
         public string ExternalId { get; set; }
 
-        [JsonProperty(PropertyName = "name ")]
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         [JsonProperty(PropertyName = "email")]
