@@ -10,25 +10,25 @@ namespace ChartMogul.API.Models.Metrics
     public class MRREntry
     {
         [JsonProperty(PropertyName = "date")]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
 
         [JsonProperty(PropertyName = "mrr")]
-        public string MRR { get; set; }
+        public int MRR { get; set; }
 
         [JsonProperty(PropertyName = "mrr-new-business")]
-        public string MrrNewBusiness { get; set; }
+        public int MrrNewBusiness { get; set; }
 
         [JsonProperty(PropertyName = "mrr-expansion")]
-        public string MrrExpansion { get; set; }
+        public int MrrExpansion { get; set; }
 
         [JsonProperty(PropertyName = "mrr-contraction")]
-        public string MrrContraction { get; set; }
+        public int MrrContraction { get; set; }
 
         [JsonProperty(PropertyName = "mrr-churn")]
-        public string MrrChurn { get; set; }
+        public int MrrChurn { get; set; }
 
         [JsonProperty(PropertyName = "mrr-reactivation")]
-        public string MrrReactivation { get; set; }
+        public int MrrReactivation { get; set; }
     }
 
     public class MRRModel

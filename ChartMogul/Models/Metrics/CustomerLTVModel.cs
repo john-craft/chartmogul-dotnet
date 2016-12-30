@@ -10,10 +10,10 @@ namespace ChartMogul.API.Models.Metrics
     public class CustomerLTVEntry
     {
         [JsonProperty(PropertyName = "date")]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
 
         [JsonProperty(PropertyName = "ltv")]
-        public string LTV { get; set; }
+        public decimal LTV { get; set; }
     }
 
     public class CustomerLTVModel

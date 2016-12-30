@@ -81,6 +81,7 @@
     <Compile Include="Import\Transaction.cs" />
     <Compile Include="Metrics\Metrics.cs" />
     <Compile Include="Models\Core\APIRequest.cs" />
+    <Compile Include="Models\Enrichment\CustomerQueryParams.cs" />
     <Compile Include="Models\Enrichment\RemoveCustomAttributeModel.cs" />
     <Compile Include="Models\Import\DataSourceModel.cs" />
     <Compile Include="Client.cs" />

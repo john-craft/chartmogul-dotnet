@@ -12,19 +12,19 @@ namespace ChartMogul.API.Models.Metrics
     public class CustomerSubscriptionEntry
     {
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty(PropertyName = "plan")]
         public string Plan { get; set; }
 
         [JsonProperty(PropertyName = "quantity")]
-        public string Quantity { get; set; }
+        public int Quantity { get; set; }
 
         [JsonProperty(PropertyName = "mrr")]
-        public string Mrr { get; set; }
+        public int Mrr { get; set; }
 
         [JsonProperty(PropertyName = "arr")]
-        public string Arr { get; set; }
+        public int Arr { get; set; }
 
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }
@@ -36,10 +36,10 @@ namespace ChartMogul.API.Models.Metrics
         public string BillingCycleCount { get; set; }
 
         [JsonProperty(PropertyName = "start-date")]
-        public string StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         [JsonProperty(PropertyName = "end-date")]
-        public string EndDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         [JsonProperty(PropertyName = "currency")]
         public string Currency { get; set; }
@@ -54,12 +54,12 @@ namespace ChartMogul.API.Models.Metrics
         public List<CustomerSubscriptionEntry> Entries { get; set; }
 
         [JsonProperty(PropertyName = "has_more")]
-        public string HasMore { get; set; }
+        public bool HasMore { get; set; }
 
         [JsonProperty(PropertyName = "per_page")]
-        public string PerPage { get; set; }
+        public int PerPage { get; set; }
 
         [JsonProperty(PropertyName = "page")]
-        public string Page { get; set; }
+        public int Page { get; set; }
     }
 }

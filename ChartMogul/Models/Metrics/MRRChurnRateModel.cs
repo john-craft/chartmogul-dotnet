@@ -10,10 +10,10 @@ namespace ChartMogul.API.Models.Metrics
     public class MRRChurnRateEntry
     {
         [JsonProperty(PropertyName = "date")]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
 
         [JsonProperty(PropertyName = "mrr-churn-rate")]
-        public string MRRChurnRate { get; set; }
+        public decimal MRRChurnRate { get; set; }
     }
 
     public class MRRChurnRateModel

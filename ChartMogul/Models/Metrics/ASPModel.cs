@@ -10,10 +10,10 @@ namespace ChartMogul.API.Models.Metrics
     public class ASPEntry
     {
         [JsonProperty(PropertyName = "date")]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
 
         [JsonProperty(PropertyName = "asp")]
-        public string ASP { get; set; }
+        public int ASP { get; set; }
     }
 
     public class ASPModel

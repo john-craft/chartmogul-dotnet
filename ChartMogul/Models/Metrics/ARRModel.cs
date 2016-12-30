@@ -10,10 +10,10 @@ namespace ChartMogul.API.Models.Metrics
     public class ARREntry
     {
         [JsonProperty(PropertyName= "date")]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
 
         [JsonProperty(PropertyName = "arr")]
-        public string Arr { get; set; }
+        public int Arr { get; set; }
     }
 
     public class ARRModel

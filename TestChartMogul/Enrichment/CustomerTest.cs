@@ -75,7 +75,7 @@ namespace TestChartMogul.Enrichment
         public void GivenCalling_GetCustomers_ReturnsListOfCustomers()
         {
             MockHttpResponse<CustomerResponseModel>(GetCustomerResponseDataModel());
-            var response = _customer.GetAllCustomers(new APIRequest());
+            var response = _customer.GetAllCustomers(new APIRequest(),null);
             Assert.IsNotNull(response);
         }
 
@@ -84,7 +84,7 @@ namespace TestChartMogul.Enrichment
         public void GivenCalling_GetCustomers_WhenUserIsNotAuthorizedThenThrowsException()
         {
             MockHttpErrorResponse(HttpStatusCode.Unauthorized, "The remote server returned an error: (401) Unauthorized.");
-            var response = _customer.GetAllCustomers(new APIRequest());
+            var response = _customer.GetAllCustomers(new APIRequest(),null);
         }
 
 
@@ -93,7 +93,7 @@ namespace TestChartMogul.Enrichment
         public void GivenCalling_GetCustomers_WhenServerIsNotRespondingThenThrowsException()
         {
             MockHttpErrorResponse(HttpStatusCode.GatewayTimeout, "The remote server returned an error: (504)");
-            var response = _customer.GetAllCustomers(new APIRequest());
+            var response = _customer.GetAllCustomers(new APIRequest(),null);
         }
 
         [TestMethod]

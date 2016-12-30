@@ -69,15 +69,14 @@
     <Compile Include="Import\CustomerTest.cs" />
     <Compile Include="Import\DataSourceTest.cs" />
     <Compile Include="Import\InvoiceTest.cs" />
+    <Compile Include="Metrics\MetricsTest.cs" />
     <Compile Include="ParentTest.cs" />
     <Compile Include="Import\PlanTest.cs" />
     <Compile Include="Import\SubscriptionTest.cs" />
     <Compile Include="Import\TransactionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Metrics\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ChartMogul\ChartMogul.API.csproj">
       <Project>{eef931bb-b3bf-4cb9-a151-e4a959b6684e}</Project>

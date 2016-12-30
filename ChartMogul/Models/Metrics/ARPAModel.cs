@@ -10,10 +10,10 @@ namespace ChartMogul.API.Models.Metrics
     public class ARPAEntry
     {
         [JsonProperty(PropertyName = "date")]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
 
         [JsonProperty(PropertyName = "arpa")]
-        public string Arpa { get; set; }
+        public int Arpa { get; set; }
     }
 
     public class ARPAModel

@@ -10,10 +10,10 @@ namespace ChartMogul.API.Models.Metrics
     public class CustomerCountEntry
     {
         [JsonProperty(PropertyName = "date")]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
 
         [JsonProperty(PropertyName = "customers")]
-        public string Customers { get; set; }
+        public int Customers { get; set; }
     }
 
     public class CustomerCountModel

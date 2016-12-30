@@ -9,12 +9,12 @@ namespace ChartMogul.API.Models.Enrichment
         public List<CustomerModel> Entries { get; set; }
 
         [JsonProperty(PropertyName = "has_more")]    
-        public string HasMore { get; set; }
+        public bool HasMore { get; set; }
 
         [JsonProperty(PropertyName = "per_page")]
-        public string PerPage { get; set; }
+        public int PerPage { get; set; }
 
         [JsonProperty(PropertyName = "page")]
-        public string Page { get; set; }
+        public int Page { get; set; }
     }
 }

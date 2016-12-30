@@ -10,10 +10,10 @@ namespace ChartMogul.API.Enrichment
     public interface ICustomer
     {
         CustomerModel UpdateCustomer(CustomerPatchModel customerPatchModel, APIRequest apiRequest, string customerUUID);
-        CustomerModel GetCustomerDetails(APIRequest apiRequest, string customerUUID);
-        List<CustomerModel> GetAllCustomers(APIRequest apiRequest);
+        CustomerModel GetCustomerDetails(APIRequest apiRequest, string customerUUID);       
         List<CustomerModel> SearchForCustomer(APIRequest apiRequest, string email);
         void MergeCustomers(APIRequest apiRequest, MergeCustomers mergeCustomers);
+        List<CustomerModel> GetAllCustomers(APIRequest apiRequest, CustomerQueryParams queryParams);
     }
 
     public class Customer : ICustomer
@@ -40,9 +40,10 @@ namespace ChartMogul.API.Enrichment
         }
 
 
-        public List<CustomerModel> GetAllCustomers(APIRequest apiRequest)
+        public List<CustomerModel> GetAllCustomers(APIRequest apiRequest, CustomerQueryParams queryParams)
         {
-            apiRequest.RouteName = "customers";
+            var queryString = GenerateQuery(queryParams);
+            apiRequest.RouteName = string.Concat("customers", queryString);
             _iHttp.ApiRequest = apiRequest;
             var response = _iHttp.Get<CustomerResponseModel>();
             return response.Entries;
@@ -63,6 +64,28 @@ namespace ChartMogul.API.Enrichment
             var response = _iHttp.Post<MergeCustomers, MergeCustomers>(mergeCustomers);         
         }
 
+        private string GenerateQuery(CustomerQueryParams queryParams)
+        {
+            string queryString = string.Empty;           
+            if (queryParams != null)
+            {             
+                if (!string.IsNullOrEmpty(queryParams.DataSourceUUID))
+                {                   
+                   queryString = string.Concat(queryString.Contains("?")?"&":"?","data_source_uuid=", queryParams.DataSourceUUID);                    
+                }
+                if (!string.IsNullOrEmpty(queryParams.Status))
+                    queryString = string.Concat(queryString, queryString.Contains("?") ? "&" : "?", "status=", queryParams.Status);
+                if (!string.IsNullOrEmpty(queryParams.System))
+                    queryString = string.Concat(queryString, queryString.Contains("?") ? "&" : "?", "system=", queryParams.System);
+                if (!string.IsNullOrEmpty(queryParams.PerPage))
+                    queryString = string.Concat(queryString, queryString.Contains("?") ? "&" : "?", "perpage=", queryParams.PerPage);
+                if (!string.IsNullOrEmpty(queryParams.Page))
+                    queryString = string.Concat(queryString, queryString.Contains("?") ? "&" : "?", "page=", queryParams.Page);
+                if (!string.IsNullOrEmpty(queryParams.ExternalId))
+                    queryString = string.Concat(queryString, queryString.Contains("?") ? "&" : "?", "external_id=", queryParams.ExternalId);
+            }
+            return queryString;
+        }
 
     }
 }

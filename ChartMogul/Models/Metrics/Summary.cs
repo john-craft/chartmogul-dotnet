@@ -10,12 +10,12 @@ namespace ChartMogul.API.Models.Metrics
     public class Summary
     {
         [JsonProperty(PropertyName = "current")]
-        public string Current { get; set; }
+        public int Current { get; set; }
 
         [JsonProperty(PropertyName = "previous")]
-        public string Previous { get; set; }
+        public int Previous { get; set; }
 
         [JsonProperty(PropertyName = "percentage-change")]
-        public string PercentageChange { get; set; }
+        public decimal PercentageChange { get; set; }
     }
 }

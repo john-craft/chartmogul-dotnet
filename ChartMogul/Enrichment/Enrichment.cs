@@ -12,7 +12,7 @@ namespace ChartMogul.API.Enrichment
     {
         CustomerModel UpdateCustomer(CustomerPatchModel customerPatchModel, string customerUUID);
         CustomerModel GetCustomerDetails(string customerUUID);
-        List<CustomerModel> GetAllCustomers();
+        List<CustomerModel> GetAllCustomers(CustomerQueryParams queryParams);
         List<CustomerModel> SearchForCustomer(string email);
         void MergeCustomers(MergeCustomers mergeCustomers);
         CustomerTag GetCustomerAttribute(string customerUUID);
@@ -47,9 +47,9 @@ namespace ChartMogul.API.Enrichment
             return _customer.GetCustomerDetails(ApiRequest, customerUUID);
         }
 
-        public List<CustomerModel> GetAllCustomers()
+        public List<CustomerModel> GetAllCustomers(CustomerQueryParams queryParams)
         {
-            return _customer.GetAllCustomers(ApiRequest);
+            return _customer.GetAllCustomers(ApiRequest, queryParams);
         }
 
         public List<CustomerModel> SearchForCustomer(string email)

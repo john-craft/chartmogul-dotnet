@@ -16,31 +16,31 @@ namespace ChartMogul.API.Models.Metrics
     public class Entry
     {
         [JsonProperty(PropertyName = "date")]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
 
         [JsonProperty(PropertyName = "customer-churn-rate")]
-        public string CustomerChurnRate { get; set; }
+        public decimal CustomerChurnRate { get; set; }
 
         [JsonProperty(PropertyName = "mrr-churn-rate")]
-        public string MRRChurnRate { get; set; }
+        public decimal MRRChurnRate { get; set; }
 
         [JsonProperty(PropertyName = "ltv")]
-        public string Ltv { get; set; }
+        public decimal Ltv { get; set; }
 
         [JsonProperty(PropertyName = "customers")]
-        public string Customers { get; set; }
+        public int Customers { get; set; }
 
         [JsonProperty(PropertyName = "asp")]
-        public string Asp { get; set; }
+        public int Asp { get; set; }
 
         [JsonProperty(PropertyName = "arpa")]
-        public string Arpa { get; set; }
+        public int Arpa { get; set; }
 
         [JsonProperty(PropertyName = "arr")]
-        public string Arr { get; set; }
+        public int Arr { get; set; }
 
         [JsonProperty(PropertyName = "mrr")]
-        public string Mrr { get; set; }
+        public int Mrr { get; set; }
     }
 
 }
