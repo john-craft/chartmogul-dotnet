@@ -582,6 +582,40 @@ namespace TestChartMogul.Metrics
         {
             MockHttpErrorResponse(HttpStatusCode.NotFound, "Customer UUID Not Found");
             var response = _metrics.GetCustomerActivities("cus_12023");
-        }      
+        }
+
+
+        [TestMethod]
+        public void GivenCalling_GetCustomerSubscriptionDetails_ReturnsCustomerSubscriptionDetails()
+        {
+            MockHttpResponse<CustomerActivityModel>(GetCustomerActivityModel());
+            var response = _metrics.GetCustomerSubscriptionDetails(customerUUID);
+            Assert.IsNotNull(response);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UnAuthorizedUserException))]
+        public void GivenCalling_GetCustomerSubscriptionDetails_WhenUserIsNotAuthorizedThenThrowsException()
+        {
+            MockHttpErrorResponse(HttpStatusCode.Unauthorized, "The remote server returned an error: (401) Unauthorized.");
+            var response = _metrics.GetCustomerSubscriptionDetails(customerUUID);
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(ChartMogulException))]
+        public void GivenCalling_GetCustomerSubscriptionDetails_WhenServerIsNotRespondingThenThrowsException()
+        {
+            MockHttpErrorResponse(HttpStatusCode.GatewayTimeout, "The remote server returned an error: (504)");
+            var response = _metrics.GetCustomerSubscriptionDetails(customerUUID);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotFoundException))]
+        public void GivenCalling_GetCustomerSubscriptionDetails_ThrowsNotFoundException_WhenCustomerUUIDIsNotFound()
+        {
+            MockHttpErrorResponse(HttpStatusCode.NotFound, "Customer UUID Not Found");
+            var response = _metrics.GetCustomerSubscriptionDetails("cus_12023");
+        }
     }
 }

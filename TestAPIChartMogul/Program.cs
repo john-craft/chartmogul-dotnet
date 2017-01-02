@@ -227,6 +227,9 @@ namespace TestAPIChartMogul
                 //queryParams.EndDate = "2016-12-30";
                 //var response = Objclient.Metrics.GetLTV(queryParams);
 
+                //Retrives a list of subscriptions for a given customer..
+               // var response = Objclient.Metrics.GetCustomerSubscriptionDetails("cus_635608cb-9b6d-4a59-a03d-15f00fa0e408");
+
                 //Retrieves the Net MRR Churn Rate, for the specified time period.
                 //var queryParams = new MetricsQueryParams();
                 //queryParams.StartDate = "2016-05-11";

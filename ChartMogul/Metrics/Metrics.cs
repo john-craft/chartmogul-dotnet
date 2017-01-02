@@ -19,7 +19,7 @@ namespace ChartMogul.API.Metrics
         CustomerCountModel GetCustomerCount(MetricsQueryParams queryParams);
         CustomerChurnRateModel GetCustomerChurnRate(MetricsQueryParams queryParams);
         CustomerLTVModel GetLTV(MetricsQueryParams queryParams);
-        CustomerSubscriptionModel GetLTV(string customerUUID);
+        CustomerSubscriptionModel GetCustomerSubscriptionDetails(string customerUUID);
         CustomerActivityModel GetCustomerActivities(string customerUUID);
         MRRChurnRateModel GetMRRChurnRate(MetricsQueryParams queryParams);
     }
@@ -113,7 +113,7 @@ namespace ChartMogul.API.Metrics
             return response;
         }
 
-        public CustomerSubscriptionModel GetLTV(string customerUUID)
+        public CustomerSubscriptionModel GetCustomerSubscriptionDetails(string customerUUID)
         {
             ApiRequest.RouteName = string.Concat("customers/",customerUUID, "/subscriptions");
             _iHttp.ApiRequest = ApiRequest;
