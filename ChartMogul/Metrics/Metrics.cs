@@ -2,6 +2,7 @@
 using ChartMogul.API.Models.Metrics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -129,7 +130,15 @@ namespace ChartMogul.API.Metrics
         }
 
         private string GenerateQuery(MetricsQueryParams queryParams)
-        {           
+        {
+            if (string.IsNullOrEmpty(queryParams.StartDate) )
+            {
+                throw new InvalidDataException("Start date is required. It cannot be null");
+            }
+            if (string.IsNullOrEmpty(queryParams.EndDate))
+            {
+                throw new InvalidDataException("End date is required. It cannot be null");
+            }
             string queryString = string.Concat("?start-date=", queryParams.StartDate, "&end-date=", queryParams.EndDate);
             if (!string.IsNullOrEmpty(queryParams.Plans))
                 queryString = string.Concat(queryString, "&plans=", queryParams.Plans);

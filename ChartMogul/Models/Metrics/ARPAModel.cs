@@ -18,7 +18,9 @@ namespace ChartMogul.API.Models.Metrics
 
     public class ARPAModel
     {
-        public List<ARPAEntry> entries { get; set; }
-        public Summary summary { get; set; }
+        [JsonProperty(PropertyName = "entries")]
+        public List<ARPAEntry> Entries { get; set; }
+        [JsonProperty(PropertyName = "summary")]
+        public Summary Summary { get; set; }
     }
 }
