@@ -31,7 +31,7 @@ namespace ChartMogul.API.Enrichment
 
         public CustomerResponseModel AddTagsToCustomerWithEmail(string customerUUID, APIRequest apiRequest, CustomerTagModel customerTagDetails)
         {
-            apiRequest.RouteName = string.Format(url, "");
+            apiRequest.RouteName = string.Format(url, string.Empty);
             _iHttp.ApiRequest = apiRequest;
             var response = _iHttp.Post<CustomerTagModel, CustomerResponseModel>(customerTagDetails);
             return response;

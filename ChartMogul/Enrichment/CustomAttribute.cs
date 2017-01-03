@@ -30,7 +30,7 @@ namespace ChartMogul.API.Enrichment
 
         public CustomerResponseModel AddCustomAttributeToCustomerWithEmail(APIRequest apiRequest, AddCustomAttributeModel customAttributes)
         {
-            apiRequest.RouteName = string.Format(url, "");
+            apiRequest.RouteName = string.Format(url, string.Empty);
             _iHttp.ApiRequest = apiRequest;
             var response = _iHttp.Post<AddCustomAttributeModel, CustomerResponseModel>(customAttributes);
             return response;

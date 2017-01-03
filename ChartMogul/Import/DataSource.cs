@@ -21,7 +21,7 @@ namespace ChartMogul.API.Import
         }
         public List<DataSourceModel> GetDataSources(APIRequest apiRequest)
         {
-            apiRequest.RouteName = string.Format(url, "");
+            apiRequest.RouteName = string.Format(url, string.Empty);
             _iHttp.ApiRequest = apiRequest;
             var response = _iHttp.Get<DataSourceResponseDataModel>();
             return response.DataSources;
@@ -29,7 +29,7 @@ namespace ChartMogul.API.Import
 
         public DataSourceModel AddDataSource(DataSourceModel dataSourceModel, APIRequest apiRequest)
         {
-            apiRequest.RouteName = string.Format(url,"");
+            apiRequest.RouteName = string.Format(url, string.Empty);
             _iHttp.ApiRequest = apiRequest;
             var response = _iHttp.Post<DataSourceModel, DataSourceModel>(dataSourceModel);
             return response;

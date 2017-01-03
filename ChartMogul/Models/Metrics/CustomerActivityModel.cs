@@ -1,10 +1,6 @@
-﻿using ChartMogul.API.Models.Metrics;
-using Newtonsoft.Json;
-using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ChartMogul.API.Models.Metrics
 {

@@ -135,46 +135,25 @@ namespace ChartMogul.API
             {
                 new ChartMogulException("Invalid request");
             }
-
             return HandleResponse<TO>(request.InputStream);
         }
 
-        #region helpers
+    
 
         private HttpWebRequest CreateRequest(RequestMethod method, object data, bool authorize)
         {
             var request = (HttpWebRequest)HttpWebRequest.Create(string.Concat(baseUrl, ApiRequest.RouteName));
-            //request.Accept = ApplicationJson;
             request.Accept = "*/*";
             request.Timeout = connectionTimeout;
-
-            switch (method)
-            {
-                case RequestMethod.Get:
-                    request.Method = WebRequestMethods.Http.Get;
-                    break;
-                case RequestMethod.Post:
-                    request.Method = WebRequestMethods.Http.Post;
-                    break;
-                case RequestMethod.Put:
-                    request.Method = WebRequestMethods.Http.Put;
-                    break;
-                case RequestMethod.Delete:
-                    request.Method = "DELETE";
-                    break;
-                case RequestMethod.Patch:
-                    request.Method = "PATCH";
-                    break;
-                default:
-                    throw new NotSupportedException(String.Format("Request method {0} not supported", method.ToString()));
-            }
-
+            SetRequestMethod(request,  method);
+            
             if (authorize)
             {
                 var plainTextBytes = Encoding.UTF8.GetBytes(Configuration.AccountToken + ":" + Configuration.SecretKey);
                 var credentials = Convert.ToBase64String(plainTextBytes);
                 request.Headers.Add(HttpRequestHeader.Authorization, "Basic " + credentials);
             }
+
             foreach (KeyValuePair<string, string> entry in ApiRequest.Header)
             {
                 request.Headers.Add(entry.Key, entry.Value);
@@ -200,6 +179,30 @@ namespace ChartMogul.API
             }
 
             return request;
+        }
+
+        private void SetRequestMethod(HttpWebRequest request, RequestMethod method)
+        {
+             switch (method)
+            {
+                case RequestMethod.Get:
+                    request.Method = WebRequestMethods.Http.Get;
+                    break;
+                case RequestMethod.Post:
+                    request.Method = WebRequestMethods.Http.Post;
+                    break;
+                case RequestMethod.Put:
+                    request.Method = WebRequestMethods.Http.Put;
+                    break;
+                case RequestMethod.Delete:
+                    request.Method = "DELETE";
+                    break;
+                case RequestMethod.Patch:
+                    request.Method = "PATCH";
+                    break;
+                default:
+                    throw new NotSupportedException(String.Format("Request method {0} not supported", method.ToString()));
+            }
         }
 
         private void SendRequest(HttpWebRequest request)
@@ -276,7 +279,6 @@ namespace ChartMogul.API
                     throw new ChartMogulException(errorDetails);
             }
         }
-
-        #endregion
+     
     }
 }

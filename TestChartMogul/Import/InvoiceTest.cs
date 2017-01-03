@@ -33,8 +33,8 @@ namespace TestChartMogul.Import
               Items =new List<LineItemModel> { GetLineItemModel() },
               Transactions= new List<TransactionModel> { GetTransactionModel() },
               DueDate= DateTime.Now.AddDays(3).ToString(),
-              Uuid = "",
-              ExternalId = ""
+              Uuid = string.Empty,
+              ExternalId = string.Empty
             };
         }
 
