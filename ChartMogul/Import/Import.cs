@@ -1,11 +1,6 @@
 ﻿using ChartMogul.API.Models.Core;
-using OConnors.ChartMogul.API.Models;
-using OConnors.ChartMogul.API.Models.Import;
-using System;
+using ChartMogul.API.Models.Import;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChartMogul.API.Import
 {
@@ -20,12 +15,13 @@ namespace ChartMogul.API.Import
         PlanModel CreatePlan(PlanModel plan);
         List<PlanModel> GetPlans();
         List<InvoiceModel> GetInvoices(CustomerModel customerModel);
-        List<InvoiceModel> AddInvoice(CustomerModel customerModel, List<InvoiceModel> invoiceModellist);
+        List<InvoiceModel> AddInvoice(CustomerModel customerModel, InvoiceResponseDataModel invoiceModellist);
         TransactionModel AddTransaction(InvoiceModel invoicemodel, TransactionModel transactionmodel);
         List<SubscriptionModel> GetSubscriptions(CustomerModel customermodel);
         SubscriptionModel CancelSubscription(SubscriptionModel subscriptionModel);
     }
-    public class Import: IImport
+
+    public class Import : IImport
     {
         private ICustomer _iCustomer;
         private IDataSource _iDataSource;
@@ -51,7 +47,6 @@ namespace ChartMogul.API.Import
 
         public DataSourceModel AddDataSource(DataSourceModel datasourcemodal)
         {
-            //dataSourceName
             return _iDataSource.AddDataSource(datasourcemodal, ApiRequest);
         }
 
@@ -91,7 +86,7 @@ namespace ChartMogul.API.Import
             return _iInvoice.GetInvoices(customerModel, ApiRequest);
         }
 
-        public List<InvoiceModel> AddInvoice(CustomerModel customerModel, List<InvoiceModel> invoiceModellist)
+        public List<InvoiceModel> AddInvoice(CustomerModel customerModel, InvoiceResponseDataModel invoiceModellist)
         {
             return _iInvoice.AddInvoice(customerModel, ApiRequest, invoiceModellist);
         }

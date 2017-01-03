@@ -2,7 +2,7 @@
 
 namespace ChartMogul.API.Models.Enrichment
 {
-    public class CustomerTag
+    public class CustomerTagModel
     {
         [JsonProperty(PropertyName = "tags")]
         public string[] Tags { get; set; }

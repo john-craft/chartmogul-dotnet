@@ -1,53 +1,49 @@
 ﻿using ChartMogul.API.Models.Core;
 using ChartMogul.API.Models.Enrichment;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChartMogul.API.Enrichment
 {
     public interface ITags
     {
         string[] AddTagsToCustomer(string customerUUID, APIRequest apiRequest, string[] tags);
-        CustomerResponseModel AddTagsToCustomerWithEmail(string customerUUID, APIRequest apiRequest, CustomerTag customerTagDetails);
+        CustomerResponseModel AddTagsToCustomerWithEmail(string customerUUID, APIRequest apiRequest, CustomerTagModel customerTagDetails);
         string[] RemoveTagsFromCustomer(string customerUUID, APIRequest apiRequest, string[] tags);
     }
 
-    public class Tags: ITags
+    public class Tags : ITags
     {
         private IHttp _iHttp;
+        private const string url = "customers{0}/attributes/tags";
         public Tags(IHttp iHttp)
         {
             _iHttp = iHttp;
         }
 
-       public string[] AddTagsToCustomer(string customerUUID, APIRequest apiRequest,string[] tags)
-        {  
-            apiRequest.RouteName = string.Concat("customers/", customerUUID, "/attributes/tags");
-            _iHttp.ApiRequest = apiRequest;
-            var customerTagDetails = new CustomerTag();
-            customerTagDetails.Tags = tags;
-            var response = _iHttp.Post<CustomerTag,CustomerTag>(customerTagDetails);
-            return response.Tags;        
-      }
-
-       public CustomerResponseModel AddTagsToCustomerWithEmail(string customerUUID, APIRequest apiRequest, CustomerTag customerTagDetails)
+        public string[] AddTagsToCustomer(string customerUUID, APIRequest apiRequest, string[] tags)
         {
-            apiRequest.RouteName = "customers/attributes/tags";
-            _iHttp.ApiRequest = apiRequest;      
-            var response = _iHttp.Post<CustomerTag, CustomerResponseModel>(customerTagDetails);
+            apiRequest.RouteName = string.Format(url, string.Concat("/", customerUUID));
+            _iHttp.ApiRequest = apiRequest;
+            var customerTagDetails = new CustomerTagModel();
+            customerTagDetails.Tags = tags;
+            var response = _iHttp.Post<CustomerTagModel, CustomerTagModel>(customerTagDetails);
+            return response.Tags;
+        }
+
+        public CustomerResponseModel AddTagsToCustomerWithEmail(string customerUUID, APIRequest apiRequest, CustomerTagModel customerTagDetails)
+        {
+            apiRequest.RouteName = string.Format(url, "");
+            _iHttp.ApiRequest = apiRequest;
+            var response = _iHttp.Post<CustomerTagModel, CustomerResponseModel>(customerTagDetails);
             return response;
         }
 
         public string[] RemoveTagsFromCustomer(string customerUUID, APIRequest apiRequest, string[] tags)
         {
-            apiRequest.RouteName = string.Concat("customers/", customerUUID, "/attributes/tags");
+            apiRequest.RouteName = string.Format(url, string.Concat("/", customerUUID));
             _iHttp.ApiRequest = apiRequest;
-            var customerTagDetails = new CustomerTag();
+            var customerTagDetails = new CustomerTagModel();
             customerTagDetails.Tags = tags;
-            var response = _iHttp.Delete<CustomerTag, CustomerTag>(customerTagDetails);
+            var response = _iHttp.Delete<CustomerTagModel, CustomerTagModel>(customerTagDetails);
             return response.Tags;
         }
     }

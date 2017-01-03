@@ -1,8 +1,5 @@
 ﻿using ChartMogul.API.Models.Core;
-using OConnors.ChartMogul.API.Models;
 using System.Collections.Generic;
-using ChartMogul.API.Models;
-using OConnors.ChartMogul.API.Models.Import;
 using ChartMogul.API.Models.Import;
 
 namespace ChartMogul.API.Import
@@ -16,13 +13,14 @@ namespace ChartMogul.API.Import
     public class Plan : IPlan
     {
         private IHttp _ihttp;
+        private string url = "import/plans";
         public Plan(IHttp ihttp)
         {
             _ihttp = ihttp;
         }
         public PlanModel CreatePlan(PlanModel plan, APIRequest apiRequest)
         {
-            apiRequest.RouteName = "import/plans";
+            apiRequest.RouteName = url;
             _ihttp.ApiRequest = apiRequest;
             var response = _ihttp.Post<PlanModel, PlanModel>(plan);
             return response;
@@ -30,7 +28,7 @@ namespace ChartMogul.API.Import
 
         public List<PlanModel> GetPlans(APIRequest apiRequest)
         {
-            apiRequest.RouteName = "import/plans";
+            apiRequest.RouteName = url;
             _ihttp.ApiRequest = apiRequest;
             var response = _ihttp.Get<PlanResponseDataModel>();
             return response.Plans;

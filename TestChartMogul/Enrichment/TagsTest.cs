@@ -3,12 +3,7 @@ using ChartMogul.API.Exceptions;
 using ChartMogul.API.Models.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using OConnors.ChartMogul.API.Models;
-using System;
-using System.IO;
 using System.Net;
-using System.Text;
-using Newtonsoft.Json;
 using ChartMogul.API.Models.Enrichment;
 using System.Collections.Generic;
 using ChartMogul.API.Enrichment;
@@ -30,18 +25,18 @@ namespace TestChartMogul.Enrichment
             customerUUID = "cus_de305d54-75b4-431b-adb2-eb6b9e546012";
         }
 
-        public CustomerTag GetCustomerTags()
+        public CustomerTagModel GetCustomerTags()
         {
-            return new CustomerTag()
+            return new CustomerTagModel()
             {
                 Email="customer@test.com",
                 Tags= new string[4] { "convertedAt", "pro", "channel","test" }               
             };
         }
 
-        public CustomerTag GetCustomerTagsAfterRemovingATag()
+        public CustomerTagModel GetCustomerTagsAfterRemovingATag()
         {
-            return new CustomerTag()
+            return new CustomerTagModel()
             {
                 Email = "customer@test.com",
                 Tags = new string[3] { "convertedAt", "pro", "channel" }
@@ -73,7 +68,7 @@ namespace TestChartMogul.Enrichment
         [TestMethod]
         public void GivenCalling_AddTags_ReturnsTags()
         {
-            MockHttpResponse<CustomerTag>(GetCustomerTags());
+            MockHttpResponse<CustomerTagModel>(GetCustomerTags());
             var response = _custom.AddTagsToCustomer(customerUUID, new APIRequest(), new string[1] { "important" });
             Assert.IsNotNull(response);
         }
@@ -143,7 +138,7 @@ namespace TestChartMogul.Enrichment
         [TestMethod]
         public void GivenCalling_RemoveTagsFromCustomer_ReturnsTagsWithChanges()
         {                
-            MockHttpResponse<CustomerTag>(GetCustomerTagsAfterRemovingATag());
+            MockHttpResponse<CustomerTagModel>(GetCustomerTagsAfterRemovingATag());
             var response = _custom.RemoveTagsFromCustomer(customerUUID, new APIRequest(), new string[] { "test"});
             Assert.IsNotNull(response);
         }

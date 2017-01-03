@@ -2,7 +2,7 @@
 
 namespace ChartMogul.API.Models.Enrichment
 {
-    public class Stripe
+    public class StripeModel
     {
         [JsonProperty(PropertyName = "uid")]
         public string UID { get; set; }

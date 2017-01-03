@@ -28,6 +28,6 @@ namespace ChartMogul.API.Models.Enrichment
         public string State { get; set; }
         
         [JsonProperty(PropertyName = "attributes")]
-        public Attribute Attributes { get; set; }                   
+        public AttributeModel Attributes { get; set; }                   
 }
 }

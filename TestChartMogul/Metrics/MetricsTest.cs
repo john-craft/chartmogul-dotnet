@@ -19,7 +19,7 @@ namespace TestChartMogul.Metrics
     {
         private ChartMogul.API.Metrics.Metrics _metrics;
         private string customerUUID;
-        private MetricsQueryParams _queryParam;      
+        private MetricsQueryParamsModel _queryParam;      
 
         [TestInitialize]
         public void TestInitialize()
@@ -28,7 +28,7 @@ namespace TestChartMogul.Metrics
             _metrics = new ChartMogul.API.Metrics.Metrics(new Http(_getResponse.Object));
             _metrics.ApiRequest = new ChartMogul.API.Models.Core.APIRequest();
             customerUUID = "cus_de305d54-75b4-431b-adb2-eb6b9e546012";
-            _queryParam = new MetricsQueryParams() { StartDate = "2015-11-05", EndDate = "2015-12-30" };
+            _queryParam = new MetricsQueryParamsModel() { StartDate = "2015-11-05", EndDate = "2015-12-30" };
         }
 
         private KeyMetricsModel GetKeyMetricModel()
@@ -44,7 +44,7 @@ namespace TestChartMogul.Metrics
             return new ARPAModel
             {
                 Entries = new List<ARPAEntry> { new ARPAEntry { Arpa = 10, Date = DateTime.Parse("2015-11-06") } },
-                Summary = new Summary
+                Summary = new SummaryModel
                 {
                     Current = 980568,
                     Previous = 980568,
@@ -58,7 +58,7 @@ namespace TestChartMogul.Metrics
             return new ARRModel
             {
                 Entries = new List<ARREntry> { new ARREntry { Arr = 23, Date = DateTime.Parse("2015-11-06") } },
-                Summary = new Summary
+                Summary = new SummaryModel
                 {
                     Current = 23,
                     Previous = 23,
@@ -73,7 +73,7 @@ namespace TestChartMogul.Metrics
             return new ASPModel
             {
                 Entries = new List<ASPEntry> { new ASPEntry { ASP = 45, Date = DateTime.Parse("2015-11-06") } },
-                Summary = new Summary
+                Summary = new SummaryModel
                 {
                     Current = 45,
                     Previous = 45,
@@ -87,7 +87,7 @@ namespace TestChartMogul.Metrics
             return new CustomerChurnRateModel
             {
                 Entries = new List<CustomerChurnRateEntry> { new CustomerChurnRateEntry { CustomerChurnRate = 23, Date = DateTime.Parse("2015-11-06") } },
-                Summary = new Summary
+                Summary = new SummaryModel
                 {
                     Current = 23,
                     Previous = 23,
@@ -101,7 +101,7 @@ namespace TestChartMogul.Metrics
             return new CustomerCountModel
             {
                 Entries = new List<CustomerCountEntry> { new CustomerCountEntry { Customers = 67, Date = DateTime.Parse("2015-11-06") } },
-                Summary = new Summary
+                Summary = new SummaryModel
                 {
                     Current = 67,
                     Previous = 67,
@@ -115,7 +115,7 @@ namespace TestChartMogul.Metrics
             return new CustomerLTVModel
             {
                 Entries = new List<CustomerLTVEntry> { new CustomerLTVEntry { LTV = 16, Date = DateTime.Parse("2015-11-06") } },
-                Summary = new Summary
+                Summary = new SummaryModel
                 {
                     Current = 16,
                     Previous = 16,
@@ -130,7 +130,7 @@ namespace TestChartMogul.Metrics
             return new MRRChurnRateModel
             {
                 Entries = new List<MRRChurnRateEntry> { new MRRChurnRateEntry {  MRRChurnRate= 16, Date = DateTime.Parse("2015-11-06") } },
-                Summary = new Summary
+                Summary = new SummaryModel
                 {
                     Current = 16,
                     Previous = 16,
@@ -144,7 +144,7 @@ namespace TestChartMogul.Metrics
             return new MRRModel
             {
                 Entries = new List<MRREntry> { new MRREntry { MRR = 30000, Date = DateTime.Parse("2015-11-06"),MrrNewBusiness=10000,MrrExpansion=15000,MrrContraction=0,MrrChurn=0,MrrReactivation=0 }},
-                Summary = new Summary
+                Summary = new SummaryModel
                 {
                     Current = 30000,
                     Previous = 30000,
@@ -205,7 +205,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetAllKeyMetrics_ThrowsInvalidDataException_WhenStartTimeIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = null, EndDate = "2015-12-30" };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = null, EndDate = "2015-12-30" };
             var response = _metrics.GetAllKeyMetrics(queryParams);
         }
 
@@ -213,7 +213,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetAllKeyMetrics_ThrowsInvalidDataException_WhenEndDateIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = "2015-12-30", EndDate = null };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = "2015-12-30", EndDate = null };
             var response = _metrics.GetAllKeyMetrics(queryParams);          
         }
 
@@ -248,7 +248,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetArpaForSpecifiedTimePeriod_ThrowsInvalidDataException_WhenStartTimeIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = null, EndDate = "2015-12-30" };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = null, EndDate = "2015-12-30" };
             var response = _metrics.GetArpaForSpecifiedTimePeriod(queryParams);
         }
 
@@ -256,7 +256,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetArpaForSpecifiedTimePeriod_ThrowsInvalidDataException_WhenEndDateIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = "2015-12-30", EndDate = null };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = "2015-12-30", EndDate = null };
             var response = _metrics.GetArpaForSpecifiedTimePeriod(queryParams);
         }
 
@@ -289,7 +289,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetArrForSpecifiedTimePeriod_ThrowsInvalidDataException_WhenStartTimeIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = null, EndDate = "2015-12-30" };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = null, EndDate = "2015-12-30" };
             var response = _metrics.GetArrForSpecifiedTimePeriod(queryParams);
         }
 
@@ -297,7 +297,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetArrForSpecifiedTimePeriod_ThrowsInvalidDataException_WhenEndDateIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = "2015-12-30", EndDate = null };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = "2015-12-30", EndDate = null };
             var response = _metrics.GetArrForSpecifiedTimePeriod(queryParams);
         }
 
@@ -330,7 +330,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetASPForSpecifiedTimePeriod_ThrowsInvalidDataException_WhenStartTimeIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = null, EndDate = "2015-12-30" };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = null, EndDate = "2015-12-30" };
             var response = _metrics.GetASPForSpecifiedTimePeriod(queryParams);
         }
 
@@ -338,7 +338,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetASPForSpecifiedTimePeriod_ThrowsInvalidDataException_WhenEndDateIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = "2015-12-30", EndDate = null };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = "2015-12-30", EndDate = null };
             var response = _metrics.GetASPForSpecifiedTimePeriod(queryParams);         
         }
 
@@ -373,7 +373,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetCustomerChurnRate_ThrowsInvalidDataException_WhenStartTimeIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = null, EndDate = "2015-12-30" };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = null, EndDate = "2015-12-30" };
             var response = _metrics.GetCustomerChurnRate(queryParams);
         }
 
@@ -381,7 +381,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetCustomerChurnRate_ThrowsInvalidDataException_WhenEndDateIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = "2015-12-30", EndDate = null };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = "2015-12-30", EndDate = null };
             var response = _metrics.GetCustomerChurnRate(queryParams);
         }
 
@@ -415,7 +415,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetCustomerCount_ThrowsInvalidDataException_WhenStartTimeIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = null, EndDate = "2015-12-30" };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = null, EndDate = "2015-12-30" };
             var response = _metrics.GetCustomerCount(queryParams);
         }
 
@@ -423,7 +423,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetCustomerCount_ThrowsInvalidDataException_WhenEndDateIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = "2015-12-30", EndDate = null };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = "2015-12-30", EndDate = null };
             var response = _metrics.GetCustomerCount(queryParams);
         }
 
@@ -457,7 +457,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetLTV_ThrowsInvalidDataException_WhenStartTimeIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = null, EndDate = "2015-12-30" };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = null, EndDate = "2015-12-30" };
             var response = _metrics.GetLTV(queryParams);
         }
 
@@ -465,7 +465,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetLTV_ThrowsInvalidDataException_WhenEndDateIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = "2015-12-30", EndDate = null };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = "2015-12-30", EndDate = null };
             var response = _metrics.GetLTV(queryParams);
         }
 
@@ -498,7 +498,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetMRRChurnRate_ThrowsInvalidDataException_WhenStartTimeIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = null, EndDate = "2015-12-30" };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = null, EndDate = "2015-12-30" };
             var response = _metrics.GetMRRChurnRate(queryParams);
         }
 
@@ -506,7 +506,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetMRRChurnRate_ThrowsInvalidDataException_WhenEndDateIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = "2015-12-30", EndDate = null };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = "2015-12-30", EndDate = null };
             var response = _metrics.GetMRRChurnRate(queryParams);
         }
 
@@ -539,7 +539,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetMrrForSpecifiedTimePeriod_ThrowsInvalidDataException_WhenStartTimeIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = null, EndDate = "2015-12-30" };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = null, EndDate = "2015-12-30" };
             var response = _metrics.GetMrrForSpecifiedTimePeriod(queryParams);
         }
 
@@ -547,7 +547,7 @@ namespace TestChartMogul.Metrics
         [ExpectedException(typeof(InvalidDataException))]
         public void GivenCalling_GetMrrForSpecifiedTimePeriod_ThrowsInvalidDataException_WhenEndDateIsNullInQueryParams()
         {
-            var queryParams = new MetricsQueryParams() { StartDate = "2015-12-30", EndDate = null };
+            var queryParams = new MetricsQueryParamsModel() { StartDate = "2015-12-30", EndDate = null };
             var response = _metrics.GetMrrForSpecifiedTimePeriod(queryParams);
         }
 

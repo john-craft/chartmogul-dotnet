@@ -3,7 +3,6 @@ using ChartMogul.API.Exceptions;
 using ChartMogul.API.Models.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using OConnors.ChartMogul.API.Models;
 using System;
 using System.IO;
 using System.Net;
@@ -129,7 +128,7 @@ namespace TestChartMogul.Enrichment
         public void GivenCalling_AddCustomAttributeToCustomerWithEmail_ReturnsListOfCustomAttributes()
         {
             MockHttpResponse<CustomerResponseModel>(GetCustomerResponseModel());
-            var response = _customAttribute.AddCustomAttributeToCustomerWithEmail("customer@test.com", new APIRequest(), GetCustomAttributeToBeAdded());
+            var response = _customAttribute.AddCustomAttributeToCustomerWithEmail(new APIRequest(), GetCustomAttributeToBeAdded());
             Assert.IsNotNull(response);
         }
 
@@ -138,7 +137,7 @@ namespace TestChartMogul.Enrichment
         public void GivenCalling_AddCustomAttributeToCustomerWithEmail_WhenUserIsNotAuthorizedThenThrowsException()
         {
             MockHttpErrorResponse(HttpStatusCode.Unauthorized, "The remote server returned an error: (401) Unauthorized.");
-            var response = _customAttribute.AddCustomAttributeToCustomerWithEmail("customer@test.com", new APIRequest(), GetCustomAttributeToBeAdded());
+            var response = _customAttribute.AddCustomAttributeToCustomerWithEmail(new APIRequest(), GetCustomAttributeToBeAdded());
         }
 
 
@@ -147,7 +146,7 @@ namespace TestChartMogul.Enrichment
         public void GivenCalling_AddCustomAttributeToCustomerWithEmail_WhenServerIsNotRespondingThenThrowsException()
         {
             MockHttpErrorResponse(HttpStatusCode.GatewayTimeout, "The remote server returned an error: (504)");
-            var response = _customAttribute.AddCustomAttributeToCustomerWithEmail("customer@test.com", new APIRequest(), GetCustomAttributeToBeAdded());
+            var response = _customAttribute.AddCustomAttributeToCustomerWithEmail(new APIRequest(), GetCustomAttributeToBeAdded());
         }
 
 

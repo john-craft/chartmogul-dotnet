@@ -2,7 +2,7 @@
 
 namespace ChartMogul.API.Models.Enrichment
 {
-    public class MergeCustomers
+    public class MergeCustomersModel
     {
         [JsonProperty(PropertyName ="from")]
         public From From { get; set; }

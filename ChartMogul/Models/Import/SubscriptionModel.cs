@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace OConnors.ChartMogul.API.Models.Import
+namespace ChartMogul.API.Models.Import
 {
     public class SubscriptionModel
     {

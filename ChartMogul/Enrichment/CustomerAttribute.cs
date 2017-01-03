@@ -1,30 +1,27 @@
 ﻿using ChartMogul.API.Models.Core;
 using ChartMogul.API.Models.Enrichment;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChartMogul.API.Enrichment
 {
     public interface ICustomerAttribute
     {
-        CustomerTag GetCustomerAttribute(string customerUUID, APIRequest apiRequest);
+        CustomerTagModel GetCustomerAttribute(string customerUUID, APIRequest apiRequest);
     }
-    public class CustomerAttribute: ICustomerAttribute
+
+    public class CustomerAttribute : ICustomerAttribute
     {
         private IHttp _iHttp;
+        private string customerAttributeUrl = "customers/{0}/attributes";
         public CustomerAttribute(IHttp iHttp)
         {
             _iHttp = iHttp;
         }
 
-        public CustomerTag GetCustomerAttribute(string customerUUID, APIRequest apiRequest)
+        public CustomerTagModel GetCustomerAttribute(string customerUUID, APIRequest apiRequest)
         {
-            apiRequest.RouteName = string.Concat("customers/",customerUUID,"/attributes");
+            apiRequest.RouteName = string.Format(customerAttributeUrl, customerUUID);
             _iHttp.ApiRequest = apiRequest;
-            var response = _iHttp.Get<CustomerTag>();
+            var response = _iHttp.Get<CustomerTagModel>();
             return response;
         }
     }

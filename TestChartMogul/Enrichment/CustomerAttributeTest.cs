@@ -3,14 +3,8 @@ using ChartMogul.API.Exceptions;
 using ChartMogul.API.Models.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using OConnors.ChartMogul.API.Models;
-using System;
-using System.IO;
 using System.Net;
-using System.Text;
-using Newtonsoft.Json;
 using ChartMogul.API.Models.Enrichment;
-using System.Collections.Generic;
 using ChartMogul.API.Enrichment;
 
 namespace TestChartMogul.Enrichment
@@ -30,9 +24,9 @@ namespace TestChartMogul.Enrichment
             _customerAttribute = new CustomerAttribute(new Http(_getResponse.Object));
         }
 
-        public CustomerTag GetCustomerTag()
+        public CustomerTagModel GetCustomerTag()
         {
-            return new CustomerTag
+            return new CustomerTagModel
             {
                 Email = "customer@test.com",
                 Tags = new string[3] { "engage", "unit loss", "discountable" }
@@ -42,7 +36,7 @@ namespace TestChartMogul.Enrichment
         [TestMethod]
         public void GivenCalling_GetCustomerAttributes_ReturnsListOfCustomerAttributes()
         {
-            MockHttpResponse<CustomerTag>(GetCustomerTag());
+            MockHttpResponse<CustomerTagModel>(GetCustomerTag());
             var response = _customerAttribute.GetCustomerAttribute(customerUUID, new APIRequest());
             Assert.IsNotNull(response);
         }

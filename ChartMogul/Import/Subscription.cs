@@ -1,13 +1,6 @@
-﻿using ChartMogul.API.Models;
-using ChartMogul.API.Models.Core;
+﻿using ChartMogul.API.Models.Core;
 using ChartMogul.API.Models.Import;
-using OConnors.ChartMogul.API.Models;
-using OConnors.ChartMogul.API.Models.Import;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChartMogul.API.Import
 {
@@ -20,6 +13,8 @@ namespace ChartMogul.API.Import
     public class Subscription : ISubscription
     {
         private IHttp _ihttp;
+        private const string cancelSubscriptionUrl = "import/subscriptions/{0}";
+        private const string getSubscriptionUrl = "import/customers/{0}/subscriptions";
         public Subscription(IHttp ihttp)
         {
             _ihttp = ihttp;
@@ -27,7 +22,7 @@ namespace ChartMogul.API.Import
 
         public SubscriptionModel CancelSubscription(SubscriptionModel subscriptionmodel, APIRequest apiRequest)
         {
-            apiRequest.RouteName = string.Format("import/subscriptions/{0}", subscriptionmodel.Uuid);
+            apiRequest.RouteName = string.Format(cancelSubscriptionUrl, subscriptionmodel.Uuid);
             _ihttp.ApiRequest = apiRequest;
             var response = _ihttp.Put<SubscriptionModel, SubscriptionModel>(subscriptionmodel);
             return response;
@@ -35,7 +30,7 @@ namespace ChartMogul.API.Import
 
         public List<SubscriptionModel> GetSubscriptions(CustomerModel customermodel, APIRequest apiRequest)
         {
-            apiRequest.RouteName = string.Format("import/customers/{0}/subscriptions", customermodel.Uuid);
+            apiRequest.RouteName = string.Format(getSubscriptionUrl, customermodel.Uuid);
             _ihttp.ApiRequest = apiRequest;
             var response = _ihttp.Get<SubscriptionResponseDataModel>();
             return response.Subscriptions;

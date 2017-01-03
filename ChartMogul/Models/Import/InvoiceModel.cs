@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OConnors.ChartMogul.API.Models.Import
+namespace ChartMogul.API.Models.Import
 {
     public class InvoiceModel
     {

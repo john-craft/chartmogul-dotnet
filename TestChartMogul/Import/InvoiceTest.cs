@@ -1,17 +1,11 @@
 ﻿using ChartMogul.API;
 using ChartMogul.API.Exceptions;
 using ChartMogul.API.Import;
-using ChartMogul.API.Models;
 using ChartMogul.API.Models.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using OConnors.ChartMogul.API.Models;
 using System;
-using System.IO;
 using System.Net;
-using System.Text;
-using Newtonsoft.Json;
-using OConnors.ChartMogul.API.Models.Import;
 using ChartMogul.API.Models.Import;
 using System.Collections.Generic;
 
@@ -116,7 +110,7 @@ namespace TestChartMogul.Import
         public void GivenCalling_AddInvoices_AddInvoiceAndReturnResponse()
         {
             MockHttpResponse<InvoiceResponseDataModel>(GetInvoiceResponseDataModel());
-            var response = _invoice.AddInvoice(GetCustomerModel(), new APIRequest(),new List<InvoiceModel>() { GetInvoiceModel() });
+            var response = _invoice.AddInvoice(GetCustomerModel(), new APIRequest(), new InvoiceResponseDataModel { Invoices = new List<InvoiceModel> { GetInvoiceModel() } });
             Assert.IsNotNull(response);
         }
 
@@ -125,7 +119,7 @@ namespace TestChartMogul.Import
         public void GivenCalling_AddInvoices_WhenSchemaIsInvalidThenThrowsException()
         {
             MockHttpErrorResponse(HttpStatusCode.BadRequest, "Scheme is invalid. Required parameter external id is missing");
-            var response = _invoice.AddInvoice(new CustomerModel(), new APIRequest(),new List<InvoiceModel> { new InvoiceModel()});
+            var response = _invoice.AddInvoice(new CustomerModel(), new APIRequest(),new InvoiceResponseDataModel { Invoices = new List<InvoiceModel> { new InvoiceModel()} });
         }
 
         [TestMethod]
@@ -133,7 +127,7 @@ namespace TestChartMogul.Import
         public void GivenCalling_AddInvoices_WhenUserIsNotAuthorizedThenThrowsException()
         {
             MockHttpErrorResponse(HttpStatusCode.Unauthorized, "The remote server returned an error: (401) Unauthorized.");
-            var response = _invoice.AddInvoice(new CustomerModel(), new APIRequest(),new List<InvoiceModel>() { new InvoiceModel() });
+            var response = _invoice.AddInvoice(new CustomerModel(), new APIRequest(),new InvoiceResponseDataModel() { Invoices = new List<InvoiceModel> { new InvoiceModel() } });
         }
 
         [TestMethod]
@@ -141,7 +135,7 @@ namespace TestChartMogul.Import
         public void GivenCalling_AddInvoices_WhenInvoiceCurrencyIsInvalidThenThrowsException()
         {
             MockHttpErrorResponse(HttpStatusCode.NotAcceptable, "Currency code is invalid");
-            var response = _invoice.AddInvoice(GetCustomerModel(), new APIRequest(), new List<InvoiceModel>());
+            var response = _invoice.AddInvoice(GetCustomerModel(), new APIRequest(), new InvoiceResponseDataModel());
         }
 
         [TestMethod]
@@ -149,7 +143,7 @@ namespace TestChartMogul.Import
         public void GivenCalling_AddInvoices_WhenUrlIsNotValidThenThrowsNotFoundException()
         {
             MockHttpErrorResponse(HttpStatusCode.NotFound, "Requested method not found");
-            var response = _invoice.AddInvoice(new CustomerModel(),new APIRequest(), new List<InvoiceModel>());
+            var response = _invoice.AddInvoice(new CustomerModel(),new APIRequest(), new InvoiceResponseDataModel());
         }
 
         [TestMethod]
@@ -157,7 +151,7 @@ namespace TestChartMogul.Import
         public void GivenCalling_AddInvoices_RequestFailsThenThrowException()
         {
             MockHttpErrorResponse(HttpStatusCode.PaymentRequired, "Request failed");
-            var response = _invoice.AddInvoice(new CustomerModel(), new APIRequest(), new List<InvoiceModel>());
+            var response = _invoice.AddInvoice(new CustomerModel(), new APIRequest(), new InvoiceResponseDataModel());
         }
 
         [TestMethod]
@@ -165,7 +159,7 @@ namespace TestChartMogul.Import
         public void GivenCalling_AddInvoices_ThrowsForbiddenException()
         {
             MockHttpErrorResponse(HttpStatusCode.Forbidden, "Request forbidden");
-            var response = _invoice.AddInvoice(new CustomerModel(), new APIRequest(), new List<InvoiceModel>());
+            var response = _invoice.AddInvoice(new CustomerModel(), new APIRequest(), new InvoiceResponseDataModel());
         }
 
     }

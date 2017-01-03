@@ -3,12 +3,8 @@ using ChartMogul.API.Exceptions;
 using ChartMogul.API.Models.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using OConnors.ChartMogul.API.Models;
 using System;
-using System.IO;
 using System.Net;
-using System.Text;
-using Newtonsoft.Json;
 using ChartMogul.API.Models.Enrichment;
 using System.Collections.Generic;
 using ChartMogul.API.Enrichment;
@@ -62,9 +58,9 @@ namespace TestChartMogul.Enrichment
       
         }
 
-        public MergeCustomers GetCustomerMergeDataModel()
+        public MergeCustomersModel GetCustomerMergeDataModel()
         {
-            return new MergeCustomers
+            return new MergeCustomersModel
             {
                 From = new From { CustomerUUID = "cus_de305d54-75b4-431b-adb2-eb6b9e546012" },
                 Into = new Into { CustomerUUID = "cus_de305d54-75b4-431b-adb2-eb6b9e546013" }
@@ -229,7 +225,7 @@ namespace TestChartMogul.Enrichment
         public void GivenCalling_MergeCustomer_ThrowsNotFoundException_WhenCustomerUUIDISNotFound()
         {
             MockHttpErrorResponse(HttpStatusCode.NotFound, "Customer UUID Not Found");
-            _customer.MergeCustomers(new APIRequest(), new MergeCustomers());
+            _customer.MergeCustomers(new APIRequest(), new MergeCustomersModel());
 
         }
     }

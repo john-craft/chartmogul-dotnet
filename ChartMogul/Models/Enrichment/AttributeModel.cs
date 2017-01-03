@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ChartMogul.API.Models.Enrichment
 {
-    public class Attribute
+    public class AttributeModel
     {
         [JsonProperty(PropertyName = "tags")]
         public string[] Tags { get; set; }
@@ -12,10 +12,10 @@ namespace ChartMogul.API.Models.Enrichment
         public Dictionary<string,string> Custom { get; set; }
 
         [JsonProperty(PropertyName = "stripe")]
-        public Stripe Stripe { get; set; }
+        public StripeModel Stripe { get; set; }
 
         [JsonProperty(PropertyName = "clearbit")]
-        public Clearbit Clearbit { get; set; }
+        public ClearbitModel Clearbit { get; set; }
 
     }
 }

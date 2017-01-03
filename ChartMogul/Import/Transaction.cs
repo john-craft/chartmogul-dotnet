@@ -1,11 +1,5 @@
 ﻿using ChartMogul.API.Models.Core;
-using OConnors.ChartMogul.API.Models;
-using OConnors.ChartMogul.API.Models.Import;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ChartMogul.API.Models.Import;
 
 namespace ChartMogul.API.Import
 {
@@ -17,6 +11,7 @@ namespace ChartMogul.API.Import
     public class Transaction : ITransaction
     {
         private IHttp _iHttp;
+        private const string url = "import/invoices/{0}/transactions";
         public Transaction(IHttp ihttp)
         {
             _iHttp = ihttp;
@@ -24,7 +19,7 @@ namespace ChartMogul.API.Import
 
         public TransactionModel AddTransaction(InvoiceModel invoicemodel, TransactionModel transactionmodel, APIRequest apiRequest)
         {
-            apiRequest.RouteName = string.Format("import/invoices/{0}/transactions", invoicemodel.Uuid);
+            apiRequest.RouteName = string.Format(url, invoicemodel.Uuid);
             _iHttp.ApiRequest = apiRequest;
             var response = _iHttp.Post<TransactionModel, TransactionModel>(transactionmodel);
             return response;

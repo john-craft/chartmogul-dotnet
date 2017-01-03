@@ -1,19 +1,12 @@
-﻿using ChartMogul.API.Models;
-using ChartMogul.API.Models.Core;
+﻿using ChartMogul.API.Models.Core;
 using ChartMogul.API.Models.Import;
-using OConnors.ChartMogul.API.Models;
-using OConnors.ChartMogul.API.Models.Import;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChartMogul.API.Import
 {
     public interface IInvoice
     {
-        List<InvoiceModel> AddInvoice(CustomerModel customerModel, APIRequest apiRequest, List<InvoiceModel> invoiceModelList);
+        List<InvoiceModel> AddInvoice(CustomerModel customerModel, APIRequest apiRequest, InvoiceResponseDataModel invoiceModelList);
         List<InvoiceModel> GetInvoices(CustomerModel customerModel, APIRequest apirequest);
     }
 
@@ -25,11 +18,11 @@ namespace ChartMogul.API.Import
             _iHttp = iHttp;
         }
 
-        public List<InvoiceModel> AddInvoice(CustomerModel customerModel, APIRequest apiRequest, List<InvoiceModel> invoiceModelList)
+        public List<InvoiceModel> AddInvoice(CustomerModel customerModel, APIRequest apiRequest, InvoiceResponseDataModel invoiceModelList)
         {
             apiRequest.RouteName = string.Format("import/customers/{0}/invoices", customerModel.Uuid);
             _iHttp.ApiRequest = apiRequest;
-            var response = _iHttp.Post<List<InvoiceModel>, InvoiceResponseDataModel>(invoiceModelList);
+            var response = _iHttp.Post<InvoiceResponseDataModel, InvoiceResponseDataModel>(invoiceModelList);
             return response.Invoices;
         }
 

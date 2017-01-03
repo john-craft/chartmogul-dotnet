@@ -1,17 +1,10 @@
 ﻿using ChartMogul.API;
 using ChartMogul.API.Exceptions;
 using ChartMogul.API.Import;
-using ChartMogul.API.Models;
 using ChartMogul.API.Models.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using OConnors.ChartMogul.API.Models;
-using System;
-using System.IO;
 using System.Net;
-using System.Text;
-using Newtonsoft.Json;
-using OConnors.ChartMogul.API.Models.Import;
 using ChartMogul.API.Models.Import;
 using System.Collections.Generic;
 

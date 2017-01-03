@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChartMogul.API.Models.Enrichment
 {
-    public class CustomerQueryParams
+    public class CustomerQueryParamsModel
     {
         public string DataSourceUUID { get; set; }
         public string Status { get; set; }

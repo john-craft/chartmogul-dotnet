@@ -2,7 +2,7 @@
 
 namespace ChartMogul.API.Models.Enrichment
 {
-    public class Clearbit
+    public class ClearbitModel
     {
         [JsonProperty(PropertyName = "person")]
         public Person Person { get; set; }

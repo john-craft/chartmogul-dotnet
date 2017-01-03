@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ChartMogul.API.Models.Metrics
 {
-    public class Summary
+    public class SummaryModel
     {
         [JsonProperty(PropertyName = "current")]
         public int Current { get; set; }

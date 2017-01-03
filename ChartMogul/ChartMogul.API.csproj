@@ -50,7 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractService.cs" />
     <Compile Include="AbstractTransaction.cs" />
     <Compile Include="ApiResponse.cs" />
     <Compile Include="ChartMogulClient.cs" />
@@ -81,7 +80,7 @@
     <Compile Include="Import\Transaction.cs" />
     <Compile Include="Metrics\Metrics.cs" />
     <Compile Include="Models\Core\APIRequest.cs" />
-    <Compile Include="Models\Enrichment\CustomerQueryParams.cs" />
+    <Compile Include="Models\Enrichment\CustomerQueryParamsModel.cs" />
     <Compile Include="Models\Enrichment\RemoveCustomAttributeModel.cs" />
     <Compile Include="Models\Import\DataSourceModel.cs" />
     <Compile Include="Client.cs" />
@@ -89,17 +88,17 @@
     <Compile Include="Import\DataSource.cs" />
     <Compile Include="Models\Import\DataSourceResponseDataModel.cs" />
     <Compile Include="Models\Enrichment\AddCustomAttributeModel.cs" />
-    <Compile Include="Models\Enrichment\Attribute.cs" />
+    <Compile Include="Models\Enrichment\AttributeModel.cs" />
     <Compile Include="Models\Enrichment\AttributeResponseModel.cs" />
-    <Compile Include="Models\Enrichment\Clearbit.cs" />
+    <Compile Include="Models\Enrichment\ClearbitModel.cs" />
     <Compile Include="Models\Enrichment\CustomerAddressModel.cs" />
     <Compile Include="Models\Enrichment\CustomerPatchModel.cs" />
     <Compile Include="Models\Enrichment\CustomerResponseModel.cs" />
-    <Compile Include="Models\Enrichment\CustomerTag.cs" />
+    <Compile Include="Models\Enrichment\CustomerTagModel.cs" />
     <Compile Include="Models\Enrichment\CustomModel.cs" />
     <Compile Include="Models\Enrichment\CustomerModel.cs" />
-    <Compile Include="Models\Enrichment\MergeCustomers.cs" />
-    <Compile Include="Models\Enrichment\Stripe.cs" />
+    <Compile Include="Models\Enrichment\MergeCustomersModel.cs" />
+    <Compile Include="Models\Enrichment\StripeModel.cs" />
     <Compile Include="Models\Import\InvoiceModel.cs" />
     <Compile Include="Models\Import\InvoiceResponseDataModel.cs" />
     <Compile Include="Models\Import\LineItemModel.cs" />
@@ -115,10 +114,10 @@
     <Compile Include="Models\Metrics\CustomerSubscriptionModel.cs" />
     <Compile Include="Models\Metrics\KeyMetricsModel.cs" />
     <Compile Include="Models\Metrics\CustomerLTVModel.cs" />
-    <Compile Include="Models\Metrics\MetricsQueryParams.cs" />
+    <Compile Include="Models\Metrics\MetricsQueryParamsModel.cs" />
     <Compile Include="Models\Metrics\MRRChurnRateModel.cs" />
     <Compile Include="Models\Metrics\MRRModel.cs" />
-    <Compile Include="Models\Metrics\Summary.cs" />
+    <Compile Include="Models\Metrics\SummaryModel.cs" />
     <Compile Include="Payment.cs" />
     <Compile Include="Models\Import\PlanModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -130,9 +129,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,113 +1,119 @@
 ﻿using ChartMogul.API.Models.Core;
 using ChartMogul.API.Models.Metrics;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChartMogul.API.Metrics
 {
     public interface IMetrics
     {
-        KeyMetricsModel GetAllKeyMetrics(MetricsQueryParams queryParams);
-        MRRModel GetMrrForSpecifiedTimePeriod(MetricsQueryParams queryParams);
-        ARRModel GetArrForSpecifiedTimePeriod(MetricsQueryParams queryParams);
-        ARPAModel GetArpaForSpecifiedTimePeriod(MetricsQueryParams queryParams);
-        ASPModel GetASPForSpecifiedTimePeriod(MetricsQueryParams queryParams);
-        CustomerCountModel GetCustomerCount(MetricsQueryParams queryParams);
-        CustomerChurnRateModel GetCustomerChurnRate(MetricsQueryParams queryParams);
-        CustomerLTVModel GetLTV(MetricsQueryParams queryParams);
+        KeyMetricsModel GetAllKeyMetrics(MetricsQueryParamsModel queryParams);
+        MRRModel GetMrrForSpecifiedTimePeriod(MetricsQueryParamsModel queryParams);
+        ARRModel GetArrForSpecifiedTimePeriod(MetricsQueryParamsModel queryParams);
+        ARPAModel GetArpaForSpecifiedTimePeriod(MetricsQueryParamsModel queryParams);
+        ASPModel GetASPForSpecifiedTimePeriod(MetricsQueryParamsModel queryParams);
+        CustomerCountModel GetCustomerCount(MetricsQueryParamsModel queryParams);
+        CustomerChurnRateModel GetCustomerChurnRate(MetricsQueryParamsModel queryParams);
+        CustomerLTVModel GetLTV(MetricsQueryParamsModel queryParams);
         CustomerSubscriptionModel GetCustomerSubscriptionDetails(string customerUUID);
         CustomerActivityModel GetCustomerActivities(string customerUUID);
-        MRRChurnRateModel GetMRRChurnRate(MetricsQueryParams queryParams);
+        MRRChurnRateModel GetMRRChurnRate(MetricsQueryParamsModel queryParams);
     }
     public class Metrics:IMetrics
     {      
         IHttp _iHttp;
         public APIRequest ApiRequest { get; set; }
+        private const string metricsUrl = "metrics/all";
+        private const string mrrMetricsUrl = "metrics/mrr";
+        private const string arrMetricsUrl = "metrics/arr";
+        private const string arpaMetricsUrl = "metrics/arpa";
+        private const string aspMetricsUrl = "metrics/asp";
+        private const string customerCountMetricsUrl = "metrics/customer-count";
+        private const string customerChurnRateMetricsUrl= "metrics/customer-churn-rate";
+        private const string mrrChurnRateMetricsUrl= "metrics/mrr-churn-rate";
+        private const string ltvMetricsUrl = "metrics/ltv";
+        private const string customerSubscriptionMetricsUrl = "customers/{0}/subscriptions";
+        private const string customerActivityMetricsUrl = "customers/{0}/activities";
         public Metrics(IHttp iHttp)
         {
             _iHttp = iHttp;
         }
 
-        public KeyMetricsModel GetAllKeyMetrics(MetricsQueryParams queryParams)
+        public KeyMetricsModel GetAllKeyMetrics(MetricsQueryParamsModel queryParams)
         {
             var queryString = GenerateQuery(queryParams);
-            ApiRequest.RouteName = string.Concat("metrics/all", queryString);
+            ApiRequest.RouteName = string.Concat(metricsUrl, queryString);
             _iHttp.ApiRequest = ApiRequest;     
             var response = _iHttp.Get<KeyMetricsModel>();
             return response;
         }
 
-        public MRRModel GetMrrForSpecifiedTimePeriod(MetricsQueryParams queryParams)
+        public MRRModel GetMrrForSpecifiedTimePeriod(MetricsQueryParamsModel queryParams)
         {
             var queryString = GenerateQuery(queryParams);
-            ApiRequest.RouteName = string.Concat("metrics/mrr", queryString);
+            ApiRequest.RouteName = string.Concat(mrrMetricsUrl, queryString);
             _iHttp.ApiRequest = ApiRequest;
             var response = _iHttp.Get<MRRModel>();
             return response;
         }
 
-        public ARRModel GetArrForSpecifiedTimePeriod(MetricsQueryParams queryParams)
+        public ARRModel GetArrForSpecifiedTimePeriod(MetricsQueryParamsModel queryParams)
         {
             var queryString = GenerateQuery(queryParams);
-            ApiRequest.RouteName = string.Concat("metrics/arr", queryString);
+            ApiRequest.RouteName = string.Concat(arrMetricsUrl, queryString);
             _iHttp.ApiRequest = ApiRequest;
             var response = _iHttp.Get<ARRModel>();
             return response;
         }
 
-        public ARPAModel GetArpaForSpecifiedTimePeriod(MetricsQueryParams queryParams)
+        public ARPAModel GetArpaForSpecifiedTimePeriod(MetricsQueryParamsModel queryParams)
         {
             var queryString = GenerateQuery(queryParams);
-            ApiRequest.RouteName = string.Concat("metrics/arpa", queryString);
+            ApiRequest.RouteName = string.Concat(arpaMetricsUrl, queryString);
             _iHttp.ApiRequest = ApiRequest;
             var response = _iHttp.Get<ARPAModel>();
             return response;
         }
 
-        public ASPModel GetASPForSpecifiedTimePeriod(MetricsQueryParams queryParams)
+        public ASPModel GetASPForSpecifiedTimePeriod(MetricsQueryParamsModel queryParams)
         {
             var queryString = GenerateQuery(queryParams);
-            ApiRequest.RouteName = string.Concat("metrics/asp", queryString);
+            ApiRequest.RouteName = string.Concat(aspMetricsUrl, queryString);
             _iHttp.ApiRequest = ApiRequest;
             var response = _iHttp.Get<ASPModel>();
             return response;
         }
 
-        public CustomerCountModel GetCustomerCount(MetricsQueryParams queryParams)
+        public CustomerCountModel GetCustomerCount(MetricsQueryParamsModel queryParams)
         {
             var queryString = GenerateQuery(queryParams);
-            ApiRequest.RouteName = string.Concat("metrics/customer-count", queryString);
+            ApiRequest.RouteName = string.Concat(customerCountMetricsUrl, queryString);
             _iHttp.ApiRequest = ApiRequest;
             var response = _iHttp.Get<CustomerCountModel>();
             return response;
         }
 
-        public CustomerChurnRateModel GetCustomerChurnRate(MetricsQueryParams queryParams)
+        public CustomerChurnRateModel GetCustomerChurnRate(MetricsQueryParamsModel queryParams)
         {
             var queryString = GenerateQuery(queryParams);
-            ApiRequest.RouteName = string.Concat("metrics/customer-churn-rate", queryString);
+            ApiRequest.RouteName = string.Concat(customerChurnRateMetricsUrl, queryString);
             _iHttp.ApiRequest = ApiRequest;
             var response = _iHttp.Get<CustomerChurnRateModel>();
             return response;
         }
 
-        public MRRChurnRateModel GetMRRChurnRate(MetricsQueryParams queryParams)
+        public MRRChurnRateModel GetMRRChurnRate(MetricsQueryParamsModel queryParams)
         {
             var queryString = GenerateQuery(queryParams);
-            ApiRequest.RouteName = string.Concat("metrics/mrr-churn-rate", queryString);
+            ApiRequest.RouteName = string.Concat(mrrChurnRateMetricsUrl, queryString);
             _iHttp.ApiRequest = ApiRequest;
             var response = _iHttp.Get<MRRChurnRateModel>();
             return response;
         }
 
-        public CustomerLTVModel GetLTV(MetricsQueryParams queryParams)
+        public CustomerLTVModel GetLTV(MetricsQueryParamsModel queryParams)
         {
             var queryString = GenerateQuery(queryParams);
-            ApiRequest.RouteName = string.Concat("metrics/ltv", queryString);
+            ApiRequest.RouteName = string.Concat(ltvMetricsUrl, queryString);
             _iHttp.ApiRequest = ApiRequest;
             var response = _iHttp.Get<CustomerLTVModel>();
             return response;
@@ -115,7 +121,7 @@ namespace ChartMogul.API.Metrics
 
         public CustomerSubscriptionModel GetCustomerSubscriptionDetails(string customerUUID)
         {
-            ApiRequest.RouteName = string.Concat("customers/",customerUUID, "/subscriptions");
+            ApiRequest.RouteName = string.Format(customerSubscriptionMetricsUrl, customerUUID);
             _iHttp.ApiRequest = ApiRequest;
             var response = _iHttp.Get<CustomerSubscriptionModel>();
             return response;
@@ -123,13 +129,13 @@ namespace ChartMogul.API.Metrics
 
         public CustomerActivityModel GetCustomerActivities(string customerUUID)
         {
-            ApiRequest.RouteName = string.Concat("customers/", customerUUID, "/activities");
+            ApiRequest.RouteName = string.Format(customerActivityMetricsUrl, customerUUID);
             _iHttp.ApiRequest = ApiRequest;
             var response = _iHttp.Get<CustomerActivityModel>();
             return response;
         }
 
-        private string GenerateQuery(MetricsQueryParams queryParams)
+        private string GenerateQuery(MetricsQueryParamsModel queryParams)
         {
             if (string.IsNullOrEmpty(queryParams.StartDate) )
             {

@@ -26,7 +26,7 @@ namespace ChartMogul.API.Models.Enrichment
         public string CustomerSince { get; set; }
 
         [JsonProperty(PropertyName = "attributes")]
-        public Attribute Attributes { get; set; }
+        public AttributeModel Attributes { get; set; }
 
         [JsonProperty(PropertyName = "address")]
         public CustomerAddressModel Address { get; set; }

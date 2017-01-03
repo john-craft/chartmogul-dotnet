@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChartMogul.API.Models.Metrics
 {
-    public class MetricsQueryParams
+    public class MetricsQueryParamsModel
     {    
        public string StartDate {get;set;}
        public string EndDate { get; set; }
