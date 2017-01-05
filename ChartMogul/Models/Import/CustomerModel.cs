@@ -1,19 +1,14 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace OConnors.ChartMogul
+namespace ChartMogul.API.Models.Import
 {
-    public class Customer
+    public class CustomerModel
     {
         [JsonProperty(PropertyName = "data_source_uuid")]
-        public string DataSource { get; set; }
+        public string Data_Source_Uuid { get; set; }
 
         [JsonProperty(PropertyName = "external_id")]
-        public string ExternalId { get; set; }
+        public string External_Id { get; set; }
 
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

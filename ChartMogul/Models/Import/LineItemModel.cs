@@ -1,13 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace OConnors.ChartMogul
+namespace ChartMogul.API.Models.Import
 {
-    public class LineItem
+    public class LineItemModel
     {
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
