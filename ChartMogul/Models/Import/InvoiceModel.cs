@@ -37,7 +37,7 @@ namespace ChartMogul.API.Models.Import
         /// The date within which this invoice must be paid.
         /// </summary>
         [JsonProperty(PropertyName = "due_date")]
-        public string DueDate { get; set; }
+        public DateTime DueDate { get; set; }
 
         /// <summary>
         /// A list of Line Item objects.
