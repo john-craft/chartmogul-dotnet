@@ -12,7 +12,7 @@ namespace ChartMogul.API.Models.Import
         public string SubscriptionId { get; set; }
 
         [JsonProperty(PropertyName = "plan_uuid")]
-        public string Uuid { get; set; }
+        public string PlanId { get; set; }
 
         [JsonProperty(PropertyName = "service_period_start")]
         public DateTime SubscriptionStart { get; set; }
