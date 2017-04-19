@@ -10,6 +10,9 @@ namespace ChartMogul.API.Models.Import
         [JsonProperty(PropertyName = "external_id")]
         public string External_Id { get; set; }
 
+        [JsonProperty(PropertyName = "lead_created_at")]
+        public string CreateDate { get; set; }
+
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 

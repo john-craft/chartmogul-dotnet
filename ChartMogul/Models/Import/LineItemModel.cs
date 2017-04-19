@@ -9,7 +9,7 @@ namespace ChartMogul.API.Models.Import
         public string Type { get; set; }
 
         [JsonProperty(PropertyName = "subscription_external_id")]
-        public string SubscriptionId { get; set; }
+        public string SubscriptionExternalId { get; set; }
 
         [JsonProperty(PropertyName = "plan_uuid")]
         public string PlanId { get; set; }
@@ -24,7 +24,7 @@ namespace ChartMogul.API.Models.Import
         public int Amount { get; set; }
 
         [JsonProperty(PropertyName = "cancelled_at")]
-        public DateTime CancellationDate { get; set; }
+        public DateTime? CancellationDate { get; set; }
 
         [JsonProperty(PropertyName = "prorated")]
         public bool ProRated { get; set; }
