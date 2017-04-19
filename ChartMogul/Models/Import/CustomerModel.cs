@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 
 namespace ChartMogul.API.Models.Import
 {
@@ -11,7 +12,7 @@ namespace ChartMogul.API.Models.Import
         public string External_Id { get; set; }
 
         [JsonProperty(PropertyName = "lead_created_at")]
-        public string CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
 
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
