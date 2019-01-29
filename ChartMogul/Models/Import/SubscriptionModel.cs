@@ -1,13 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace OConnors.ChartMogul
+namespace ChartMogul.API.Models.Import
 {
-    public class Subscription
+    public class SubscriptionModel
     {
         [JsonProperty(PropertyName = "uuid")]
         public string Uuid { get; set; }
@@ -25,6 +21,6 @@ namespace OConnors.ChartMogul
         public string DataSource { get; set; }
 
         [JsonProperty(PropertyName = "cancellation_dates")]
-        public DateTime CancellationDates { get; set; }
+        public DateTime[] CancellationDates { get; set; }
     }
 }

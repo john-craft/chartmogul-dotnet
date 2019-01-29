@@ -1,13 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace OConnors.ChartMogul
+namespace ChartMogul.API.Models.Import
 {
-    public class Invoice
+    public class InvoiceModel
     {
         /// <summary>
         /// The ChartMogul UUID of the Customer that these invoices 
@@ -40,18 +37,18 @@ namespace OConnors.ChartMogul
         /// The date within which this invoice must be paid.
         /// </summary>
         [JsonProperty(PropertyName = "due_date")]
-        public string DueDate { get; set; }
+        public DateTime DueDate { get; set; }
 
         /// <summary>
         /// A list of Line Item objects.
         /// </summary>
         [JsonProperty(PropertyName = "line_items")]
-        public List<LineItem> Items { get; set; }
+        public List<LineItemModel> Items { get; set; }
 
         /// <summary>
         /// A list of Transaction objects.
         /// </summary>
         [JsonProperty(PropertyName = "transactions")]
-        public List<Transaction> Transactions { get; set; }
+        public List<TransactionModel> Transactions { get; set; }
     }
 }

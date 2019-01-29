@@ -1,22 +1,18 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace OConnors.ChartMogul
+namespace ChartMogul.API.Models.Import
 {
-    public class LineItem
+    public class LineItemModel
     {
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
         [JsonProperty(PropertyName = "subscription_external_id")]
-        public string SubscriptionId { get; set; }
+        public string SubscriptionExternalId { get; set; }
 
         [JsonProperty(PropertyName = "plan_uuid")]
-        public string Uuid { get; set; }
+        public string PlanId { get; set; }
 
         [JsonProperty(PropertyName = "service_period_start")]
         public DateTime SubscriptionStart { get; set; }
@@ -28,7 +24,7 @@ namespace OConnors.ChartMogul
         public int Amount { get; set; }
 
         [JsonProperty(PropertyName = "cancelled_at")]
-        public DateTime CancellationDate { get; set; }
+        public DateTime? CancellationDate { get; set; }
 
         [JsonProperty(PropertyName = "prorated")]
         public bool ProRated { get; set; }
